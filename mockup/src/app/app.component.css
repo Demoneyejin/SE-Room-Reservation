@@ -1,0 +1,18 @@
+
+.toolbar {
+	background-color: #081E3F;
+	color: white;
+	height: 60px;
+	margin: -8px;
+	display: flex;
+	font-weight: 200
+}
+
+h1 {
+	margin: 8px;
+}
+
+.cardContain {
+	display: flex;
+	flex-direction: column;
+}
