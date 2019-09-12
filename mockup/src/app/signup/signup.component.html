@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<div class="cardInner" fxFlex="0 1 calc(20em + 50px)"
+	gdAreas="header | instructions | form | footer">
+	<div gdArea="header">
+		<h2>Create an Account</h2>
+	</div>
+	<div gdArea="instructions">
+		<p>Please fill out all fields and hit submit to confirm</p>
+	</div>
+	<div gdArea="form">
+		<form>
+			Username:<br>
+			<input type="text" name="username"><br>
+			Full Name:<br>
+			<input type="text" name="fullname"><br>
+			Email: <br>
+			<input type="email" name="email"><br>
+			Password: <br>
+			<input type="password" name="password"><br>
+		</form>
+		<a href="./login">Already have an account?</a>
+	</div>
+	<div gdArea="footer">
+		<button type="submit" onClick="window.location.href='./dashboard'">Submit</button>
+	</div>
+</div>

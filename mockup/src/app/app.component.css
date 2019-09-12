@@ -5,14 +5,12 @@
 	height: 60px;
 	margin: -8px;
 	display: flex;
-	font-weight: 200
+	font-weight: 200;
+	margin-bottom: 20px;
 }
 
 h1 {
 	margin: 8px;
+	font-family: 'Bitter', serif;
 }
 
-.cardContain {
-	display: flex;
-	flex-direction: column;
-}

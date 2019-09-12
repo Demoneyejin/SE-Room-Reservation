@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<div class=cardInner>
+<div class=cardInner fxFlex="0 1 calc(20em + 50px)">
 
 	<div [style.grid-area]="'header'">
 		<h2>Sign In</h2>
@@ -10,9 +10,10 @@
 	</div>
 	<div [style.grid.area]="'password'" class="textArea">Password</div>
 	<div [style.grid.area]="'pwordfield'">
-		<input type="password" name="pWord">
+		<input type="password" name="pWord"><br>
+		<a href="./signup">Create an Account</a>
 	</div>
 	<div [style.grid-area]="'button'">
-		<button type="button">Login</button>
+			<button type="button" onclick="window.location.href='./dashboard'">Login</button>
 	</div>	
 </div>

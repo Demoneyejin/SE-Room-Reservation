@@ -1,15 +1,6 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <style>
-
   :host{
-    font-family: 'Bitter', serif;
+    font-family: 'Roboto';
   }
 </style>
 
@@ -18,12 +9,9 @@
 
 <div class=toolbar>
 
-  <h1>Library Reserve</h1>
+  <h1>Reservo</h1>
 
 </div>
-<div fxLayout="row"  fxLayoutAlign="center">
-  <app-login fxFlex="0 1 calc(20em + 50px)"></app-login>
+<div fxLayout="row" fxLayoutAlign="center">
+  <router-outlet ></router-outlet>
 </div>
-
-
-<router-outlet></router-outlet>
