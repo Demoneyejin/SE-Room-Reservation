@@ -7,7 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
+import { faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -25,4 +26,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+  constructor(library: FaIconLibrary){
+    library.addIcons(faCalendarPlus, faCalendarAlt)
+  }
+
+}

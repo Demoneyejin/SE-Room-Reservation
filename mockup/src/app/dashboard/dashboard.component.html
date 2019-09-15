@@ -2,13 +2,12 @@
 
 <h2>Dashboard</h2>
 
-<div fxLayout="row">
-	<div class="dashCard" fxLayout="column">
-		<fa-icon [icon]="faCalendarPlus" size="10x"></fa-icon>
-		<h3>Make New Reservation</h3>
-	</div>
-	<div class="dashCard"fxLayout="column">
-		<fa-icon [icon]="faCalendarPlus" size="10x"></fa-icon>
-		<h3>Make New Reservation</h3>
+<div fxLayout="row" fxLayoutGap=16px>
+
+	<div class="dashCard" fxLayout="column"
+	*ngFor="let card of cards"
+	fxLayoutGap=10px>
+		<fa-icon icon={{card.icon}} size="10x"></fa-icon>
+		<h3>{{card.title}}</h3>
 	</div>
 </div>
