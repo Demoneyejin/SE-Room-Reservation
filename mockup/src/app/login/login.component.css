@@ -19,7 +19,6 @@ h2 {
 	float: left;
 	font-family: "Bitter", serif;
 	font-size: 225%;
-	font-weight: 500;
 }
 
 button {
@@ -56,4 +55,5 @@ input {
 	font-family: 'Roboto';
 	font-size: 150%;
 	width: inherit;
+	margin-bottom: 10px;
 }

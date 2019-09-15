@@ -1,0 +1,15 @@
+
+
+.dashCard {
+	outline: 10px;
+	outline-color: yellow;
+	border: 10px;
+	border-color: yellow;
+	padding: 20px;
+	background-color: #eee;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 300px;
+	height: 300px;
+}
