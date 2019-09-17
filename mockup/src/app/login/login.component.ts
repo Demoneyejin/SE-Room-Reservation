@@ -13,4 +13,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  onEnter(){
+    window.location.href = "./dashboard";
+  }
+
 }

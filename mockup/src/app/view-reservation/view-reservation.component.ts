@@ -9,8 +9,8 @@ import { Reservation } from './Reservation'
 export class ViewReservationComponent implements OnInit {
 
   reservations = [
-    new Reservation("9/18/19", "12:15pm", "Green Library 245", "dmato"),
-    new Reservation("9/31/19", "5:45pm", "Green Library 512", "dmato")
+    new Reservation("9/18/19", "12:00pm", "Green Library 245", "dmato"),
+    new Reservation("9/31/19", "5:30pm", "Green Library 512", "dmato")
   ];
 
   constructor() { }

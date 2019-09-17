@@ -11,6 +11,8 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { ViewReservationComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { ModalModule } from './_modal';
 
 @NgModule({
   declarations: [
@@ -19,13 +21,18 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     SignupComponent,
     DashboardComponent,
     ViewReservationComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ModalModule
+  ],
+  entryComponents: [
+    DialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

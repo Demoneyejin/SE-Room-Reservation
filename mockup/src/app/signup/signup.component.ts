@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogComponent } from '../dialog/dialog.component';
+import { ModalService } from '../_modal';
+import { faFileWord } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-signup',
@@ -7,9 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: ModalService) { }
+
+  refName = "dashboard";
 
   ngOnInit() {
+  }
+
+  onClick(){
+
+    //this.modalService.open('dialog-modal');
+    window.location.href="./dashboard"
   }
 
 }
