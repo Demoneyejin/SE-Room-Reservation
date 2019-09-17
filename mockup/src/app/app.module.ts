@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
 import { faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { ViewReservationComponent } from './view-reservation/view-reservation.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ViewReservationComponent } from './view-reservation/view-reservation.co
     LoginComponent,
     SignupComponent,
     DashboardComponent,
-    ViewReservationComponent
+    ViewReservationComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

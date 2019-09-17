@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignupComponent } from './signup/signup.component';
 import { Reservation } from './view-reservation/Reservation';
 import { ViewReservationComponent } from './view-reservation/view-reservation.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'reservations',
     component: ViewReservationComponent
+  },
+  {
+    path: 'pagenotfound',
+    component: PageNotFoundComponent
   }
 ];
 

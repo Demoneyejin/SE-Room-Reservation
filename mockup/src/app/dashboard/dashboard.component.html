@@ -2,11 +2,11 @@
 
 <h2>Dashboard</h2>
 
-<div fxLayout="row" fxLayoutGap=16px>
+<div fxLayout="row wrap" fxLayoutGap=16px>
 
 	<div class="dashCard" fxLayout="column"
 	*ngFor="let card of cards"
-	fxLayoutGap=10px (click)=onclick(card.reference)>
+	fxLayoutGap=10px (click)=onclick(card.getRef())>
 		<fa-icon icon={{card.icon}} size="10x"></fa-icon>
 		<h3>{{card.title}}</h3>
 	</div>
