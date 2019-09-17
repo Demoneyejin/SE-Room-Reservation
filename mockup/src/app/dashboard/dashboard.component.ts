@@ -12,13 +12,17 @@ export class DashboardComponent implements OnInit {
   faCalendarPlus = faCalendarPlus
 
   cards = [
-    new card("Make a Reservation", "calendar-plus"),
-    new card("View Reservations", "calendar-alt")
+    new card("Make a Reservation", "calendar-plus", ""),
+    new card("View Reservations", "calendar-alt", "reservations")
   ];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onclick(reference){
+    window.location.href="./" + reference;
   }
 
 }

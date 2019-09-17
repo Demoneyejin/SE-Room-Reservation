@@ -6,7 +6,7 @@
 
 	<div class="dashCard" fxLayout="column"
 	*ngFor="let card of cards"
-	fxLayoutGap=10px>
+	fxLayoutGap=10px (click)=onclick(card.reference)>
 		<fa-icon icon={{card.icon}} size="10x"></fa-icon>
 		<h3>{{card.title}}</h3>
 	</div>

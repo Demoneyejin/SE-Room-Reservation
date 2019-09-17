@@ -1,0 +1,39 @@
+.reserveUnit {
+	display: flex;
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+
+}
+
+.card {
+	width: inherit;
+}
+
+:host {
+	box-shadow: 0px 0px 22px 4px rgba(0,0,0,0.36);
+	align-content: center;
+	display: block;
+	margin: 20px;
+	padding: 20px;
+	border-radius: 5px;
+	width: inherit;
+}
+
+button {
+	font-family: 'Bitter', serif;
+	background-color: #081E3F;
+	color: white;
+	float: right;
+	font-size: 175%;
+	border: 0;
+	outline: 0;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;	
+	border-radius: 5px;
+	margin-top: 20px;
+	margin-left: 200px;
+	height: 2em;
+	box-shadow: 0px 3px 4px 1px rgba(0,0,0,0.25);
+}

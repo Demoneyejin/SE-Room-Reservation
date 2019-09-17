@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<div class="card" fxLayout="column">
+
+	<h2>Reservations</h2>
+
+	<div *ngFor="let reserve of reservations" class="reserveUnit">
+
+		<div>
+			<h2>Date: {{reserve.date}}</h2>
+			<p>Time: {{reserve.time}}</p>
+			<p>Owner: {{reserve.owner}}</p>
+			<p>Room: {{reserve.room}}</p>
+		</div>
+
+		<button type="submit">Cancel</button>
+	</div>
+</div>
