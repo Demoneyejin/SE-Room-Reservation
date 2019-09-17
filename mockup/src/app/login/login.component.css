@@ -2,7 +2,7 @@
 	font-family: Roboto;
 	align-content: flex-start;
 	float: left;
-	font-size: 150%;
+	font-size: 125%;
 }
 
 :host {
@@ -35,14 +35,6 @@ button {
 	padding-bottom: 5px;	
 	border-radius: 5px;
 	margin-top: 20px;
-}
-
-.cardInner {
-	display:grid;
-	grid-template-areas: "header" "uname" "unamefield" "password" "pwordfield" "button";
-	grid-row-gap: 16px;
-	grid-column-gap: 16px;
-	font-family: "Roboto";
 }
 
 input {

@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<div class=cardInner fxFlex="0 1 calc(20em + 50px)">
-
-	<div [style.grid-area]="'header'">
+<div class=cardInner fxFlex="0 1 calc(20em + 50px)"
+	gdAreas="header | uname | unamefield | password | pwordfield"
+	fxLayoutGap="16px">
+	<div gdArea="'header'">
 		<h2>Sign In</h2>
 	</div>
-	<div [style.grid-area]="'uname'" class="textArea">Username</div>
-	<div [style.grid.area]="'unamefield'">
+	<div gdArea="'uname'" class="textArea">Username</div>
+	<div gdArea="'unamefield'">
 		<input type="text" name="uName">
 	</div>
-	<div [style.grid.area]="'password'" class="textArea">Password</div>
-	<div [style.grid.area]="'pwordfield'">
+	<div gdArea="'password'" class="textArea">Password</div>
+	<div gdArea="'pwordfield'">
 		<input type="password" name="pWord"><br>
 		<a href="./signup">Create an Account</a>
 	</div>
-	<div [style.grid-area]="'button'">
+	<div gdArea="'button'">
 		<button onclick="window.location.href='./dashboard'" color="primary">Login</button>			
 	</div>	
 </div>
