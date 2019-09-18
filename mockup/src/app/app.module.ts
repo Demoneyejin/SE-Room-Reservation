@@ -13,6 +13,11 @@ import { ViewReservationComponent } from './view-reservation/view-reservation.co
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { ModalModule } from './_modal';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MatButtonModule } from '@angular/material/button'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatCardModule } from '@angular/material/card'
 
 @NgModule({
   declarations: [
@@ -29,7 +34,12 @@ import { ModalModule } from './_modal';
     AppRoutingModule,
     FlexLayoutModule,
     FontAwesomeModule,
-    ModalModule
+    ModalModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDividerModule,
+    MatCardModule
   ],
   entryComponents: [
     DialogComponent

@@ -4,15 +4,19 @@
 
 	<h2>Reservations</h2>
 
-	<div *ngFor="let reserve of reservations" class="reserveUnit">
+	<div *ngFor="let reserve of reservations; last as last">
+		<div class=reserveUnit>
 
-		<div>
-			<h2>Date: {{reserve.date}}</h2>
-			<p>Time: {{reserve.time}}</p>
-			<p>Owner: {{reserve.owner}}</p>
-			<p>Room: {{reserve.room}}</p>
+			<div>
+				<h2>Date: {{reserve.date}}</h2>
+				<p>Time: {{reserve.time}}</p>
+				<p>Owner: {{reserve.owner}}</p>
+				<p>Room: {{reserve.room}}</p>
+			</div>
+
+			<button mat-raised-button type="submit">Cancel</button>
 		</div>
-
-		<button type="submit">Cancel</button>
+		<mat-divider *ngIf="!last"></mat-divider>
+		
 	</div>
 </div>
