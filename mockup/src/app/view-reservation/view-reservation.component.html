@@ -6,7 +6,6 @@
 
 	<div *ngFor="let reserve of reservations; last as last">
 		<div class=reserveUnit>
-
 			<div>
 				<h3>Date: {{reserve.date}}</h3>
 				<p>Time: {{reserve.time}}</p>
@@ -17,6 +16,5 @@
 			<button mat-raised-button type="submit">Cancel</button>
 		</div>
 		<mat-divider *ngIf="!last"></mat-divider>
-		
 	</div>
 </mat-card>

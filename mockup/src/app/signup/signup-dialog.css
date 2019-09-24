@@ -1,5 +1,9 @@
 .content {
-	font-style: Roboto;
+	font-family: Roboto;
+}
+
+h2 {
+	font-family: 'Bitter', serif;
 }
 /*
 mat-spinner {
