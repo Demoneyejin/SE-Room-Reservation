@@ -18,7 +18,7 @@ $color-fiuprimary: (
     'A400' : #0030f2,
 	'A700' : #002bd9,
 	contrast: (
-		'50' : #fff,
+		'50' : #000,
 		'100' : #fff,
 		'200' : #fff,
 		'300' : #fff,
@@ -67,11 +67,16 @@ $color-fiuaccent: (
 		'A700' :#000
 	)
 );
-
+/*
 $custom-theme-primary: mat-palette($color-fiuprimary);
-$custom-theme-accent: mat-palette($color-fiuaccent);
+$custom-theme-accent: mat-palette($color-fiuaccent, 500, 700, 800);
 $custom-theme-warn: mat-palette($mat-red);
+*/
 
-$custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
+$theme-primary: mat-palette($mat-indigo);
+$theme-accent: mat-palette($mat-yellow);
+$theme-warn: mat-palette($mat-red);
+
+$custom-theme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
 
 @include angular-material-theme($custom-theme);

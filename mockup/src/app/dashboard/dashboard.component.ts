@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {faCalendarPlus} from '@fortawesome/free-solid-svg-icons';
 import { card } from './card';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,20 +10,20 @@ import { card } from './card';
 })
 export class DashboardComponent implements OnInit {
 
-  faCalendarPlus = faCalendarPlus
+  faCalendarPlus = faCalendarPlus;
 
   cards = [
-    new card("Make a Reservation", "calendar-plus", "pagenotfound"),
-    new card("View Reservations", "calendar-alt", "reservations")
+    new card('Make a Reservation', 'calendar-plus', 'pagenotfound'),
+    new card('View Reservations', 'calendar-alt', 'reservations')
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   onclick(reference){
-    window.location.href="./" + reference;
+    this.router.navigate([reference]);
   }
 
 }

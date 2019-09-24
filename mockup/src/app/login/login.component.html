@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<div class=cardInner fxFlex="0 1 calc(20em + 50px)"
+<mat-card class="cardInner mat-elevation-z4" fxFlex="0 1 calc(20em + 50px)"
 	gdAreas="header | uname | unamefield | password | pwordfield"
 	fxLayoutGap="16px">
 	<div gdArea="'header'">
@@ -15,6 +15,6 @@
 		<a href="./signup">Create an Account</a>
 	</div>
 	<div gdArea="'button'">
-		<button onclick="window.location.href='./dashboard'" type="submit" mat-raised-button>Login</button>
+		<button (click)="onClick()" type="submit" mat-raised-button color="primary">Login</button>
 	</div>	
-</div>
+</mat-card>
