@@ -9,16 +9,16 @@ import { catchError } from 'rxjs/operators'
 })
 export class ReservationService {
 
-  private _url: string = "/assets/data/reservations.json"
+  private url = '/assets/data/reservations.json';
 
   constructor(private http: HttpClient) { }
 
   getReservations(): Observable<Reservation[]>{
-    return this.http.get<Reservation[]>(this._url)
+    return this.http.get<Reservation[]>(this.url)
                   .pipe(catchError(this.errorHandler));
   }
 
   errorHandler(error: HttpErrorResponse){
-    return throwError(error.message || "Server Error");
+    return throwError(error.message || 'Server Error');
   }
 }

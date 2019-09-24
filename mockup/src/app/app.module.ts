@@ -5,19 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SignupComponent } from './signup/signup.component';
+import { SignupComponent, SignupDialogComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { ViewReservationComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatButtonModule } from '@angular/material/button'
-import { MatCheckboxModule } from '@angular/material/checkbox'
-import { MatDividerModule } from '@angular/material/divider'
-import { MatCardModule } from '@angular/material/card'
-import { MatRippleModule } from '@angular/material/core'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { MatRippleModule } from '@angular/material/core'
     DashboardComponent,
     ViewReservationComponent,
     PageNotFoundComponent,
-    DialogComponent
+    DialogComponent,
+    SignupDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -39,18 +43,21 @@ import { MatRippleModule } from '@angular/material/core'
     MatCheckboxModule,
     MatDividerModule,
     MatCardModule,
-    MatRippleModule
+    MatRippleModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    HttpClientModule
   ],
   entryComponents: [
-    DialogComponent
+    SignupDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 
-  constructor(library: FaIconLibrary){
-    library.addIcons(faCalendarPlus, faCalendarAlt)
+  constructor(library: FaIconLibrary) {
+    library.addIcons(faCalendarPlus, faCalendarAlt);
   }
 
 }

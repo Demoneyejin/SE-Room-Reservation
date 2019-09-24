@@ -22,16 +22,20 @@ const routes: Routes = [
     component: SignupComponent
   },
   {
-    path: '',
-    pathMatch: 'full',
-    component: LoginComponent
-  },
-  {
     path: 'reservations',
     component: ViewReservationComponent
   },
   {
     path: 'pagenotfound',
+    component: PageNotFoundComponent
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    component: LoginComponent
+  },
+  {
+    path: '',
     component: PageNotFoundComponent
   }
 ];
