@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 
-<div class="card" fxLayout="column">
+<h2>Reservations</h2>
 
-	<h2>Reservations</h2>
+<mat-card class="card mat-elevation-z4" fxLayout="column">
 
 	<div *ngFor="let reserve of reservations; last as last">
 		<div class=reserveUnit>
 
 			<div>
-				<h2>Date: {{reserve.date}}</h2>
+				<h3>Date: {{reserve.date}}</h3>
 				<p>Time: {{reserve.time}}</p>
 				<p>Owner: {{reserve.owner}}</p>
 				<p>Room: {{reserve.room}}</p>
@@ -19,4 +19,4 @@
 		<mat-divider *ngIf="!last"></mat-divider>
 		
 	</div>
-</div>
+</mat-card>

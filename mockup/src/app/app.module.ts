@@ -12,12 +12,12 @@ import { faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons
 import { ViewReservationComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { ModalModule } from './_modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatCardModule } from '@angular/material/card'
+import { MatRippleModule } from '@angular/material/core'
 
 @NgModule({
   declarations: [
@@ -34,12 +34,12 @@ import { MatCardModule } from '@angular/material/card'
     AppRoutingModule,
     FlexLayoutModule,
     FontAwesomeModule,
-    ModalModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
+    MatRippleModule
   ],
   entryComponents: [
     DialogComponent

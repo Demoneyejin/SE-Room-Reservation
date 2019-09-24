@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalService } from '../_modal';
 
 @Component({
   selector: 'app-dialog',
@@ -12,13 +11,12 @@ export class DialogComponent implements OnInit {
 
   
 
-  constructor(private modalService: ModalService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   closeClick(){
-    this.modalService.close('dialog-modal');
     window.location.href="./dashboard";
   }
 
