@@ -3,80 +3,80 @@
 @include mat-core();
 
 $color-fiuprimary: (
-    '50' : #e1e4e8,
-    '100' : #b5bcc5,
-    '200' : #848f9f,
-    '300' : #526279,
-    '400' : #2d405c,
-    '500' : #081e3f,
-    '600' : #071a39,
-    '700' : #061631,
-    '800' : #041229,
-    '900' : #020a1b,
-    'A100' : #597aff,
-    'A200' : #2652ff,
-    'A400' : #0030f2,
-	'A700' : #002bd9,
+    50 : #e1e4e8,
+    100 : #b5bcc5,
+    200 : #848f9f,
+    300 : #526279,
+    400 : #2d405c,
+    500 : #081e3f,
+    600 : #071a39,
+    700 : #061631,
+    800 : #041229,
+    900 : #020a1b,
+    A100 : #597aff,
+    A200 : #2652ff,
+    A400 : #0030f2,
+	A700 : #002bd9,
 	contrast: (
-		'50' : #000,
-		'100' : #fff,
-		'200' : #fff,
-		'300' : #fff,
-		'400' : #fff,
-		'500' : #fff,
-		'600' : #fff,
-		'700' : #fff,
-		'800' : #fff,
-		'900' : #fff,
-		'A100' : #fff,
-		'A200' : #fff,
-		'A400' : #fff,
-		'A700' : #fff,
+		50 : #000,
+		100 : #fff,
+		200 : #fff,
+		300 : #fff,
+		400 : #fff,
+		500 : #fff,
+		600 : #fff,
+		700 : #fff,
+		800 : #fff,
+		900 : #fff,
+		A100 : #fff,
+		A200 : #fff,
+		A400 : #fff,
+		A700 : #fff,
 	)
 );
 
 $color-fiuaccent: (
-    '50' : #fef9e8,
-    '100' : #fdefc5,
-    '200' : #fce49f,
-    '300' : #fad978,
-    '400' : #f9d15b,
-    '500' : #f8c93e,
-    '600' : #f7c338,
-    '700' : #f6bc30,
-    '800' : #f5b528,
-    '900' : #f3a91b,
-    'A100' : #ffffff,
-    'A200' : #fffbf3,
-    'A400' : #ffe8c0,
-	'A700' : #ffdfa7,
+    50 : #fef9e8,
+    100 : #fdefc5,
+    200 : #fce49f,
+    300 : #fad978,
+    400 : #f9d15b,
+    500 : #f8c93e,
+    600 : #f7c338,
+    700 : #f6bc30,
+    800 : #f5b528,
+    900 : #f3a91b,
+    A100 : #ffffff,
+    A200 : #fffbf3,
+    A400 : #ffe8c0,
+	A700 : #ffdfa7,
 	contrast: (
-		'50' : #000,	
-		'100' : #000,
-		'200' : #000,
-		'300' : #000,
-		'400' : #000,
-		'500' : #000,
-		'600' : #000,
-		'700' : #000,
-		'800' : #000,
-		'900' : #000,
-		'A100' :#000,
-		'A200' :#000,
-		'A400' :#000,
-		'A700' :#000
+		50 : #000,	
+		100 : #000,
+		200 : #000,
+		300 : #000,
+		400 : #000,
+		500 : #000,
+		600 : #000,
+		700 : #000,
+		800 : #000,
+		900 : #000,
+		A100 :#000,
+		A200 :#000,
+		A400 :#000,
+		A700 :#000
 	)
 );
-/*
-$custom-theme-primary: mat-palette($color-fiuprimary);
-$custom-theme-accent: mat-palette($color-fiuaccent, 500, 700, 800);
-$custom-theme-warn: mat-palette($mat-red);
-*/
 
+$custom-theme-primary: mat-palette($color-fiuprimary);
+$custom-theme-accent: mat-palette($color-fiuaccent, 500, 700, 800, 900);
+$custom-theme-warn: mat-palette($mat-red);
+
+/*
 $theme-primary: mat-palette($mat-indigo);
 $theme-accent: mat-palette($mat-yellow);
 $theme-warn: mat-palette($mat-red);
-
-$custom-theme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
+*/
+$custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
 
 @include angular-material-theme($custom-theme);

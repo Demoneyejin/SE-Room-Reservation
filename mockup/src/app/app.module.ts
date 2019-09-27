@@ -20,6 +20,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatRippleModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatToolbarModule
   ],
   entryComponents: [
     SignupDialogComponent

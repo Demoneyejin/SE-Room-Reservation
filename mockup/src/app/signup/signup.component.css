@@ -14,8 +14,8 @@ input {
 
 button {
 	font-family: 'Bitter', serif;
-	background-color: #081E3F;
-	color: white;
+	/* background-color: #081E3F; */
+	/* color: white; */
 	float: right;
 	font-size: 175%;
 	border: 0;
