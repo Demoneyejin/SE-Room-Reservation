@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DialogComponent } from '../dialog/dialog.component';
-import { faFileWord } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateUserService } from '../create-user.service';
@@ -12,6 +10,21 @@ import { CreateUserService } from '../create-user.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+
+  securityQuestions = [
+    {
+      value: 1,
+      text: 'What is your mother\'s maiden name?'
+    },
+    {
+      value: 2,
+      text: 'What is your first pet\'s name?'
+    },
+    {
+      value: 3,
+      text: 'Where were you born?'
+    }
+  ];
 
   constructor(private router: Router, private dialog: MatDialog, private signupService: CreateUserService) { }
 
@@ -34,8 +47,12 @@ export class SignupComponent implements OnInit {
 
   }
 
-  toLogin(){
+  toLogin() {
     this.router.navigate(['/login']);
+  }
+
+  getNumQuestions() {
+    return this.securityQuestions.length;2
   }
 
 }

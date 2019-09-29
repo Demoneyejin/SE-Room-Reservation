@@ -17,10 +17,16 @@
 			<input type="email" name="email"><br>
 			Password: <br>
 			<input type="password" name="password"><br>
+			Confirm Password: <br>
+			<input type="password" name="confPassword"><br>
+			Security Question:
+			<select name="secQuestions" [size]="getNumQuestions()">
+				<option *ngFor="let opt of securityQuestions" [value]="opt.value">{{opt.text}}</option>
+			</select>
 		</form>
 		<a (click)="toLogin()">Already have an account?</a>
 	</div>
 	<div gdArea="footer">
-		<button mat-raised-button type="submit" (click)="onClick()" color="accent">Submit</button>
+		<button mat-raised-button type="submit" (click)="onClick()" color="primary">Submit</button>
 	</div>
 </mat-card>
