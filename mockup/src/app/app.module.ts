@@ -24,6 +24,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MatInputModule } from '@angular/material/input';
     PageNotFoundComponent,
     DialogComponent,
     SignupDialogComponent,
-    ReservationDialogComponent
+    ReservationDialogComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

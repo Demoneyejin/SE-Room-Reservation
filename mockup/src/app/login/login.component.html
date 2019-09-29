@@ -12,7 +12,8 @@
 	<div gdArea="'password'" class="textArea">Password</div>
 	<div gdArea="'pwordfield'">
 		<input type="password" name="pWord" (keyup.enter)="onEnter()"><br>
-		<a href="./signup">Create an Account</a>
+		<a href="./signup">Create an Account</a><br><br>
+		<a (click)="toForgotPass()" clickable>Forgot Password?</a>
 	</div>
 	<div gdArea="'button'">
 		<button (click)="onClick()" type="submit" mat-raised-button color="primary">Login</button>
