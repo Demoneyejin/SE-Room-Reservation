@@ -13,7 +13,7 @@
 				<p>Room: {{reserve.room}}</p>
 			</div>
 
-			<button mat-raised-button type="submit">Cancel</button>
+			<button mat-raised-button type="submit" color="primary" (click)="onClick(reserve)">Cancel</button>
 		</div>
 		<mat-divider *ngIf="!last"></mat-divider>
 	</div>

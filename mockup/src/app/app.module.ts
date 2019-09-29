@@ -8,7 +8,7 @@ import { SignupComponent, SignupDialogComponent } from './signup/signup.componen
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import { ViewReservationComponent } from './view-reservation/view-reservation.component';
+import { ViewReservationComponent, ReservationDialogComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,7 +31,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ViewReservationComponent,
     PageNotFoundComponent,
     DialogComponent,
-    SignupDialogComponent
+    SignupDialogComponent,
+    ReservationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +51,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatToolbarModule
   ],
   entryComponents: [
-    SignupDialogComponent
+    SignupDialogComponent,
+    ReservationDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
