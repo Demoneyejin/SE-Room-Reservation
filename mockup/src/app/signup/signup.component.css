@@ -1,14 +1,13 @@
-input {
-	border-radius: 5px;
+mat-form-field {
+/*	border-radius: 5px;
 	border-color: #ddd;
 	border-style: solid;
 	outline: 0;
-	padding: 5px;
+	padding: 5px;*/
 	font-family: 'Roboto';
-	font-size: 150%;
-	width: 95%;
-	margin-bottom: 10px;
-	margin-right: 40px;
+	width: 100%;
+/*	margin-bottom: 10px;
+	margin-right: 40px;*/
 }
 
 
@@ -35,6 +34,8 @@ h2 {
 
 .cardInner {
 	font-family: "Roboto";
+	display: block;
+	width: 500px;
 }
 :host {
 	align-content: center;
@@ -45,3 +46,13 @@ h2 {
 	width: inherit;
 }
 
+form {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	
+}
+
+.halfSpace {
+	width: 50%;
+}
