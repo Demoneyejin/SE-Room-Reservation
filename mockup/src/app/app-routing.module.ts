@@ -8,6 +8,7 @@ import { ViewReservationComponent } from './view-reservation/view-reservation.co
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MakeReservationComponent } from './make-reservation/make-reservation.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'changepassword',
     component: ChangePasswordComponent
+  },
+  {
+    path: 'makereservation',
+    component: MakeReservationComponent
   },
   {
     path: '',

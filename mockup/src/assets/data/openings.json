@@ -1,0 +1,18 @@
+[
+	{
+		"time": "1200",
+		"capacity": "2",
+		"roomName": "Green Library 212"
+	},
+	{
+		"time": "1300",
+		"capacity": "5",
+		"roomName": "ECS 200"
+		
+	},
+	{
+		"time": "1230",
+		"capcity": "6",
+		"roomName": "Green Library 530"
+	}
+]

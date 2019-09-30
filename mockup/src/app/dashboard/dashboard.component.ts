@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
   faCalendarPlus = faCalendarPlus;
 
   cards = [
-    new card('Make a Reservation', 'calendar-plus', 'pagenotfound'),
+    new card('Make a Reservation', 'calendar-plus', 'makereservation'),
     new card('View Reservations', 'calendar-alt', 'reservations')
   ];
 

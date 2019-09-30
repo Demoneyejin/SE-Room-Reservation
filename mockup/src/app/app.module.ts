@@ -15,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-import { MatRippleModule } from '@angular/material/core';
+import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +25,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MakeReservationComponent } from './make-reservation/make-reservation.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ReserveListDirective } from './reserve-list.directive';
+import { OpenRoomListComponent } from './open-room-list/open-room-list.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     SignupDialogComponent,
     ReservationDialogComponent,
     ForgotPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    MakeReservationComponent,
+    ReserveListDirective,
+    OpenRoomListComponent
   ],
   imports: [
     BrowserModule,
@@ -56,11 +64,15 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     MatToolbarModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatListModule
   ],
   entryComponents: [
     SignupDialogComponent,
-    ReservationDialogComponent
+    ReservationDialogComponent,
+    OpenRoomListComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,12 +13,12 @@ export class ReservationService {
 
   constructor(private http: HttpClient) { }
 
-  getReservations(): Observable<Reservation[]>{
+  getReservations(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(this.url)
                   .pipe(catchError(this.errorHandler));
   }
 
-  errorHandler(error: HttpErrorResponse){
+  errorHandler(error: HttpErrorResponse) {
     return throwError(error.message || 'Server Error');
   }
 }

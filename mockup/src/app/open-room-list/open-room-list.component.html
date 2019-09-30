@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<mat-list *ngIf="openings.length">
+	<mat-list-item *ngFor="let item of openings">
+		<h4 mat-line>Time: {{item.time}}</h4>
+		<p mat-line>Capcity: {{item.capacity}} people</p>
+		<p mat-line>Room: {{item.roomName}}</p>
+		<button mat-raised-button color="primary">Reserve</button>
+	</mat-list-item>
+</mat-list>
