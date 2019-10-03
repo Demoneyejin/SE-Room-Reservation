@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CreateUserService } from '../create-user.service';
 
 
@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
   }
 
   getNumQuestions() {
-    return this.securityQuestions.length;2
+    return this.securityQuestions.length;
   }
 
 }
@@ -64,5 +64,17 @@ export class SignupComponent implements OnInit {
 })
 
 export class SignupDialogComponent {
-  constructor() {}
+
+  addContinue = false;
+
+  constructor(private router: Router, private createUserService: CreateUserService,
+              public dialogRef: MatDialogRef<SignupDialogComponent> ) {
+    createUserService.createUser().subscribe(data =>
+      this.addContinue = data);
+  }
+
+  toDashboard() {
+    this.dialogRef.close();
+    this.router.navigate(['/dashboard']);
+  }
 }
