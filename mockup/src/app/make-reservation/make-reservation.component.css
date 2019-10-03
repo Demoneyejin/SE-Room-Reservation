@@ -7,3 +7,9 @@ mat-form-field {
 	margin-right: 5px;
 	width: 26%;
 }
+
+button {
+	font-family: 'Bitter', serif;
+	margin-left: auto;
+	font-size: 170%;
+}

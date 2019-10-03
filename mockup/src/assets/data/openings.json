@@ -5,14 +5,14 @@
 		"roomName": "Green Library 212"
 	},
 	{
+		"time": "1230",
+		"capacity": "6",
+		"roomName": "Green Library 530"
+	},
+	{
 		"time": "1300",
 		"capacity": "5",
 		"roomName": "ECS 200"
 		
-	},
-	{
-		"time": "1230",
-		"capcity": "6",
-		"roomName": "Green Library 530"
 	}
 ]
