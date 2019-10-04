@@ -13,7 +13,7 @@ export class CreateUserService {
       setTimeout(() =>{
         subscriber.next(true);
         subscriber.complete();
-      }, 5000);
+      }, 2000);
     });
   }
 }

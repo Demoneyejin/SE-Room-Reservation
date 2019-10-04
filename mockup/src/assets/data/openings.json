@@ -1,16 +1,16 @@
 [
 	{
-		"time": "1200",
+		"time": "12:00pm",
 		"capacity": "2",
 		"roomName": "Green Library 212"
 	},
 	{
-		"time": "1230",
+		"time": "12:30pm",
 		"capacity": "6",
 		"roomName": "Green Library 530"
 	},
 	{
-		"time": "1300",
+		"time": "1:00pm",
 		"capacity": "5",
 		"roomName": "ECS 200"
 		

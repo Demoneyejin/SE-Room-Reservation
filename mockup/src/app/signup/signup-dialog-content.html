@@ -2,6 +2,6 @@
 <h2 mat-dialog-title>Please wait</h2>
 <p>We are currently adding your account</p>
 <mat-spinner mode="indeterminate" color="accent" diameter="50" style="float: center"></mat-spinner>
-<div mat-dialog-actions>
-	<button mat-raised-button *ngIf="addContinue" color="primary" (click)="toDashboard()" style="float: right;">Continue to Dashboard</button>
+<div mat-dialog-actions align="end">
+	<button mat-raised-button *ngIf="addContinue" color="primary" (click)="toDashboard()">Continue to Dashboard</button>
 </div>

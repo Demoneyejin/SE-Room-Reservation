@@ -38,7 +38,8 @@ export class SignupComponent implements OnInit {
     console.log('Testing');
 
     let dialogRef = this.dialog.open(SignupDialogComponent, {
-      width: '350px'
+      width: '350px',
+      disableClose: true
     });
     /*if (this.signupService.createUser()) {
       dialogRef.close();
