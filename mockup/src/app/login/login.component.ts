@@ -14,16 +14,20 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  onEnter(){
+  onEnter() {
     this.router.navigate(['dashboard']);
   }
 
-  onClick(){
+  onClick() {
     this.router.navigate(['dashboard']);
   }
 
-  toForgotPass(){
+  toForgotPass() {
     this.router.navigate(['forgotpassword']);
+  }
+
+  resolved(captchaResponse: string) {
+    console.log(captchaResponse);
   }
 
 }

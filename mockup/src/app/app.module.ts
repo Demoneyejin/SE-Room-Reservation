@@ -30,6 +30,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReserveListDirective } from './reserve-list.directive';
 import { OpenRoomListComponent } from './open-room-list/open-room-list.component';
 import { MatListModule } from '@angular/material/list';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatListModule
+    MatListModule,
+    RecaptchaModule
   ],
   entryComponents: [
     SignupDialogComponent,
