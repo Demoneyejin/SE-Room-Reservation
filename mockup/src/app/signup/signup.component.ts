@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CreateUserService } from '../create-user.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -26,6 +27,15 @@ export class SignupComponent implements OnInit {
     }
   ];
 
+  profileForm = new FormGroup({
+    userName: new FormControl('', Validators.required),
+    fullName: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.email, Validators.required]),
+    submit: new FormControl(''),
+    confirmPassword: new FormControl('', Validators.required)
+  });
+
   constructor(private router: Router, private dialog: MatDialog, private signupService: CreateUserService) { }
 
   refName = 'dashboard';
@@ -41,10 +51,6 @@ export class SignupComponent implements OnInit {
       width: '350px',
       disableClose: true
     });
-    /*if (this.signupService.createUser()) {
-      dialogRef.close();
-      this.router.navigate(['/dashboard']);
-    }*/
 
   }
 

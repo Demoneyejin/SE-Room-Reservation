@@ -97,7 +97,7 @@ export class MakeReservationComponent implements OnInit {
     },
     {
       value: 10,
-      text: '10'
+      text: '10+'
     }
   ];
 

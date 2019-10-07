@@ -8,30 +8,30 @@
 		<p>Please fill out all fields and press submit to confirm</p>
 	</div>
 	<div gdArea="form" class="formArea">
-		<form>
+		<form [formGroup]="profileForm">
 			<mat-form-field appearance="outline" class="halfSpace">
 				<mat-label>Username</mat-label>
-				<input matInput placeholder="Username" required >
+				<input matInput placeholder="Username" required formControlName="userName">
 			</mat-form-field>
 			
 			<mat-form-field appearance="outline" class="halfSpace">
 				<mat-label>Full Name</mat-label>
-				<input matInput placeholder="Full Name" required>
+				<input matInput placeholder="Full Name" required formControlName="fullName">
 			</mat-form-field><br>
 
 			<mat-form-field appearance="outline">
 				<mat-label>Email</mat-label>
-				<input matInput placeholder="Email" required>
+				<input matInput placeholder="Email" required type="email"formControlName="email">
 			</mat-form-field> <br>
 
 			<mat-form-field appearance="outline"class="halfSpace">
 				<mat-label>Password</mat-label>
-				<input matInput type="password" placeholder="Password" required>
+				<input matInput type="password" placeholder="Password" required formControlName="password">
 			</mat-form-field>
 
 			<mat-form-field appearance="outline"class="halfSpace">
 				<mat-label>Confirm Password</mat-label>
-				<input matInput type="password" placeholder="Password" required>
+				<input matInput type="password" placeholder="Password" required formControlName="confirmPassword">
 			</mat-form-field><br>
 
 			<mat-form-field appearance="outline">
