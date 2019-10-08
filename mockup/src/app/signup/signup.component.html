@@ -8,12 +8,12 @@
 		<p>Please fill out all fields and press submit to confirm</p>
 	</div>
 	<div gdArea="form" class="formArea">
-		<form [formGroup]="profileForm">
-			<mat-form-field appearance="outline" class="halfSpace">
+		<form [formGroup]="profileForm" (ngSubmit)="onClick()">
+			<mat-form-field appearance="outline" class="halfSpace" >
 				<mat-label>Username</mat-label>
 				<input matInput placeholder="Username" required formControlName="userName">
 			</mat-form-field>
-			
+
 			<mat-form-field appearance="outline" class="halfSpace">
 				<mat-label>Full Name</mat-label>
 				<input matInput placeholder="Full Name" required formControlName="fullName">
@@ -24,12 +24,12 @@
 				<input matInput placeholder="Email" required type="email"formControlName="email">
 			</mat-form-field> <br>
 
-			<mat-form-field appearance="outline"class="halfSpace">
+			<mat-form-field appearance="outline" class="halfSpace">
 				<mat-label>Password</mat-label>
 				<input matInput type="password" placeholder="Password" required formControlName="password">
 			</mat-form-field>
 
-			<mat-form-field appearance="outline"class="halfSpace">
+			<mat-form-field appearance="outline" class="halfSpace">
 				<mat-label>Confirm Password</mat-label>
 				<input matInput type="password" placeholder="Password" required formControlName="confirmPassword">
 			</mat-form-field><br>
@@ -46,11 +46,11 @@
 			<mat-form-field appearance="outline">
 				<mat-label>Answer</mat-label>
 				<input matInput type="text" placeholder="Answer" required>
-			</mat-form-field>
+      </mat-form-field>
+
+      <a routerLink="/login">Already have an account?</a>
+      <button mat-raised-button type="submit" color="primary">Submit</button>
 		</form>
-		<a routerLink="/login">Already have an account?</a>
-	</div>
-	<div gdArea="footer">
-		<button mat-raised-button type="submit" (click)="onClick()" color="primary">Submit</button>
+
 	</div>
 </mat-card>
