@@ -31,6 +31,7 @@ import { ReserveListDirective } from './reserve-list.directive';
 import { OpenRoomListComponent } from './open-room-list/open-room-list.component';
 import { MatListModule } from '@angular/material/list';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,9 @@ import { RecaptchaModule } from 'ng-recaptcha';
     MatDatepickerModule,
     MatNativeDateModule,
     MatListModule,
-    RecaptchaModule
+    RecaptchaModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   entryComponents: [
     SignupDialogComponent,
