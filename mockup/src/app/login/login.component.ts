@@ -1,4 +1,5 @@
 import { Component, OnInit, NgModule } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +9,25 @@ import { Component, OnInit, NgModule } from '@angular/core';
 
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
-  onEnter(){
-    window.location.href = "./dashboard";
+  onEnter() {
+    this.router.navigate(['dashboard']);
+  }
+
+  onClick() {
+    this.router.navigate(['dashboard']);
+  }
+
+  toForgotPass() {
+    this.router.navigate(['forgotpassword']);
+  }
+
+  resolved(captchaResponse: string) {
+    console.log(captchaResponse);
   }
 
 }

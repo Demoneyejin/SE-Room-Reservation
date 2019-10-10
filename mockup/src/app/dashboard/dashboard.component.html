@@ -4,7 +4,7 @@
 
 <div fxLayout="row wrap" fxLayoutGap=16px>
 
-	<mat-card class="dashCard mat-elevation-z7" fxLayout="column"
+	<mat-card mat-ripple  [matRippleColor]="primary" class="dashCard mat-elevation-z4" fxLayout="column"
 	*ngFor="let card of cards"
 	fxLayoutGap=10px (click)=onclick(card.getRef())>
 		<fa-icon icon={{card.icon}} size="10x"></fa-icon>

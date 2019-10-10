@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<h2 mat-dialog-title>
+	Are you sure?
+</h2>
+<mat-dialog-content class = "content">
+	<p>Do you want to cancel your reservation on <b>{{data.date}}</b>?</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button mat-button mat-dialog-close>No, don't cancel</button>
+	<button mat-button mat-dialog-close tabindex="0">Yes, I want to cancel</button>
+</mat-dialog-actions>

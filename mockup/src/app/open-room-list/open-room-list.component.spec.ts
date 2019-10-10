@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogComponent } from './dialog.component';
+import { OpenRoomListComponent } from './open-room-list.component';
 
-describe('DialogComponent', () => {
-  let component: DialogComponent;
-  let fixture: ComponentFixture<DialogComponent>;
+describe('OpenRoomListComponent', () => {
+  let component: OpenRoomListComponent;
+  let fixture: ComponentFixture<OpenRoomListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogComponent ]
+      declarations: [ OpenRoomListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogComponent);
+    fixture = TestBed.createComponent(OpenRoomListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

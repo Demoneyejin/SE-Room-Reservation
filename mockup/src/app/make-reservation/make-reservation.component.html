@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<mat-card class="mat-elevation-z4" fxLayout="row wrap" fxLayoutAlign="center">
+	<h2>Make a Reservation</h2>
+	<mat-form-field>
+		<input matInput [min]="minDate" [matDatepicker]="myDatePicker" placeholder="Choose a date">
+		<mat-datepicker-toggle matSuffix [for]="myDatePicker"></mat-datepicker-toggle>
+		<mat-datepicker #myDatePicker></mat-datepicker>
+	</mat-form-field>
+	
+	<mat-form-field>
+		<mat-label>Time</mat-label>
+		<mat-select>
+			<mat-option *ngFor="let time of times" [value]="time.value">
+				{{time.text}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<mat-form-field>
+		<mat-label># of people</mat-label>
+		<mat-select>
+			<mat-option *ngFor="let people of numPersons" [value]="people.value">
+				{{people.text}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<button mat-raised-button color="primary"(click)="getAvailableRooms()">Search</button>
+
+	<ng-template appReserveList></ng-template>
+</mat-card>

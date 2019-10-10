@@ -6,6 +6,9 @@ import { SignupComponent } from './signup/signup.component';
 import { Reservation } from './view-reservation/Reservation';
 import { ViewReservationComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MakeReservationComponent } from './make-reservation/make-reservation.component';
 
 
 const routes: Routes = [
@@ -22,16 +25,32 @@ const routes: Routes = [
     component: SignupComponent
   },
   {
-    path: '',
-    pathMatch: 'full',
-    component: LoginComponent
-  },
-  {
     path: 'reservations',
     component: ViewReservationComponent
   },
   {
     path: 'pagenotfound',
+    component: PageNotFoundComponent
+  },
+  {
+    path: 'forgotpassword',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'changepassword',
+    component: ChangePasswordComponent
+  },
+  {
+    path: 'makereservation',
+    component: MakeReservationComponent
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    component: LoginComponent
+  },
+  {
+    path: '',
     component: PageNotFoundComponent
   }
 ];

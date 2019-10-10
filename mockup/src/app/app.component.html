@@ -7,16 +7,26 @@
 
 <head>
 <link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
-<div class=toolbar>
+<!--<div class=toolbar>
 
-  <h1 style="align-self: flex-start;">Reservo</h1>
+  <h1 style="align-self: flex-start;" (click)="toHome()">Reservo</h1>
 
   <a href="./login" class='loginLink'>Login</a>
   <p style="margin-top: auto; margin-bottom: auto;"> / </p>
   <a href="./signup" style="margin-right: 8px;">Sign Up</a>
 
-</div>
+</div>-->
+<mat-toolbar color='primary' style="margin: -8px; width: auto;" class="mat-elevation-z3">
+  <h1 (click)="toHome()" class="home-link">Reservo</h1>
+
+  <span class="toolbar-spacer"></span>
+
+  <a routerLink="/login">Login</a>
+  <p> / </p>
+  <a routerLink="/signup">Sign Up</a>
+</mat-toolbar>
 <body>
   <div fxLayout="row" fxLayoutAlign="center">
     <router-outlet></router-outlet>
@@ -26,7 +36,3 @@
   <p align="center" style="margin-top: 20px">&copy; 2019 Florida International University</p>
 
 </body> 
-
-<!--<jw-modal id='dialog-modal'>
-  <app-dialog [nextpage]="refName"></app-dialog>
-</jw-modal>-->

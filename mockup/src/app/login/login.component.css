@@ -6,46 +6,49 @@
 }
 
 :host {
-	box-shadow: 0px 0px 22px 4px rgba(0,0,0,0.36);
-	align-content: center;
 	display: block;
-	margin: 20px;
-	padding: 20px;
+	margin-top: 40px;
 	border-radius: 5px;
-	width: inherit;
 }
 
 h2 {
 	float: left;
-	font-family: "Bitter", serif;
 	font-size: 225%;
+	width: 100%;
+	margin-top: 30px;
+	margin-bottom: 30px
 }
 
 button {
 	font-family: 'Bitter', serif;
-	background-color: #081E3F;
-	color: white;
 	float: right;
 	font-size: 175%;
-	border: 0;
-	outline: 0;
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;	
-	border-radius: 5px;
 	margin-top: 20px;
+	float: right;
 }
 
 input {
 	margin-left: 5px;
-	border-radius: 5px;
-	border-color: #ddd;
-	border-style: solid;
-	outline: 0;
-	padding: 5px;
 	font-family: 'Roboto';
-	font-size: 150%;
-	width: inherit;
 	margin-bottom: 10px;
+}
+
+mat-form-field {
+	width: 100%;
+}
+
+.formArea {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.cardInner {
+	display: flex;
+	flex-direction: column;
+	padding-top: 30px;
 }
