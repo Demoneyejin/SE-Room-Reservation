@@ -24,19 +24,20 @@
 				<input matInput placeholder="Email" required type="email"formControlName="email">
 			</mat-form-field> <br>
 
+			
 			<mat-form-field appearance="outline" class="halfSpace">
 				<mat-label>Password</mat-label>
-				<input matInput type="password" placeholder="Password" required formControlName="password">
+				<input matInput type="password" placeholder="Password" required formControlName="password" name="password">
 			</mat-form-field>
 
 			<mat-form-field appearance="outline" class="halfSpace">
 				<mat-label>Confirm Password</mat-label>
-				<input matInput type="password" placeholder="Password" required formControlName="confirmPassword">
+				<input matInput type="password" placeholder="Password" required formControlName="confirmPassword" pattern="{{password?.value}}">
 			</mat-form-field><br>
 
 			<mat-form-field appearance="outline">
 				<mat-label>Security Question</mat-label>
-				<mat-select required>
+				<mat-select required formControlName="securityQuestion">
 					<mat-option *ngFor="let opt of securityQuestions" [value]="opt.value">
 						{{opt.text}}
 					</mat-option>
@@ -45,11 +46,11 @@
 
 			<mat-form-field appearance="outline">
 				<mat-label>Answer</mat-label>
-				<input matInput type="text" placeholder="Answer" required>
-      </mat-form-field>
+				<input matInput type="text" placeholder="Answer" required fromControlName="securityAnswer">
+     		 </mat-form-field>
 
-      <a routerLink="/login">Already have an account?</a>
-      <button mat-raised-button type="submit" color="primary">Submit</button>
+      		<a routerLink="/login">Already have an account?</a>
+      		<button mat-raised-button type="submit" color="primary">Submit</button>
 		</form>
 
 	</div>
