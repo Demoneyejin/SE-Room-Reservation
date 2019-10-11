@@ -2,41 +2,28 @@
 <head>
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
-<!--<mat-card class="cardInner mat-elevation-z4" fxFlex="0 1 calc(20em + 50px)"
-	gdAreas="header | uname | unamefield | password | pwordfield"
-	fxLayoutGap="16px">
-	<div gdArea="'header'">
-		<h2>Sign In</h2>
-	</div>
-	<div gdArea="'uname'" class="textArea">Username</div>
-	<div gdArea="'unamefield'">
-		<input type="text" name="uName">
-	</div>
-	<div gdArea="'password'" class="textArea">Password</div>
-	<div gdArea="'pwordfield'">
-		<input type="password" name="pWord" (keyup.enter)="onEnter()"><br>
-		<a routerLink="/signup">Create an Account</a><br><br>
-		<a routerLink="/forgotpassword" >Forgot Password?</a>
-	</div>
-	<div gdArea="'button'">
-		<button (click)="onClick()" type="submit" mat-raised-button color="primary">Login</button>
-	</div>	
-</mat-card>-->
 
 <mat-card class="cardInner mat-elevation-z4" fxFlex="0 0 calc(30em + 50px)">
 	<h2>Sign In</h2>
 	<div class='formArea'>
-		<mat-form-field appearance='outline'>
-			<mat-label>Username</mat-label>
-			<input matInput placeholder="Username" type='text' required>
-		</mat-form-field>
-		<mat-form-field appearance='outline'>
-			<mat-label>Password</mat-label>
-			<input matInput type='password' placeholder="Password" required>
-		</mat-form-field>
-		<re-captcha (resolved)="resolved($event)" siteKey="6Ld2MLwUAAAAAEiwQDTjrblTurB91_PW63ooWoXn"></re-captcha>
+		<form [formGroup]="loginForm" (ngSubmit)="onClick()">
+			<mat-form-field appearance='outline'>
+				<mat-label>Username</mat-label>
+				<input matInput placeholder="Username" type='text' required formControlName="username">
+			</mat-form-field>
+
+			<mat-form-field appearance='outline'>
+				<mat-label>Password</mat-label>
+				<input matInput type='password' placeholder="Password" required formControlName="password">
+			</mat-form-field>
+
+			<re-captcha (resolved)="resolved($event)" siteKey="6Ld2MLwUAAAAAEiwQDTjrblTurB91_PW63ooWoXn"></re-captcha>
+
+			<a routerLink="/signup">Create an Account</a><br>
+			<a routerLink="/forgotpassword">Forgot Password?</a>
+			
+			<button mat-raised-button color="primary" type="submit">Log In</button>
+		</form>
 	</div>
-	<a routerLink="/signup">Create an Account</a><br>
-	<a routerLink="/forgotpassword">Forgot Password?</a>
-	<button mat-raised-button color="primary" (click)=onClick()>Log In</button>
+	
 </mat-card>

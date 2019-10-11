@@ -1,5 +1,6 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,19 +12,18 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router) { }
 
+  loginForm = new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
+  });
+
   ngOnInit() {
   }
 
-  onEnter() {
-    this.router.navigate(['dashboard']);
-  }
-
   onClick() {
-    this.router.navigate(['dashboard']);
-  }
-
-  toForgotPass() {
-    this.router.navigate(['forgotpassword']);
+    if (this.loginForm.valid){
+      this.router.navigate(['dashboard']);
+    }
   }
 
   resolved(captchaResponse: string) {

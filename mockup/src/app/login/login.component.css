@@ -52,3 +52,11 @@ mat-form-field {
 	flex-direction: column;
 	padding-top: 30px;
 }
+
+form {
+	width: 100%;
+}
+
+re-captcha {
+	margin-bottom: 15px;
+}
