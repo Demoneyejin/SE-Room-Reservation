@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit {
     console.log('Testing');
 
     if (this.profileForm.valid){
-      let dialogRef = this.dialog.open(SignupDialogComponent, {
+      const dialogRef = this.dialog.open(SignupDialogComponent, {
         width: '350px',
         disableClose: true
       });

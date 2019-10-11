@@ -22,7 +22,7 @@ export class ViewReservationComponent implements OnInit {
   }
 
   onClick(reserve: Reservation) {
-    let dialogRef = this.dialog.open(ReservationDialogComponent, {
+    const dialogRef = this.dialog.open(ReservationDialogComponent, {
       width: '350px',
       data: {date: reserve.date}
     });

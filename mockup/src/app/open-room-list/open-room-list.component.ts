@@ -15,7 +15,6 @@ export class OpenRoomListComponent implements OnInit {
   private errorMsg;
 
   ngOnInit() {
-
     this.openingService.getOpen().subscribe(
       data => this.openings = data,
       error => this.errorMsg = error
