@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   });
 
+  loginAttempts = 4;
+
   ngOnInit() {
   }
 
@@ -28,6 +30,10 @@ export class LoginComponent implements OnInit {
 
   resolved(captchaResponse: string) {
     console.log(captchaResponse);
+  }
+
+  doCaptcha(): boolean{
+    return this.loginAttempts > 4;
   }
 
 }
