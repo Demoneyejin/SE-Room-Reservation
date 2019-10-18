@@ -10,15 +10,18 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ViewReservationComponent implements OnInit {
 
-  public reservations;
+  public reservations: Reservation[];
   public errorMsg;
+
+  public noReservations: boolean;
 
   constructor(private reservationService: ReservationService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.reservationService.getReservations()
-        .subscribe(data => this.reservations = data,
-          error => this.errorMsg = error);
+        .subscribe(data => {this.reservations = data;
+                            this.noReservations = this.reservations.length === 0; },
+        error => this.errorMsg = error);
   }
 
   onClick(reserve: Reservation) {

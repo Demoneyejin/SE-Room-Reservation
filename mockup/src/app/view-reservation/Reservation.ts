@@ -3,6 +3,7 @@ export class Reservation{
 		public date: string,
 		public time: string,
 		public room: string,
-		public owner: string
+		public owner: string,
+		public id: number
 	){}
 }
