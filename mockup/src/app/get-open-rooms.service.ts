@@ -9,7 +9,7 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class GetOpenRoomsService {
 
-  private url = '/assets/data/openings.json';
+  private url = '/assets/data/openings.jso';
 
   constructor(private http: HttpClient) { }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<mat-list *ngIf="openings.length">
+<mat-list >
 	<mat-list-item *ngFor="let item of openings">
 		<h4 mat-line>Time: {{item.time}}</h4>
 		<p mat-line>Capcity: {{item.capacity}} people</p>
@@ -7,3 +7,8 @@
 		<button mat-raised-button color="primary">Reserve</button>
 	</mat-list-item>
 </mat-list>
+
+<div *ngIf="is404">
+	<h3>Couldn't find openings</h3>
+	<p>No openings found with that request</p>
+</div>
