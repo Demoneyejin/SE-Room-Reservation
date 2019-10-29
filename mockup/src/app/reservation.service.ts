@@ -11,6 +11,8 @@ export class ReservationService {
 
   private url = '/assets/data/reservations.json';
 
+  private postURL = '/remove/reserve/';
+
   constructor(private http: HttpClient) { }
 
   getReservations(): Observable<Reservation[]> {
@@ -20,5 +22,15 @@ export class ReservationService {
 
   errorHandler(error: HttpErrorResponse) {
     return throwError(error.message || 'Server Error');
+  }
+
+  removeReservation(reserveID, credentials): Observable<string> {
+    // return this.http.post<string>(this.postURL + reserveID, credentials);
+    return new Observable<string>(subscriber => {
+      setTimeout(() => {
+        subscriber.next('Confirmed');
+        subscriber.complete();
+      }, 2000);
+    });
   }
 }

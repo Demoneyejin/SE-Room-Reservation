@@ -26,11 +26,11 @@ export class OpenRoomListComponent implements OnInit {
   }
 
   errorParse(error: HttpErrorResponse) {
+    console.log('testing ' + error.message);
     if (error.status === 404) {
       this.is404 = true;
 
     }
-    
   }
 
 }
