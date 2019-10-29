@@ -9,9 +9,14 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'mockup';
 
-  constructor(private router: Router){}
+   userName = 'Danny';
+
+   isLoggedIn = false;
+
+  constructor(private router: Router) {}
 
   toHome() {
     this.router.navigate(['dashboard']);
   }
+
 }

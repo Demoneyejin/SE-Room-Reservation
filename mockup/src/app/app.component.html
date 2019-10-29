@@ -23,9 +23,14 @@
 
   <span class="toolbar-spacer"></span>
 
-  <a routerLink="/login">Login</a>
-  <p> / </p>
-  <a routerLink="/signup">Sign Up</a>
+  <div *ngIf="isLoggedIn; else username">
+    <a routerLink="/login">Login</a>
+    <p> / </p>
+    <a routerLink="/signup">Sign Up</a>
+  </div>
+  <ng-template #username>
+    <h2>Hello, {{ userName }}!</h2>
+  </ng-template>
 </mat-toolbar>
 <body>
   <div fxLayout="row" fxLayoutAlign="center">
