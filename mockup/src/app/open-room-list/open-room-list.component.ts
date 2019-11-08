@@ -20,7 +20,7 @@ export class OpenRoomListComponent implements OnInit {
   ngOnInit() {
     this.openingService.getOpen().subscribe(
       data => this.openings = data,
-      error => this.errorParse(error)
+      error => this.is404 = true
     );
 
   }
