@@ -3,13 +3,13 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignupComponent } from './signup/signup.component';
-import { Reservation } from './view-reservation/Reservation';
 import { ViewReservationComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { MakeReservationComponent } from './make-reservation/make-reservation.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
+import { ResetGuardService } from './reset-guard.service';
 
 
 const routes: Routes = [
@@ -41,7 +41,8 @@ const routes: Routes = [
   },
   {
     path: 'changepassword',
-    component: ChangePasswordComponent
+    component: ChangePasswordComponent,
+    canActivate: [ResetGuardService]
   },
   {
     path: 'makereservation',

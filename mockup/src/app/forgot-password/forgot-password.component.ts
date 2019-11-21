@@ -29,7 +29,9 @@ export class ForgotPasswordComponent implements OnInit {
 
   changePassword() {
     console.log('Pressed the button');
-    this.router.navigate(['changepassword']);
+    if (this.forgotPassForm.valid) {
+      this.router.navigate(['changepassword']);
+    }
   }
 
 }
