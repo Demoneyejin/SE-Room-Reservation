@@ -13,3 +13,7 @@ button {
 	margin-left: auto;
 	font-size: 170%;
 }
+
+:host {
+	margin: 20px;
+}
