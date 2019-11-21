@@ -55,6 +55,12 @@ export class ViewReservationComponent implements OnInit {
 
   }
 
+  addRoles(reservation: Reservation) {
+    const dialogRef = this.dialog.open(AssignUserRoleComponent, {
+      width: '350px'
+    });
+  }
+
 }
 
 @Component({
@@ -91,4 +97,15 @@ export class ReservationCancelWaitComponent implements OnInit {
   ngOnInit(): void {
 
   }
+}
+
+@Component({
+  selector: 'app-assign-role-dialog',
+  templateUrl: 'assign-role.html',
+  styles: ['assign-role.css']
+})
+export class AssignUserRoleComponent implements OnInit {
+  ngOnInit(): void {
+  }
+  
 }

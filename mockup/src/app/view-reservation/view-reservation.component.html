@@ -13,7 +13,12 @@
 				<p>Room: {{reserve.room}}</p>
 			</div>
 
-			<button mat-raised-button type="submit" color="primary" (click)="onClick(reserve)">Cancel</button>
+			<button mat-icon-button class='push' aria-label="Add User Roles" (click)="addRoles(reserve)">
+				<mat-icon>group_add</mat-icon>
+			</button>
+			<button mat-icon-button type="submit" color="primary" (click)="onClick(reserve)" aria-label="Cancel Reservation">
+				<mat-icon>delete</mat-icon>
+			</button>
 		</div>
 		<mat-divider *ngIf="!last"></mat-divider>
 	</div>

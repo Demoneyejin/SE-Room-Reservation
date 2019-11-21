@@ -8,7 +8,7 @@ import { SignupComponent, SignupDialogComponent } from './signup/signup.componen
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import { ViewReservationComponent, ReservationDialogComponent, ReservationCancelWaitComponent } from './view-reservation/view-reservation.component';
+import { ViewReservationComponent, ReservationDialogComponent, ReservationCancelWaitComponent, AssignUserRoleComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,6 +32,7 @@ import { OpenRoomListComponent } from './open-room-list/open-room-list.component
 import { MatListModule } from '@angular/material/list';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ReactiveFormsModule, FormsModule} from '@angular/forms';
     MakeReservationComponent,
     ReserveListDirective,
     OpenRoomListComponent,
-    ReservationCancelWaitComponent
+    ReservationCancelWaitComponent,
+    AssignUserRoleComponent
   ],
   imports: [
     BrowserModule,
@@ -73,13 +75,15 @@ import { ReactiveFormsModule, FormsModule} from '@angular/forms';
     MatListModule,
     RecaptchaModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
   ],
   entryComponents: [
     SignupDialogComponent,
     ReservationDialogComponent,
     OpenRoomListComponent,
-    ReservationCancelWaitComponent
+    ReservationCancelWaitComponent,
+    AssignUserRoleComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
