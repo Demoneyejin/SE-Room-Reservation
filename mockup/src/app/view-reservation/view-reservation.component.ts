@@ -3,6 +3,7 @@ import { ReservationService } from '../reservation.service';
 import { Reservation } from './Reservation';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
+import { OperationSuccessfulComponent } from '../operation-successful/operation-successful.component';
 
 @Component({
   selector: 'app-view-reservation',
@@ -50,6 +51,11 @@ export class ViewReservationComponent implements OnInit {
         console.log('Dialog finished');
         this.confirmedCancellation = data === 'Confirmation';
         dialogRef.close();
+        this.dialog.open(OperationSuccessfulComponent, {
+          width: '350px',
+          data: {text: 'You\'re reservation for ' + reservation.date + ' has been successfully been cancelled.',
+                toDashboard: false}
+        });
       });
     }
 
@@ -107,5 +113,4 @@ export class ReservationCancelWaitComponent implements OnInit {
 export class AssignUserRoleComponent implements OnInit {
   ngOnInit(): void {
   }
-  
 }

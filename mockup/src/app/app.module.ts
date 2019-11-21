@@ -33,6 +33,8 @@ import { MatListModule } from '@angular/material/list';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { OperationSuccessfulComponent } from './operation-successful/operation-successful.component';
+import { PleaseWaitComponent } from './please-wait/please-wait.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { MatIconModule } from '@angular/material/icon';
     ReserveListDirective,
     OpenRoomListComponent,
     ReservationCancelWaitComponent,
-    AssignUserRoleComponent
+    AssignUserRoleComponent,
+    OperationSuccessfulComponent,
+    PleaseWaitComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +87,9 @@ import { MatIconModule } from '@angular/material/icon';
     ReservationDialogComponent,
     OpenRoomListComponent,
     ReservationCancelWaitComponent,
-    AssignUserRoleComponent
+    AssignUserRoleComponent,
+    OperationSuccessfulComponent,
+    PleaseWaitComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

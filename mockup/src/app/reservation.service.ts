@@ -33,4 +33,13 @@ export class ReservationService {
       }, 2000);
     });
   }
+
+  makeReservation(date: string, time: string, room: string){
+    return new Observable<string>(subscriber => {
+      setTimeout(() => {
+        subscriber.next('Confirmed');
+        subscriber.complete();
+      }, 2000);
+    });
+  }
 }
