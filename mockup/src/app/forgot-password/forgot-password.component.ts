@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GetQuestionsService } from '../get-questions.service';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -13,6 +14,12 @@ export class ForgotPasswordComponent implements OnInit {
   public errorMsg;
 
   constructor(private questionService: GetQuestionsService, private router: Router) { }
+
+  forgotPassForm = new FormGroup({
+    username: new FormControl('', Validators.required),
+    securQues: new FormControl('', Validators.required),
+    secAns: new FormControl('', Validators.required)
+  });
 
   ngOnInit() {
     this.questionService.getQuestions()

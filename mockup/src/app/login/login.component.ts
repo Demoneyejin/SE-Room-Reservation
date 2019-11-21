@@ -14,16 +14,16 @@ export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    password: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
 
-  loginAttempts = 4;
+  loginAttempts = 5;
 
   ngOnInit() {
   }
 
   onClick() {
-    if (this.loginForm.valid){
+    if (this.loginForm.valid) {
       this.router.navigate(['dashboard']);
     }
   }
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     console.log(captchaResponse);
   }
 
-  doCaptcha(): boolean{
+  doCaptcha(): boolean {
     return this.loginAttempts > 4;
   }
 

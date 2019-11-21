@@ -21,7 +21,7 @@ export class CheckCredentialsService {
   }
 
   isAuthenticated(): boolean {
-    return false;
+    return true;
   }
 
 }
