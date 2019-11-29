@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ReservationService } from '../reservation.service';
 import { Reservation } from './Reservation';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
+import { OperationSuccessfulComponent } from '../operation-successful/operation-successful.component';
 
 @Component({
   selector: 'app-view-reservation',
@@ -10,21 +12,58 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ViewReservationComponent implements OnInit {
 
-  public reservations;
+  public reservations: Reservation[];
   public errorMsg;
+
+  public noReservations: boolean;
+
+  public confirmedCancellation: boolean;
 
   constructor(private reservationService: ReservationService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.reservationService.getReservations()
-        .subscribe(data => this.reservations = data,
-          error => this.errorMsg = error);
+        .subscribe(data => {this.reservations = data;
+                            this.noReservations = this.reservations.length === 0; },
+        error => this.errorMsg = error);
   }
 
   onClick(reserve: Reservation) {
-    let dialogRef = this.dialog.open(ReservationDialogComponent, {
+    const dialogRef = this.dialog.open(ReservationDialogComponent, {
       width: '350px',
       data: {date: reserve.date}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog returned: ' + result);
+      this.afterDialog(result, reserve);
+    });
+
+  }
+
+  afterDialog(selected: string, reservation: Reservation) {
+
+    if (selected === 'Confirmed') {
+      const dialogRef = this.dialog.open(ReservationCancelWaitComponent, {
+        width: '350px'
+      });
+      this.reservationService.removeReservation(reservation.id, 'creds').subscribe(data => {
+        console.log('Dialog finished');
+        this.confirmedCancellation = data === 'Confirmation';
+        dialogRef.close();
+        this.dialog.open(OperationSuccessfulComponent, {
+          width: '350px',
+          data: {text: 'You\'re reservation for ' + reservation.date + ' has been successfully been cancelled.',
+                toDashboard: false}
+        });
+      });
+    }
+
+  }
+
+  addRoles(reservation: Reservation) {
+    const dialogRef = this.dialog.open(AssignUserRoleComponent, {
+      width: '350px'
     });
   }
 
@@ -41,6 +80,37 @@ export class ReservationDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              public dialogRef: MatDialogRef<ReservationDialogComponent>) {}
 
+  onConfirm() {
+    this.dialogRef.close('Confirmed');
+  }
+
+  onCancel() {
+    this.dialogRef.close('Cancelled');
+  }
+
+}
+
+@Component({
+  selector: 'app-reservation-cancel-wait',
+  templateUrl: 'reservation-cancel-wait.html',
+  styles: ['h2 {font-family: \'Bitter\', serif}',
+  '.content {font-family: Roboto;}']
+})
+export class ReservationCancelWaitComponent implements OnInit {
+  ngOnInit(): void {
+
+  }
+}
+
+@Component({
+  selector: 'app-assign-role-dialog',
+  templateUrl: 'assign-role.html',
+  styles: ['assign-role.css']
+})
+export class AssignUserRoleComponent implements OnInit {
+  ngOnInit(): void {
+  }
 }

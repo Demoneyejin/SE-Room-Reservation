@@ -15,14 +15,15 @@ button {
 	font-family: 'Bitter', serif;
 	/* background-color: #081E3F; */
 	/* color: white; */
-	float: right;
+  float: right;
+  width: 100%;
 	font-size: 175%;
 	border: 0;
 	outline: 0;
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-top: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 	margin-top: 20px;
 }
 
@@ -49,7 +50,7 @@ form {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	
+
 }
 
 .halfSpace {

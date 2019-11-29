@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignupComponent } from './signup/signup.component';
-import { Reservation } from './view-reservation/Reservation';
 import { ViewReservationComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { MakeReservationComponent } from './make-reservation/make-reservation.component';
+import { AuthGuardService as AuthGuard } from './auth-guard.service';
+import { ResetGuardService } from './reset-guard.service';
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'signup',
@@ -26,7 +28,8 @@ const routes: Routes = [
   },
   {
     path: 'reservations',
-    component: ViewReservationComponent
+    component: ViewReservationComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'pagenotfound',
@@ -38,11 +41,13 @@ const routes: Routes = [
   },
   {
     path: 'changepassword',
-    component: ChangePasswordComponent
+    component: ChangePasswordComponent,
+    canActivate: [ResetGuardService]
   },
   {
     path: 'makereservation',
-    component: MakeReservationComponent
+    component: MakeReservationComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '',

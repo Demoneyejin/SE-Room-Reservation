@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { SecQuestions } from './signup/SecQuestions';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,9 @@ export class GetQuestionsService {
 
   getQuestions(): Observable<SecQuestions[]>{
     return this.http.get<SecQuestions[]>(this.url)
-                  .pipe(catchError(this.errorHandler));
+                  .pipe(
+                    retry(3),
+                    catchError(this.errorHandler));
   }
 
   errorHandler(error: HttpErrorResponse){

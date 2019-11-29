@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {faCalendarPlus} from '@fortawesome/free-solid-svg-icons';
-import { card } from './card';
+import { Card } from './card';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,8 +13,8 @@ export class DashboardComponent implements OnInit {
   faCalendarPlus = faCalendarPlus;
 
   cards = [
-    new card('Make a Reservation', 'calendar-plus', 'makereservation'),
-    new card('View Reservations', 'calendar-alt', 'reservations')
+    new Card('Make a Reservation', 'calendar-plus', 'makereservation'),
+    new Card('View Reservations', 'calendar-alt', 'reservations')
   ];
 
   constructor(private router: Router) { }
@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
-  onclick(reference){
+  onclick(reference) {
     this.router.navigate([reference]);
   }
 

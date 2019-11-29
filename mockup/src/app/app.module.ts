@@ -8,7 +8,7 @@ import { SignupComponent, SignupDialogComponent } from './signup/signup.componen
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import { ViewReservationComponent, ReservationDialogComponent } from './view-reservation/view-reservation.component';
+import { ViewReservationComponent, ReservationDialogComponent, ReservationCancelWaitComponent, AssignUserRoleComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +31,10 @@ import { ReserveListDirective } from './reserve-list.directive';
 import { OpenRoomListComponent } from './open-room-list/open-room-list.component';
 import { MatListModule } from '@angular/material/list';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { OperationSuccessfulComponent } from './operation-successful/operation-successful.component';
+import { PleaseWaitComponent } from './please-wait/please-wait.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,11 @@ import { RecaptchaModule } from 'ng-recaptcha';
     ChangePasswordComponent,
     MakeReservationComponent,
     ReserveListDirective,
-    OpenRoomListComponent
+    OpenRoomListComponent,
+    ReservationCancelWaitComponent,
+    AssignUserRoleComponent,
+    OperationSuccessfulComponent,
+    PleaseWaitComponent
   ],
   imports: [
     BrowserModule,
@@ -69,12 +77,19 @@ import { RecaptchaModule } from 'ng-recaptcha';
     MatDatepickerModule,
     MatNativeDateModule,
     MatListModule,
-    RecaptchaModule
+    RecaptchaModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatIconModule
   ],
   entryComponents: [
     SignupDialogComponent,
     ReservationDialogComponent,
-    OpenRoomListComponent
+    OpenRoomListComponent,
+    ReservationCancelWaitComponent,
+    AssignUserRoleComponent,
+    OperationSuccessfulComponent,
+    PleaseWaitComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
