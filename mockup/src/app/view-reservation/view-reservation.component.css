@@ -21,7 +21,7 @@
 	margin-left: 200px;
 }
 
-button {
+.reg_button {
 	font-family: 'Bitter', serif;
 	float: right;
 	font-size: 175%;
@@ -31,4 +31,10 @@ button {
 	margin-top: auto;
 	margin-bottom: auto;
 	height: 2em;
+}
+
+.roles {
+	margin-left: 20px;
+	align-self: baseline;
+	margin-top: auto;
 }

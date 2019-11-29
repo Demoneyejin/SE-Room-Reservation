@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 
+<button class="back_button" mat-button routerLink="/dashboard"><mat-icon>keyboard_arrow_left</mat-icon> Go Back</button>
+
 <h2>Reservations</h2>
 
 <mat-card class="card mat-elevation-z4" fxLayout="column" *ngIf='!noReservations; else noReserve'>
@@ -13,10 +15,15 @@
 				<p>Room: {{reserve.room}}</p>
 			</div>
 
-			<button mat-icon-button class='push' aria-label="Add User Roles" (click)="addRoles(reserve)">
+			<div class="roles">
+				<h4>Roles</h4>
+				<p *ngFor="let role of reserve.roles">{{role.email}}: {{role.roles}}</p>
+			</div>
+
+			<button mat-icon-button class='push reg_button' aria-label="Add User Roles" (click)="addRoles(reserve)">
 				<mat-icon>group_add</mat-icon>
 			</button>
-			<button mat-icon-button type="submit" color="primary" (click)="onClick(reserve)" aria-label="Cancel Reservation">
+			<button class="reg_button" mat-icon-button type="submit" color="primary" (click)="onClick(reserve)" aria-label="Cancel Reservation">
 				<mat-icon>delete</mat-icon>
 			</button>
 		</div>

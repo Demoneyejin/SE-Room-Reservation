@@ -52,7 +52,7 @@ export class OpenRoomListComponent implements OnInit {
         dialogRef.close();
         this.dialog.open(OperationSuccessfulComponent, {
           width: '350px',
-          data: {text: 'Your reservation for ' + opening.date + ' at ' + opening.roomName + ' has been confirmed.'}
+          data: {text: 'Your reservation for ' + opening.date + ' at ' + opening.roomName + '  has been confirmed.'}
         });
       }
     );
