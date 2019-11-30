@@ -9,12 +9,12 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class GetOpenRoomsService {
 
-  private url = '/assets/data/openings.json';
+  private url = 'http://localhost:8080/reserve';
 
   constructor(private http: HttpClient) { }
 
-  getOpen(): Observable<Opening[]> {
-    return this.http.get<Opening[]>(this.url)
+  getOpen(date: string, time: string, numPeople: number): Observable<Opening[]> {
+    return this.http.get<Opening[]>(this.url + '/' + date + '/' + time + '/' + numPeople as string)
           .pipe(
             retry(3),
             catchError(this.errorHandler));

@@ -13,7 +13,7 @@ import { OperationSuccessfulComponent } from '../operation-successful/operation-
   styleUrls: ['./open-room-list.component.css']
 })
 export class OpenRoomListComponent implements OnInit {
- openings: Opening[];
+ @Input() openings: Opening[];
 
   constructor(private openingService: GetOpenRoomsService,
               private reservationService: ReservationService, public dialog: MatDialog) { }
@@ -22,10 +22,10 @@ export class OpenRoomListComponent implements OnInit {
 
 
   ngOnInit() {
-    this.openingService.getOpen().subscribe(
+    /*this.openingService.getOpen().subscribe(
       data => this.openings = data,
       error => this.is404 = true
-    );
+    );*/
 
   }
 
@@ -47,12 +47,12 @@ export class OpenRoomListComponent implements OnInit {
       data: {text: 'We are confirming your reservation'},
       disableClose: true
     });
-    this.reservationService.makeReservation(opening.date, opening.time.toString(), opening.roomName).subscribe(
+    this.reservationService.makeReservation(opening.date, opening.time.toString(), opening.room).subscribe(
       data => {
         dialogRef.close();
         this.dialog.open(OperationSuccessfulComponent, {
           width: '350px',
-          data: {text: 'Your reservation for ' + opening.date + ' at ' + opening.roomName + '  has been confirmed.'}
+          data: {text: 'Your reservation for ' + opening.date + ' at ' + opening.room + '  has been confirmed.'}
         });
       }
     );

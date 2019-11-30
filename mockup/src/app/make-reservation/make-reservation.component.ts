@@ -3,6 +3,7 @@ import { ReserveListDirective } from '../reserve-list.directive';
 import { OpenRoomListComponent } from '../open-room-list/open-room-list.component';
 import { Opening } from '../Openings';
 import { GetOpenRoomsService } from '../get-open-rooms.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-make-reservation',
@@ -17,39 +18,39 @@ export class MakeReservationComponent implements OnInit {
 
   times = [
     {
-      value: 900,
+      value: '9:00',
       text: '9:00 am'
     },
     {
-      value: 1000,
+      value: '10:00',
       text: '10:00 am'
     },
     {
-      value: 1100,
+      value: '11:00',
       text: '11:00 am'
     },
     {
-      value: 1200,
+      value: '12:00',
       text: '12:00 pm'
     },
     {
-      value: 1300,
+      value: '13:00',
       text: '1:00 pm'
     },
     {
-      value: 1400,
+      value: '14:00',
       text: '2:00 pm'
     },
     {
-      value: 1500,
+      value: '15:00',
       text: '3:00 pm'
     },
     {
-      value: 1600,
+      value: '16:00',
       text: '4:00 pm'
     },
     {
-      value: 1700,
+      value: '17:00',
       text: '5:00 pm'
     },
   ];
@@ -101,6 +102,12 @@ export class MakeReservationComponent implements OnInit {
     }
   ];
 
+  openingForm = new FormGroup({
+    date: new FormControl(new Date()),
+    time: new FormControl('', Validators.required),
+    numPeople: new FormControl('', Validators.required),
+    submit: new FormControl('')
+  });
   ngOnInit() {
 
   }
@@ -119,16 +126,23 @@ export class MakeReservationComponent implements OnInit {
   }
 
   getAvailableRooms() {
+
+    const date: string = this.formatDate(this.openingForm.get('date').value);
+    const time = this.openingForm.get('time').value;
+    const numPeople = this.openingForm.get('numPeople').value;
+
     let errorMsg = '';
     let openings: Opening[];
 
-    this.openingService.getOpen()
-      .subscribe(data => {openings = data; console.log(openings); },
+    this.openingService.getOpen(date, time, numPeople)
+      .subscribe(data => {openings = data; console.log(openings); this.loadComponent(openings); },
           error => errorMsg = error);
 
     console.log(openings);
+  }
 
-    this.loadComponent(openings);
+  formatDate(date: Date): string {
+    return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
   }
 
 

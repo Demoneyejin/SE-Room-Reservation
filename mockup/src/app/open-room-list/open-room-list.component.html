@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <mat-list >
-	<mat-list-item *ngFor="let item of openings">
+	<mat-list-item *ngFor="let item of openings; last as last">
 		<h4 mat-line>Time: {{item.time}}</h4>
 		<p mat-line>Capacity: {{item.capacity}} people</p>
-		<p mat-line>Room: {{item.roomName}}</p>
+		<p mat-line>Room: {{item.room}}</p>
 		<button mat-raised-button color="primary" (click)="reserve(item)">Reserve</button>
 	</mat-list-item>
+	<mat-divider *ngIf="!last"></mat-divider>
 </mat-list>
 
-<div *ngIf="is404">
+<div *ngIf="openings.length == 0">
 	<h3>Couldn't find openings</h3>
 	<p>No openings found at the time requested</p>
 </div>
