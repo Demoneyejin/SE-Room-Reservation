@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class Room_DAL_IMP implements Room_DAL{
 
     @Autowired
-    MongoTemplate mongoTemplate;
+    private MongoTemplate mongoTemplate;
 
     @Override
     public List<Room> getAllAvailableRoomsID() {
@@ -29,6 +29,8 @@ public class Room_DAL_IMP implements Room_DAL{
 
         Query query = new Query();
         query.addCriteria(Criteria.where("isAvailable").is(true).and("capacity").gte(capacity));
+
+        System.out.println(mongoTemplate.toString());
 
         // Gets all the roomIDs of the query
         return mongoTemplate.find(query, Room.class);

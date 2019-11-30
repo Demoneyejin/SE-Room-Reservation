@@ -1,7 +1,9 @@
 package com.reservo.reservo.Models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class Room {
 
     @Id
@@ -9,6 +11,7 @@ public class Room {
     private String roomName;
     private int capacity;
     private boolean isAvailable;
+
 
     public Room(String roomName, int capacity, boolean isAvailable){
         this.roomName = roomName;

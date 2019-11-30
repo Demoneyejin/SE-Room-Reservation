@@ -19,8 +19,6 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception{
-		roomRepository.save(new Room("GL 123", 4, true));
-		roomRepository.save(new Room("ECS 222", 5, true));
 	}
 
 
