@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       const user: UserInfo = {
         email: this.loginForm.get('username').value,
         password: this.loginForm.get('password').value
-      }
+      };
       this.checkAuth.checkCredentials(user)
       .subscribe(
         data => {

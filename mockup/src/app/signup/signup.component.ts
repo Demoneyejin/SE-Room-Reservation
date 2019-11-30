@@ -95,7 +95,7 @@ export class SignupDialogComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: any, private router: Router, private createUserService: CreateUserService,
               public dialogRef: MatDialogRef<SignupDialogComponent> ) {
-    createUserService.createUser(data.user).subscribe(
+    createUserService.createUser(this.data.user).subscribe(
       data => {this.returnMessage = data;
                this.toDashboard();
       }
@@ -104,7 +104,7 @@ export class SignupDialogComponent {
 
   toDashboard() {
     if (this.returnMessage !== 'Failed to create user') {
-      this.dialogRef.close()
+      this.dialogRef.close();
       this.router.navigate(['/dashboard']);
     }
   }
