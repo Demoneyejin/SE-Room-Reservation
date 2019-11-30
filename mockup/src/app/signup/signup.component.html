@@ -32,7 +32,7 @@
 
 			<mat-form-field appearance="outline" class="halfSpace">
 				<mat-label>Confirm Password</mat-label>
-				<input matInput type="password" placeholder="Password" required formControlName="confirmPassword" pattern="{{password?.value}}">
+				<input matInput type="password" placeholder="Confirm Password" required formControlName="confirmPassword">
 			</mat-form-field><br>
 
 			<mat-form-field appearance="outline">
@@ -46,7 +46,7 @@
 
 			<mat-form-field appearance="outline">
 				<mat-label>Answer</mat-label>
-				<input matInput type="text" placeholder="Answer" required fromControlName="securityAnswer">
+				<input matInput type="text" placeholder="Answer" required formControlName="securityAnswer">
      		 </mat-form-field>
 
       		<a routerLink="/login">Already have an account?</a>

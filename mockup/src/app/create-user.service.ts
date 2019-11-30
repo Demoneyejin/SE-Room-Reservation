@@ -1,19 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { User } from './User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateUserService {
 
-  constructor() { }
+  private url = 'http://localhost:8080/user/create';
 
-  public createUser(): Observable<boolean> {
-    return new Observable<boolean>(subscriber => {
-      setTimeout(() => {
-        subscriber.next(true);
-        subscriber.complete();
-      }, 2000);
-    });
+  constructor(private http: HttpClient) { }
+
+  public createUser(user: User): Observable<string> {
+    return this.http.post<string>(this.url, user)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler)
+      );
+  }
+
+  private errorHandler(error: HttpErrorResponse) {
+    return throwError(error.message || 'Server Error');
   }
 }
