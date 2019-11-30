@@ -19,6 +19,8 @@
 
 			<re-captcha (resolved)="resolved($event)" siteKey="6Ld2MLwUAAAAAEiwQDTjrblTurB91_PW63ooWoXn" *ngIf="doCaptcha()"></re-captcha>
 
+			<mat-error *ngIf="!loginInfo.loginSuccessful">Incorrect Email/Password Combination</mat-error>
+
 			<a routerLink="/signup">Create an Account</a><br>
 			
 			<button mat-raised-button color="primary" type="submit">Log In</button>
