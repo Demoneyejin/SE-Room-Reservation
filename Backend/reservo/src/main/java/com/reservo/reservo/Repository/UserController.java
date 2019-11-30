@@ -53,10 +53,10 @@ public class UserController {
 
     @RequestMapping(value = "/settings/{userId}/{key}", method = RequestMethod.GET)
     public String getUserSettings(@PathVariable String userId, @PathVariable String key){
-        return userDal.getUserSetting(userId, key);
+        return userDal.getUserSettings(userId, key);
     }
 
-    @RequestMapping(value = "/settings/{userId}/{key}", method = RequestMethod.GET)
+    @RequestMapping(value = "/settings/{userId}/{key}/{value}", method = RequestMethod.GET)
     public String addUserSettings(@PathVariable String userId, @PathVariable String key, @PathVariable String value){
         Optional<User> user = userRepository.findById(userId);
         if(user != null){
@@ -68,7 +68,7 @@ public class UserController {
             return "User not found.";
         }
     }
-    /* traditional implementation, trying out the DAL implementation (utilizing mongos interface options)
+    /* traditional implementation, trying out the DAL implementation (utilizing mongos interface options)/(Above this)
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
