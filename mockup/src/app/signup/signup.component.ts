@@ -30,10 +30,12 @@ export class SignupComponent implements OnInit {
   profileForm = new FormGroup({
     userName: new FormControl('', Validators.required),
     fullName: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.email, Validators.required]),
     submit: new FormControl(''),
-    confirmPassword: new FormControl('', Validators.required)
+    password: new FormControl('', Validators.required),
+    confirmPassword: new FormControl('', Validators.required),
+    securityQuestion: new FormControl('', Validators.required),
+    securityAnswer: new FormControl('', Validators.required)
   });
 
   constructor(private router: Router, private dialog: MatDialog, private signupService: CreateUserService) { }
@@ -47,10 +49,12 @@ export class SignupComponent implements OnInit {
 
     console.log('Testing');
 
-    let dialogRef = this.dialog.open(SignupDialogComponent, {
-      width: '350px',
-      disableClose: true
-    });
+    if (this.profileForm.valid){
+      const dialogRef = this.dialog.open(SignupDialogComponent, {
+        width: '350px',
+        disableClose: true
+      });
+    }
 
   }
 
@@ -61,6 +65,8 @@ export class SignupComponent implements OnInit {
   getNumQuestions() {
     return this.securityQuestions.length;
   }
+
+
 
 }
 

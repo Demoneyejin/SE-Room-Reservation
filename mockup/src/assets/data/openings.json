@@ -2,17 +2,20 @@
 	{
 		"time": "12:00pm",
 		"capacity": "2",
-		"roomName": "Green Library 212"
+		"roomName": "Green Library 212",
+		"date": "12/23/33"
 	},
 	{
 		"time": "12:30pm",
 		"capacity": "6",
-		"roomName": "Green Library 530"
+		"roomName": "Green Library 530",
+		"date": "10/23/32"
 	},
 	{
 		"time": "1:00pm",
 		"capacity": "5",
-		"roomName": "ECS 200"
+		"roomName": "ECS 200",
+		"date": "10/44/23"
 		
 	}
 ]

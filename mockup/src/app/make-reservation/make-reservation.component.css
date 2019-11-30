@@ -8,8 +8,12 @@ mat-form-field {
 	width: 26%;
 }
 
-button {
+.spec-button {
 	font-family: 'Bitter', serif;
 	margin-left: auto;
 	font-size: 170%;
+}
+
+:host {
+	margin: 20px;
 }

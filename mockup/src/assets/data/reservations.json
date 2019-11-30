@@ -1,14 +1,34 @@
 [
 	{
-		"date": "9/18/19",
+		"date": "12/18/19",
 		"time": "12:00pm",
 		"room": "Green Library 245",
-		"owner": "dmato"
+		"owner": "jsmit",
+		"roles": [
+			{
+				"email": "jsmit011@fiu.edu",
+				"roles": "Software Engineer, Team Leader"
+			},
+			{
+				"email": "jappl001@fiu.edu",
+				"roles": "Requirements Engineer, Time Keeper"
+			}
+		]
 	},
 	{
-		"date": "9/31/19",
+		"date": "12/31/19",
 		"time": "5:30pm",
 		"room": "Green Library 512",
-		"owner": "dmato"
+		"owner": "jsmit",
+		"roles": [
+			{
+				"email": "jsmit011@fiu.edu",
+				"roles": "Software Engineer, Team Leader"
+			},
+			{
+				"email": "jappl001@fiu.edu",
+				"roles": "Requirements Engineer, Time Keeper"
+			}
+		]
 	}
 ]

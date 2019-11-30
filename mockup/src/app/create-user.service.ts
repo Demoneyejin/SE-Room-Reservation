@@ -10,7 +10,7 @@ export class CreateUserService {
 
   public createUser(): Observable<boolean> {
     return new Observable<boolean>(subscriber => {
-      setTimeout(() =>{
+      setTimeout(() => {
         subscriber.next(true);
         subscriber.complete();
       }, 2000);

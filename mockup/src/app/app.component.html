@@ -8,6 +8,7 @@
 <head>
 <link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <!--<div class=toolbar>
 
@@ -18,14 +19,21 @@
   <a href="./signup" style="margin-right: 8px;">Sign Up</a>
 
 </div>-->
+
+
 <mat-toolbar color='primary' style="margin: -8px; width: auto;" class="mat-elevation-z3">
   <h1 (click)="toHome()" class="home-link">Reservo</h1>
 
   <span class="toolbar-spacer"></span>
 
-  <a routerLink="/login">Login</a>
-  <p> / </p>
-  <a routerLink="/signup">Sign Up</a>
+  <div *ngIf="isLoggedIn; else username">
+    <a routerLink="/login">Login</a>
+    <p> / </p>
+    <a routerLink="/signup">Sign Up</a>
+  </div>
+  <ng-template #username>
+    <h2>Hello, {{ userName }}!</h2>
+  </ng-template>
 </mat-toolbar>
 <body>
   <div fxLayout="row" fxLayoutAlign="center">
