@@ -12,30 +12,44 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User{
 
     @Id
-    private String userId;
+    private String passwordId;
     private String userName;
+    private String userEmail;
+    //contains the question and answer for security questions.
+    private Map<String, String> securityScreening;
     private Map<String, String> userSettings = new HashMap<>();
 
     
-    public final String getUserID(){
-        return userId;
+    public final String getPasswordID(){
+        return passwordId;
     }
     public final String getUserName(){
         return userName;
     }
-    //UpdateUserName() from the model
-    public void setUserName(final String name){
-        userId = name;
+    public final String getUserEmail(){
+        return userEmail;
     }
-    //Required UpdateUserID in the model
-    public void setUserID(final String Id){
-       userId = Id;
-    }
-
     public final Map<String, String> getUserSettings(){
         return userSettings;
     }
+    public final Map<String, String> getSecurityScreening(){
+        return securityScreening;
+    }
+    //UpdateUserName() from the model
+    public void setUserName(final String name){
+        passwordId = name;
+    }
+    //Required UpdateUserID in the model
+    public void setUserID(final String Id){
+       passwordId = Id;
+    }
+    public void setUserEmail(final String email){
+        userEmail = email;
+    }
     public void setUserSettings(final Map<String, String> userSetting){
         this.userSettings = userSetting;
+    }
+    public void setSecurityScreening(final Map<String, String> securityScreening){
+        this.securityScreening = securityScreening;
     }
 }
