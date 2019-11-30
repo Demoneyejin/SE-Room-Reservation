@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import jdk.internal.org.jline.utils.Log;
-
 import com.reservo.reservo.Models.User;
 import com.reservo.reservo.Repository.UserRepository;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +34,7 @@ public class UserController {
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public Optional<User> getUser(@PathVariable String userId) {
-        Log.info("Getting user with ID: {}.", userId);
+        LOG.info("Getting user with ID: {}.", userId);
         return userRepository.findById(userId);
     }
 
@@ -60,7 +58,7 @@ public class UserController {
     @RequestMapping(value = "/settings/{userId}/{key}", method = RequestMethod.GET)
     public String getUserSetting(@PathVariable String userId, @PathVariable String key) {
         Optional<User> user = userRepository.findById(userId);
-        if(user  != null)
+        if(user.isPresent())
         {
             User Localuser = user.get();
             return Localuser.getUserSettings().get(key);
