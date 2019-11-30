@@ -16,7 +16,8 @@ public class User{
     private String userName;
     private String userEmail;
     //contains the question and answer for security questions.
-    private Map<String, String> securityScreening;
+    private Map<String, String> securityScreening = new HashMap<>();
+    //contains roles for the user, simplified here instead of being an object.
     private Map<String, String> userSettings = new HashMap<>();
 
     
