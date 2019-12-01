@@ -47,4 +47,6 @@ public class Reservation {
 	public LocalDate getDate() {
 		return date;
 	}
+
+	public void setRoomID(String roomID){this.roomID = roomID;}
 }

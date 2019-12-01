@@ -142,7 +142,11 @@ export class MakeReservationComponent implements OnInit {
   }
 
   formatDate(date: Date): string {
-    return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+    return date.getFullYear() + '-' + `${date.getMonth() + 1}` + '-' + this.formatDay(date.getDate());
+  }
+
+  formatDay(day: number): string {
+    return day > 9 ? day.toString() : '0' + day;
   }
 
 

@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class ReservationService {
 
-  private url = '/assets/data/reservations.json';
+  private url = 'http://localhost:8080/reserve/uname';
 
   private postURL = '/remove/reserve/';
 

@@ -1,10 +1,5 @@
 package com.reservo.reservo.Repository;
 
-
-import com.reservo.reservo.DAL.ReservationDAL_Imp;
-import com.reservo.reservo.DAL.Reservation_DAL;
-import com.reservo.reservo.DAL.Room_DAL;
-import com.reservo.reservo.DAL.Room_DAL_IMP;
 import com.reservo.reservo.Models.Reservation;
 import com.reservo.reservo.Models.Room;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +10,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,15 +21,11 @@ public class ReservationsController {
     private ReservationRepository reservationRepository;
     @Autowired
     private RoomRepository roomRepository;
-    private Reservation_DAL reservationDAL;
-    private Room_DAL roomDal;
     @Autowired
     private UserRepository userRepository;
 
     public ReservationsController(ReservationRepository reservationRepository){
         this.reservationRepository = reservationRepository;
-        this.roomDal = new Room_DAL_IMP();
-        this.reservationDAL = new ReservationDAL_Imp();
     }
 
     @RequestMapping(value="/{date}/{time}/{capacity}", method= RequestMethod.GET)
@@ -45,9 +35,11 @@ public class ReservationsController {
 
         List<Room> rooms = roomRepository.findByCapacityGreaterThanEqual(capacity);
 
+        System.out.println(rooms.toString());
+
         List<String> roomIDs = rooms.stream().map(Room::getRoomID).collect(Collectors.toList());
 
-        List<Reservation> reservations = reservationDAL.getReservationsByTimeAndRoom(LocalDate.parse(date), LocalTime.parse(time), roomIDs);
+        List<Reservation> reservations = reservationRepository.findByTimeAndDateAndRoomIDIn(LocalTime.parse(time), LocalDate.parse(date), roomIDs);
 
         if (reservations != null) {
             List<String> reservationIDs = reservations.stream().map(Reservation::getRoomID).collect(Collectors.toList());
@@ -59,12 +51,14 @@ public class ReservationsController {
         rooms.forEach(room -> returns.add(new ReservationReturn(date, room.getRoomName(),
                 room.getCapacity(), time)));
 
+        System.out.println(returns);
+
         return returns;
     }
 
     @RequestMapping(value = "/make", method=RequestMethod.POST)
     public Reservation makeNewReservation(@RequestBody ReservationReturn reservation, String userName){
-        return reservationRepository.save(new Reservation(userRepository.findByEmail(userName).getUserID(),
+        return reservationRepository.save(new Reservation(userRepository.findByUserName(userName).getUserID(),
                 roomRepository.findByRoomName(reservation.getRoom()).getRoomID()
                 , new HashMap<String, String>(), LocalTime.parse(reservation.getTime()), LocalDate.parse(reservation.getDate())));
     }
@@ -78,7 +72,11 @@ public class ReservationsController {
 
     @RequestMapping("/{userEmail}")
     public List<Reservation> getReservationFromUser(@PathVariable String userEmail){
-        return reservationRepository.findByOwnerID(userRepository.findByEmail(userEmail).getUserName());
+
+        List<Reservation> reservations = reservationRepository.findByOwnerID(userEmail);
+        reservations.forEach(res -> res.setRoomID(roomRepository.findById(res.getRoomID()).get().getRoomName()));
+
+        return reservations;
     }
 
 
@@ -91,7 +89,7 @@ class ReservationReturn {
     private int capacity;
     private String time;
 
-    public ReservationReturn(String date, String room, int capacity, String time){
+    ReservationReturn(String date, String room, int capacity, String time){
         this.date = date;
         this.room = room;
         this.capacity = capacity;
