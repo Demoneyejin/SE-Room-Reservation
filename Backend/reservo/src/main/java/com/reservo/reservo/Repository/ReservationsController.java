@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,7 +24,6 @@ public class ReservationsController {
 
     @Autowired
     private ReservationRepository reservationRepository;
-    @Autowired
     private RoomRepository roomRepository;
     @Autowired
     private UserRepository userRepository;
@@ -47,7 +47,9 @@ public class ReservationsController {
 
         List<Reservation> reservations = reservationRepository.findByTimeAndDateAndRoomIDIn(LocalTime.parse(time), LocalDate.parse(date), roomIDs);
 
+        // Checks to make sure there are actually reservations to search through, If not just send all the rooms
         if (reservations != null) {
+            //List containing the ID's of all the rooms with a reservation at the time and date
             List<String> reservationIDs = reservations.stream().map(Reservation::getRoomID).collect(Collectors.toList());
             rooms = rooms.stream().filter(room -> !reservationIDs.contains(room.getRoomID())).collect(Collectors.toList());
         }
@@ -55,7 +57,7 @@ public class ReservationsController {
         ArrayList<ReservationReturn> returns = new ArrayList<>();
 
         rooms.forEach(room -> returns.add(new ReservationReturn(date, room.getRoomName(),
-                room.getCapacity(), time)));
+                                                                room.getCapacity(), time)));
 
         System.out.println(returns);
 
@@ -66,10 +68,12 @@ public class ReservationsController {
     public Reservation makeNewReservation(@RequestBody ReservationReturn reservation, String userName){
         // Checks to make sure there are no other reservations for the combination of room, date, and time
         if (!reservationRepository.existsByTimeAndDateAndRoomID(LocalTime.parse(reservation.getTime()), LocalDate.parse(reservation.getDate()),
-                roomRepository.findByRoomName(reservation.getRoom()).getRoomID()))
-        { return reservationRepository.save(new Reservation(userRepository.findByUserName(userName).getUserID(),
-                roomRepository.findByRoomName(reservation.getRoom()).getRoomID()
-                , new HashMap<String, String>(), LocalTime.parse(reservation.getTime()), LocalDate.parse(reservation.getDate())));}
+                                                                roomRepository.findByRoomName(reservation.getRoom()).getRoomID())) {
+
+            return reservationRepository.save(new Reservation(userRepository.findByUserName(userName).getUserID(),
+                                                              roomRepository.findByRoomName(reservation.getRoom()).getRoomID(),
+                                                              new HashMap<String, String>(), LocalTime.parse(reservation.getTime()),
+                                                              LocalDate.parse(reservation.getDate())));}
         else
             return null;
     }
@@ -81,7 +85,7 @@ public class ReservationsController {
 
     }
 
-    @RequestMapping("/{userEmail}")
+    @RequestMapping(value = "/{userEmail}", method=RequestMethod.GET)
     public List<CurrentReservationsReturn> getReservationFromUser(@PathVariable String userEmail){
 
         List<Reservation> reservations = reservationRepository.findByOwnerID(userEmail);
@@ -98,6 +102,26 @@ public class ReservationsController {
         });
 
         return returns;
+    }
+
+    @RequestMapping(value="/role/add", method = RequestMethod.POST)
+    public Roles addUserRoles(@RequestParam String role, @RequestParam String reservationID, @RequestParam String userID){
+
+        Optional<Roles> rolesOptional= rolesRepository.findByReservationIDAndUserID(reservationID, userID);
+
+        if (rolesOptional.isPresent()){
+            Roles tempRole = rolesOptional.get();
+            tempRole.addRole(role);
+            return rolesRepository.save(tempRole);
+        }
+        else {
+
+            Roles tempRole = new Roles(reservationID, userID, new ArrayList<>());
+            tempRole.addRole(role);
+            return rolesRepository.save(tempRole);
+        }
+
+
     }
 
 }
