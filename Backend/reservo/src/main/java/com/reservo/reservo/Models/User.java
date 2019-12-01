@@ -64,6 +64,9 @@ public class User{
     public void setUserSettings(final Map<String, String> userSetting){
         this.userSettings = userSetting;
     }
+    public void appendUserSettings(String Key, String Value){
+        this.userSettings.put(Key, Value);
+    }
     public void setSecurityScreening(final Map<String, String> securityScreening){
         this.securityScreening = securityScreening;
     }

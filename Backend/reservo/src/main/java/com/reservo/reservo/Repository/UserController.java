@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(value = "/user")
-
 public class UserController {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
     private final UserRepository userRepository;
