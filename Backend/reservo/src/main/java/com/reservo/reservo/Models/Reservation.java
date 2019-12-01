@@ -49,4 +49,8 @@ public class Reservation {
 	}
 
 	public void setRoomID(String roomID){this.roomID = roomID;}
+
+	public String getReservationID() {
+		return reservationID;
+	}
 }

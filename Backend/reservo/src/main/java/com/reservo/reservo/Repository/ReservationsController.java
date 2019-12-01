@@ -1,7 +1,11 @@
 package com.reservo.reservo.Repository;
 
 import com.reservo.reservo.Models.Reservation;
+import com.reservo.reservo.Models.Roles;
 import com.reservo.reservo.Models.Room;
+import com.reservo.reservo.ReturnClasses.CurrentReservationsReturn;
+import com.reservo.reservo.ReturnClasses.ReservationReturn;
+import com.reservo.reservo.ReturnClasses.RoleReturn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +27,8 @@ public class ReservationsController {
     private RoomRepository roomRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RolesRepository rolesRepository;
 
     public ReservationsController(ReservationRepository reservationRepository){
         this.reservationRepository = reservationRepository;
@@ -58,9 +64,14 @@ public class ReservationsController {
 
     @RequestMapping(value = "/make", method=RequestMethod.POST)
     public Reservation makeNewReservation(@RequestBody ReservationReturn reservation, String userName){
-        return reservationRepository.save(new Reservation(userRepository.findByUserName(userName).getUserID(),
+        // Checks to make sure there are no other reservations for the combination of room, date, and time
+        if (!reservationRepository.existsByTimeAndDateAndRoomID(LocalTime.parse(reservation.getTime()), LocalDate.parse(reservation.getDate()),
+                roomRepository.findByRoomName(reservation.getRoom()).getRoomID()))
+        { return reservationRepository.save(new Reservation(userRepository.findByUserName(userName).getUserID(),
                 roomRepository.findByRoomName(reservation.getRoom()).getRoomID()
-                , new HashMap<String, String>(), LocalTime.parse(reservation.getTime()), LocalDate.parse(reservation.getDate())));
+                , new HashMap<String, String>(), LocalTime.parse(reservation.getTime()), LocalDate.parse(reservation.getDate())));}
+        else
+            return null;
     }
 
     @RequestMapping("/rooms/all")
@@ -71,44 +82,22 @@ public class ReservationsController {
     }
 
     @RequestMapping("/{userEmail}")
-    public List<Reservation> getReservationFromUser(@PathVariable String userEmail){
+    public List<CurrentReservationsReturn> getReservationFromUser(@PathVariable String userEmail){
 
         List<Reservation> reservations = reservationRepository.findByOwnerID(userEmail);
         reservations.forEach(res -> res.setRoomID(roomRepository.findById(res.getRoomID()).get().getRoomName()));
 
-        return reservations;
+        List<CurrentReservationsReturn> returns = new ArrayList<>();
+
+        reservations.forEach(res -> {
+            List<RoleReturn> roles = rolesRepository.findByReservationID(res.getReservationID())
+                    .stream().map(RoleReturn::new).collect(Collectors.toList());
+
+            returns.add(new CurrentReservationsReturn(res, roles));
+
+        });
+
+        return returns;
     }
 
-
-}
-
-class ReservationReturn {
-
-    private String date;
-    private String room;
-    private int capacity;
-    private String time;
-
-    ReservationReturn(String date, String room, int capacity, String time){
-        this.date = date;
-        this.room = room;
-        this.capacity = capacity;
-        this.time = time;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public String getTime() {
-        return time;
-    }
 }

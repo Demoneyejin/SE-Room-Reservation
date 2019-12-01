@@ -11,4 +11,5 @@ public interface ReservationRepository  extends MongoRepository<Reservation, Str
 
     List<Reservation> findByTimeAndDateAndRoomIDIn(LocalTime time, LocalDate date, List<String> roomID);
     List<Reservation> findByOwnerID(String ownerID);
+    boolean existsByTimeAndDateAndRoomID(LocalTime time, LocalDate date, String roomID);
 }

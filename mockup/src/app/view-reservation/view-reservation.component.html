@@ -11,12 +11,13 @@
 			<div>
 				<h3>Date: {{reserve.date}}</h3>
 				<p>Time: {{reserve.time}}</p>
-				<p>Owner: {{reserve.ownerID}}</p>
-				<p>Room: {{reserve.roomID}}</p>
+				<p>Owner: {{reserve.owner}}</p>
+				<p>Room: {{reserve.room}}</p>
 			</div>
 
 			<div class="roles">
-				<h4>Roles</h4>
+				<h4>Roles:</h4>
+				<p *ngIf="!reserve.roles">None Assigned</p>
 				<p *ngFor="let role of reserve.roles">{{role.email}}: {{role.roles}}</p>
 			</div>
 

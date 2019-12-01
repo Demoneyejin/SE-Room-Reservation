@@ -24,7 +24,8 @@ export class ViewReservationComponent implements OnInit {
   ngOnInit() {
     this.reservationService.getReservations()
         .subscribe(data => {this.reservations = data;
-                            this.noReservations = this.reservations.length === 0; },
+                            this.noReservations = this.reservations.length === 0;
+                            console.log(this.reservations); },
         error => this.errorMsg = error);
   }
 
@@ -47,7 +48,7 @@ export class ViewReservationComponent implements OnInit {
       const dialogRef = this.dialog.open(ReservationCancelWaitComponent, {
         width: '350px'
       });
-      this.reservationService.removeReservation(reservation.id, 'creds').subscribe(data => {
+      this.reservationService.removeReservation(reservation.resID, 'creds').subscribe(data => {
         console.log('Dialog finished');
         this.confirmedCancellation = data === 'Confirmation';
         dialogRef.close();
@@ -108,7 +109,7 @@ export class ReservationCancelWaitComponent implements OnInit {
 @Component({
   selector: 'app-assign-role-dialog',
   templateUrl: 'assign-role.html',
-  styles: ['assign-role.css']
+  styles: ['./assign-role.css']
 })
 export class AssignUserRoleComponent implements OnInit {
   ngOnInit(): void {

@@ -6,7 +6,7 @@ export class Reservation {
 		public time: string,
 		public room: string,
 		public owner: string,
-		public id: number,
+		public resID: string,
 		public roles: Roles[]
 	){}
 }
