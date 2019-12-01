@@ -8,27 +8,29 @@ import com.reservo.reservo.DAL.Room_DAL_IMP;
 import com.reservo.reservo.Models.Reservation;
 import com.reservo.reservo.Models.Room;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/reserve")
 public class ReservationsController {
-    
+
+    @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
     private RoomRepository roomRepository;
     private Reservation_DAL reservationDAL;
     private Room_DAL roomDal;
+    @Autowired
+    private UserRepository userRepository;
 
     public ReservationsController(ReservationRepository reservationRepository){
         this.reservationRepository = reservationRepository;
@@ -36,7 +38,7 @@ public class ReservationsController {
         this.reservationDAL = new ReservationDAL_Imp();
     }
 
-    @RequestMapping("/{date}/{time}/{capacity}")
+    @RequestMapping(value="/{date}/{time}/{capacity}", method= RequestMethod.GET)
     public List<ReservationReturn> findOpenSlots(@PathVariable String date, @PathVariable String time, @PathVariable int capacity){
 
         System.out.println(capacity);
@@ -60,11 +62,23 @@ public class ReservationsController {
         return returns;
     }
 
+    @RequestMapping(value = "/make", method=RequestMethod.POST)
+    public Reservation makeNewReservation(@RequestBody ReservationReturn reservation, String userName){
+        return reservationRepository.save(new Reservation(userRepository.findByEmail(userName).getUserID(),
+                roomRepository.findByRoomName(reservation.getRoom()).getRoomID()
+                , new HashMap<String, String>(), LocalTime.parse(reservation.getTime()), LocalDate.parse(reservation.getDate())));
+    }
+
     @RequestMapping("/rooms/all")
     public List<Room> getRooms(){
 
         return roomRepository.findAll();
 
+    }
+
+    @RequestMapping("/{userEmail}")
+    public List<Reservation> getReservationFromUser(@PathVariable String userEmail){
+        return reservationRepository.findByOwnerID(userRepository.findByEmail(userEmail).getUserName());
     }
 
 

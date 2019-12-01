@@ -8,5 +8,6 @@ import java.util.List;
 public interface RoomRepository extends MongoRepository<Room, String> {
 
     List<Room> findByCapacityGreaterThanEqual(int capacity);
+    Room findByRoomName(String roomName);
 
 }
