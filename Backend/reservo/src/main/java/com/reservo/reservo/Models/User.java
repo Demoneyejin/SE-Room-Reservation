@@ -24,6 +24,7 @@ public class User{
     //contains roles for the user, simplified here instead of being an object.
     private Map<String, String> userSettings = new HashMap<>();
 
+    public User(){}
 
 	public User(ObjectId id, String username, String password){
         _id = id;

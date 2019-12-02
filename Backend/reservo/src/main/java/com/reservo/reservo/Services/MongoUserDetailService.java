@@ -1,13 +1,20 @@
 package com.reservo.reservo.Services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+
 import com.reservo.reservo.Models.Role;
 import com.reservo.reservo.Repository.RoleRepository;
 import com.reservo.reservo.Repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthoritiesContainer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,6 +51,14 @@ public class MongoUserDetailService implements UserDetailsService {
         Role userRole = RoleRepository.findbyRole("User");
         user.appendUserSettings(userRole.getID(), userRole.getRole()); //assigns the role to the user setting
         userRepository.save(user);
+    }
+
+    private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles){
+        Set<GrantedAuthority> roles = new HashSet<>();
+        userRoles.forEach((role) -> {roles.add(new SimpleGrantedAuthority(role.getRole()));});
+
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
+        return grantedAuthorities;
     }
     
 }
