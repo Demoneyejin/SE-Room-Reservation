@@ -2,8 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ReservationService } from '../reservation.service';
 import { Reservation } from './Reservation';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
 import { OperationSuccessfulComponent } from '../operation-successful/operation-successful.component';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Roles } from './Roles';
 
 @Component({
   selector: 'app-view-reservation',
@@ -66,6 +67,33 @@ export class ViewReservationComponent implements OnInit {
     const dialogRef = this.dialog.open(AssignUserRoleComponent, {
       width: '350px'
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      const roleRequest: RoleRequest = {
+        reservationID: reservation.resID,
+        role: result.role,
+        userID: result.email
+      };
+
+      this.reservationService.addRole(roleRequest).subscribe(
+        data => {
+        }
+      );
+
+    });
+
+  }
+  addRoletoReservation(reservation: Reservation, roleRequest: RoleRequest) {
+      for (let i = 0; i < reservation.roles.length; i++) {
+        if (reservation.roles[i].email === roleRequest.userID) {
+          reservation.roles[i].roles = roleRequest.role;
+          break;
+        } else if (i === reservation.roles.length - 1) {
+          reservation.roles.push({roles: roleRequest.role, email: roleRequest.userID});
+        }
+      }
+
   }
 
 }
@@ -112,6 +140,30 @@ export class ReservationCancelWaitComponent implements OnInit {
   styles: ['./assign-role.css']
 })
 export class AssignUserRoleComponent implements OnInit {
+
+  constructor(public dialogRef: MatDialogRef<AssignUserRoleComponent>) {}
+
+  roleForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    role: new FormControl('', Validators.required)
+  });
+
   ngOnInit(): void {
   }
+
+  closeDialog() {
+    if (this.roleForm.valid) {
+      const email = this.roleForm.get('email').value;
+      const role = this.roleForm.get('role').value;
+
+      this.dialogRef.close({email, role});
+
+    }
+  }
+}
+
+export interface RoleRequest {
+  reservationID: string;
+  role: string;
+  userID: string;
 }

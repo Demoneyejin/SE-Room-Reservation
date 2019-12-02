@@ -9,12 +9,10 @@ import com.reservo.reservo.ReturnClasses.RoleReturn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Null;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,6 +22,7 @@ public class ReservationsController {
 
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
     private RoomRepository roomRepository;
     @Autowired
     private UserRepository userRepository;
@@ -89,7 +88,10 @@ public class ReservationsController {
     public List<CurrentReservationsReturn> getReservationFromUser(@PathVariable String userEmail){
 
         List<Reservation> reservations = reservationRepository.findByOwnerID(userEmail);
-        reservations.forEach(res -> res.setRoomID(roomRepository.findById(res.getRoomID()).get().getRoomName()));
+        reservations.forEach(res -> {
+            Optional<Room> room = roomRepository.findById(res.getRoomID());
+            room.ifPresent(value -> res.setRoomID(value.getRoomName()));
+        });
 
         List<CurrentReservationsReturn> returns = new ArrayList<>();
 
@@ -105,23 +107,34 @@ public class ReservationsController {
     }
 
     @RequestMapping(value="/role/add", method = RequestMethod.POST)
-    public Roles addUserRoles(@RequestParam String role, @RequestParam String reservationID, @RequestParam String userID){
+    public Roles addUserRoles(@RequestBody Map<String, String> payload){
 
-        Optional<Roles> rolesOptional= rolesRepository.findByReservationIDAndUserID(reservationID, userID);
+        if (payload.isEmpty()) {
+            throw new NullPointerException("No payload found");
+        }
+
+        if (!userRepository.existsById(payload.get("userID"))) {
+            throw new NullPointerException("No user found");
+        }
+
+        if (!reservationRepository.existsById(payload.get("reservationRepository"))) {
+            throw new NullPointerException("Reservation not found");
+        }
+
+        Optional<Roles> rolesOptional= rolesRepository.findByReservationIDAndUserID(payload.get("reservationID"), payload.get("userID"));
 
         if (rolesOptional.isPresent()){
             Roles tempRole = rolesOptional.get();
-            tempRole.addRole(role);
+            tempRole.addRole(payload.get("role"));
             return rolesRepository.save(tempRole);
         }
         else {
 
-            Roles tempRole = new Roles(reservationID, userID, new ArrayList<>());
-            tempRole.addRole(role);
+            Roles tempRole = new Roles(payload.get("reservationID"), payload.get("userID"), new ArrayList<>());
+            tempRole.addRole(payload.get("role"));
             return rolesRepository.save(tempRole);
         }
-
-
+        
     }
 
 }

@@ -30,7 +30,7 @@ public class CurrentReservationsReturn {
     public CurrentReservationsReturn(Reservation reservation, List<RoleReturn> roles){
         this.date = reservation.getDate().toString();
         this.time = reservation.getTime().toString();
-        this.resID = reservation.getRoomID();
+        this.resID = reservation.getReservationID();
         this.owner = reservation.getOwnerID();
         this.room = reservation.getRoomID();
         this.roles = roles;

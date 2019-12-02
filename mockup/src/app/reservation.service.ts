@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Reservation } from './view-reservation/Reservation';
 import { catchError } from 'rxjs/operators';
+import { RoleRequest } from './view-reservation/view-reservation.component';
+import { Roles } from './view-reservation/Roles';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,8 @@ export class ReservationService {
   private url = 'http://localhost:8080/reserve/uname';
 
   private postURL = '/remove/reserve/';
+
+  private roleURL = 'http://localhost:8080/reserve/role/add'
 
   constructor(private http: HttpClient) { }
 
@@ -41,5 +45,18 @@ export class ReservationService {
         subscriber.complete();
       }, 2000);
     });
+  }
+
+  addRole(role: RoleRequest) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+
+    return this.http.post<Roles>(this.roleURL, role, httpOptions)
+                    .pipe(catchError(this.errorHandler));
   }
 }
