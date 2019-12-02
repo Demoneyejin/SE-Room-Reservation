@@ -38,6 +38,7 @@ public class ReservationsController {
 
         System.out.println(capacity);
 
+        // All rooms with enough capacity
         List<Room> rooms = roomRepository.findByCapacityGreaterThanEqual(capacity);
 
         System.out.println(rooms.toString());
@@ -46,11 +47,14 @@ public class ReservationsController {
 
         List<Reservation> reservations = reservationRepository.findByTimeAndDateAndRoomIDIn(LocalTime.parse(time), LocalDate.parse(date), roomIDs);
 
+        reservations.forEach(System.out::println);
+
         // Checks to make sure there are actually reservations to search through, If not just send all the rooms
         if (reservations != null) {
             //List containing the ID's of all the rooms with a reservation at the time and date
-            List<String> reservationIDs = reservations.stream().map(Reservation::getRoomID).collect(Collectors.toList());
-            rooms = rooms.stream().filter(room -> !reservationIDs.contains(room.getRoomID())).collect(Collectors.toList());
+            List<String> roomIDsWReservations = reservations.stream().map(Reservation::getRoomID).collect(Collectors.toList());
+            roomIDsWReservations.forEach(System.out::println);
+            rooms = rooms.stream().filter(room -> !roomIDsWReservations.contains(room.getRoomID())).collect(Collectors.toList());
         }
 
         ArrayList<ReservationReturn> returns = new ArrayList<>();
@@ -97,7 +101,7 @@ public class ReservationsController {
 
         reservations.forEach(res -> {
             List<RoleReturn> roles = rolesRepository.findByReservationID(res.getReservationID())
-                    .stream().map(RoleReturn::new).collect(Collectors.toList());
+                    .stream().map(role -> new RoleReturn(role, userRepository)).collect(Collectors.toList());
 
             returns.add(new CurrentReservationsReturn(res, roles));
 
@@ -134,7 +138,7 @@ public class ReservationsController {
             tempRole.addRole(payload.get("role"));
             return rolesRepository.save(tempRole);
         }
-        
+
     }
 
 }

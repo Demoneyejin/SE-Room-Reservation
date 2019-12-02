@@ -15,7 +15,7 @@ export class ReservationService {
 
   private postURL = '/remove/reserve/';
 
-  private roleURL = 'http://localhost:8080/reserve/role/add'
+  private roleURL = 'http://localhost:8080/reserve/role/add';
 
   constructor(private http: HttpClient) { }
 

@@ -1,9 +1,11 @@
 package com.reservo.reservo.ReturnClasses;
 
 import com.reservo.reservo.Models.Roles;
-import com.reservo.reservo.Repository.UserController;
+import com.reservo.reservo.Models.User;
 import com.reservo.reservo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 public class RoleReturn {
 
@@ -18,9 +20,9 @@ public class RoleReturn {
         this.roles = roles;
     }
 
-    public RoleReturn(Roles role){
-        UserController controller = new UserController(repository);
-        this.userName = controller.getUser(role.getUserID()).get().getUserName();
+    public RoleReturn(Roles role, UserRepository repository){
+        Optional<User> userOp = repository.findById(role.getUserID());
+        userOp.ifPresent(user -> this.userName = user.getUserName());
         this.roles = role.getRoleString();
     }
 

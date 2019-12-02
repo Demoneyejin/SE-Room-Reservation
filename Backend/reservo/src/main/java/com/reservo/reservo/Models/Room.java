@@ -34,4 +34,6 @@ public class Room {
     public String getRoomID() {
         return roomID;
     }
+
+    public void setRoomID(String id) {this.roomID = id;}
 }
