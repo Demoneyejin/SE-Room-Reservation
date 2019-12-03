@@ -14,8 +14,10 @@
 
 			<mat-form-field appearance='outline'>
 				<mat-label>Password</mat-label>
-				<input matInput type='password' placeholder="Password" required formControlName="password">
+				<input matInput type='password' placeholder="Password" required formControlName="password" (blur)="changePW()">
 			</mat-form-field>
+
+			<mat-error *ngIf="pwLength">Password not long enough</mat-error>
 
 			<re-captcha (resolved)="resolved($event)" siteKey="6Ld2MLwUAAAAAEiwQDTjrblTurB91_PW63ooWoXn" *ngIf="doCaptcha()"></re-captcha>
 

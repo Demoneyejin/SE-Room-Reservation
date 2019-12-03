@@ -6,10 +6,10 @@ import com.reservo.reservo.Models.Room;
 import com.reservo.reservo.ReturnClasses.CurrentReservationsReturn;
 import com.reservo.reservo.ReturnClasses.ReservationReturn;
 import com.reservo.reservo.ReturnClasses.RoleReturn;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Null;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -20,18 +20,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/reserve")
 public class ReservationsController {
 
-    @Autowired
+    @Autowired(required = true)
     private ReservationRepository reservationRepository;
-    @Autowired
+
+    @Autowired(required = true)
     private RoomRepository roomRepository;
-    @Autowired
+
+    @Autowired(required = true)
     private UserRepository userRepository;
-    @Autowired
+
+    @Autowired(required = true)
     private RolesRepository rolesRepository;
 
-    public ReservationsController(ReservationRepository reservationRepository){
-        this.reservationRepository = reservationRepository;
-    }
 
     @RequestMapping(value="/{date}/{time}/{capacity}", method= RequestMethod.GET)
     public List<ReservationReturn> findOpenSlots(@PathVariable String date, @PathVariable String time, @PathVariable int capacity){
@@ -49,8 +49,8 @@ public class ReservationsController {
 
         reservations.forEach(System.out::println);
 
-        // Checks to make sure there are actually reservations to search through, If not just send all the rooms
-        if (reservations != null) {
+        // Checks to make sure there are actually reservations to search through, If not just send all the rooms that apply
+        if (reservations != null && !reservations.isEmpty()) {
             //List containing the ID's of all the rooms with a reservation at the time and date
             List<String> roomIDsWReservations = reservations.stream().map(Reservation::getRoomID).collect(Collectors.toList());
             roomIDsWReservations.forEach(System.out::println);
@@ -68,20 +68,25 @@ public class ReservationsController {
     }
 
     @RequestMapping(value = "/make", method=RequestMethod.POST)
-    public Reservation makeNewReservation(@RequestBody ReservationReturn reservation, String userName){
+    public Reservation makeNewReservation(@RequestBody Map<String, String> info){
         // Checks to make sure there are no other reservations for the combination of room, date, and time
-        if (!reservationRepository.existsByTimeAndDateAndRoomID(LocalTime.parse(reservation.getTime()), LocalDate.parse(reservation.getDate()),
-                                                                roomRepository.findByRoomName(reservation.getRoom()).getRoomID())) {
+        if (!reservationRepository.existsByTimeAndDateAndRoomID(LocalTime.parse(info.get("time")), LocalDate.parse(info.get("date")),
+                                                                roomRepository.findByRoomName(info.get("room")).getRoomID())) {
 
-            return reservationRepository.save(new Reservation(userRepository.findByUserName(userName).getUserID(),
-                                                              roomRepository.findByRoomName(reservation.getRoom()).getRoomID(),
-                                                              new HashMap<String, String>(), LocalTime.parse(reservation.getTime()),
-                                                              LocalDate.parse(reservation.getDate())));}
+            String userId = userRepository.findByUserName(info.get("username")).getUserID();
+            String roomID = roomRepository.findByRoomName(info.get("room")).getRoomID();
+            LocalDate date = LocalDate.parse(info.get("date"));
+            LocalTime time = LocalTime.parse(info.get("time"));
+
+            return reservationRepository.save(new Reservation(userId, roomID, time, date));
+
+        }
+
         else
             return null;
     }
 
-    @RequestMapping("/rooms/all")
+    @RequestMapping(value = "/rooms/all", method = RequestMethod.GET)
     public List<Room> getRooms(){
 
         return roomRepository.findAll();
@@ -121,22 +126,43 @@ public class ReservationsController {
             throw new NullPointerException("No user found");
         }
 
-        if (!reservationRepository.existsById(payload.get("reservationRepository"))) {
+        if (!reservationRepository.existsById(payload.get("reservationID"))) {
             throw new NullPointerException("Reservation not found");
+        }
+
+        if (payload.get("roles") == null){
+            throw new NullPointerException("No role included");
         }
 
         Optional<Roles> rolesOptional= rolesRepository.findByReservationIDAndUserID(payload.get("reservationID"), payload.get("userID"));
 
-        if (rolesOptional.isPresent()){
-            Roles tempRole = rolesOptional.get();
-            tempRole.addRole(payload.get("role"));
-            return rolesRepository.save(tempRole);
+        Roles tempRole;
+
+        tempRole = rolesOptional.orElseGet(() -> new Roles(payload.get("reservationID"), payload.get("userID"), new ArrayList<>()));
+
+        tempRole.addRole(payload.get("role"));
+        return rolesRepository.save(tempRole);
+
+    }
+
+    @RequestMapping(value = "/{id}/remove", method = RequestMethod.DELETE)
+    public String removeReservation(@PathVariable String id){
+
+        if (!reservationRepository.existsById(id)){
+            throw new NullPointerException("No reservation by that ID");
+        }
+
+        rolesRepository.deleteAllByReservationID(id);
+
+        long before = reservationRepository.count();
+
+        reservationRepository.deleteById(id);
+
+        if (before == reservationRepository.count() + 1){
+            return "Successfully removed";
         }
         else {
-
-            Roles tempRole = new Roles(payload.get("reservationID"), payload.get("userID"), new ArrayList<>());
-            tempRole.addRole(payload.get("role"));
-            return rolesRepository.save(tempRole);
+            throw new IllegalStateException("Could not remove");
         }
 
     }

@@ -47,6 +47,8 @@ export class OpenRoomListComponent implements OnInit {
       data: {text: 'We are confirming your reservation'},
       disableClose: true
     });
+
+    console.log('Date: ' + opening.date + ' Time: ' + opening.time.toString() + ' Room: ' + opening.room);
     this.reservationService.makeReservation(opening.date, opening.time.toString(), opening.room).subscribe(
       data => {
         dialogRef.close();
@@ -54,7 +56,14 @@ export class OpenRoomListComponent implements OnInit {
           width: '350px',
           data: {text: 'Your reservation for ' + opening.date + ' at ' + opening.room + '  has been confirmed.'}
         });
-      }
+      },
+      error => {
+        dialogRef.close();
+        this.dialog.open(OperationSuccessfulComponent, {
+            width: '350px',
+            data: {text: 'An error has occurred adding your reservation. Please try again.', title: 'Error'}
+          });
+        }
     );
   }
 

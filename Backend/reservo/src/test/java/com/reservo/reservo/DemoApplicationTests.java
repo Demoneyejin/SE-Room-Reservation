@@ -52,8 +52,8 @@ public class DemoApplicationTests {
 		String uid  = "testUID";
 
 		List<Reservation> reservationTest = new ArrayList<>(Arrays.asList(
-				new Reservation(uid, "testRoom1", new HashMap<>(), LocalTime.now(), LocalDate.now()),
-				new Reservation(uid, "testRoom2", new HashMap<>(), LocalTime.now(), LocalDate.now())
+				new Reservation(uid, "testRoom1",LocalTime.now(), LocalDate.now()),
+				new Reservation(uid, "testRoom2", LocalTime.now(), LocalDate.now())
 		));
 
 		List<Roles> roles1 = new ArrayList<>(Arrays.asList(
@@ -130,7 +130,7 @@ public class DemoApplicationTests {
 		List<String> roomIDs = rooms.stream().map(Room::getRoomID).collect(Collectors.toList());
 
 		List<Reservation> reservations = Collections.singletonList(
-				new Reservation("testUser", rooms.get(2).getRoomID(), new HashMap<>(), LocalTime.parse("12:00"), LocalDate.parse("2019-12-12"))
+				new Reservation("testUser", rooms.get(2).getRoomID(), LocalTime.parse("12:00"), LocalDate.parse("2019-12-12"))
 		);
 
 		roomIDs.forEach(System.out::println);

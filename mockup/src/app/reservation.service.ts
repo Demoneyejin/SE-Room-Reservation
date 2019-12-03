@@ -17,6 +17,14 @@ export class ReservationService {
 
   private roleURL = 'http://localhost:8080/reserve/role/add';
 
+  private makeResURL = 'http://localhost:8080/reserve/make';
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
   constructor(private http: HttpClient) { }
 
   getReservations(): Observable<Reservation[]> {
@@ -38,25 +46,14 @@ export class ReservationService {
     });
   }
 
-  makeReservation(date: string, time: string, room: string){
-    return new Observable<string>(subscriber => {
-      setTimeout(() => {
-        subscriber.next('Confirmed');
-        subscriber.complete();
-      }, 2000);
-    });
+  makeReservation(date: string, time: string, room: string) {
+    return this.http.post<Reservation>(this.makeResURL, {date, time, room, username: 'uname'}, this.httpOptions)
+      .pipe(catchError(this.errorHandler));
   }
 
   addRole(role: RoleRequest) {
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
-
-    return this.http.post<Roles>(this.roleURL, role, httpOptions)
+    return this.http.post<Roles>(this.roleURL, role, this.httpOptions)
                     .pipe(catchError(this.errorHandler));
   }
 }

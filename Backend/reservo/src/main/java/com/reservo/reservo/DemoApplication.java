@@ -32,18 +32,7 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception{
 
-		/*User u = userRepository.save(new User());
-		u.setUserName("uname");
-
-		Room r = roomRepository.findAll().get(1);
-		Room r2 = roomRepository.findAll().get(0);
-
-		reservationRepository.save(new Reservation(u.getUserID(),r.getRoomID(),
-				new HashMap<>(), LocalTime.parse("12:00"), LocalDate.parse("2019-12-12")));
-		reservationRepository.save(new Reservation(u.getUserID(),r2.getRoomID(),
-				new HashMap<>(), LocalTime.parse("12:00"), LocalDate.parse("2019-12-14")));
-*/
-
+		
 	}
 
 
