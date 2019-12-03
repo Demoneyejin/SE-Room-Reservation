@@ -1,7 +1,8 @@
 export interface User {
+    username: string;
     name: string;
     password: string;
     email: string;
-    secQuestion: number;
-    secAnswer: string;
+    question: number;
+    answer: string;
 }

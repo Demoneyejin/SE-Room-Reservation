@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { LoginReturn, UserInfo } from './LoginReturn';
-import { retry } from 'rxjs/operators';
+import { retry, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,14 @@ import { retry } from 'rxjs/operators';
 export class CheckCredentialsService {
 
   private url = 'http://localhost:8080/user/auth';
+
+  private createURL = 'http://localhost:8080/user/signup';
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -20,8 +28,17 @@ export class CheckCredentialsService {
               );
   }
 
+  createUser(user: any) {
+    return this.http.post<string>(this.createURL, user, this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
+
   isAuthenticated(): boolean {
     return true;
+  }
+
+  errorHandler(error: HttpErrorResponse) {
+    return throwError(error.message || 'Server Error');
   }
 
 }

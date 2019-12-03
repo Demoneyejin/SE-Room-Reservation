@@ -14,7 +14,7 @@ export class OperationSuccessfulComponent implements OnInit {
   public title = 'Operation Successful';
 
   ngOnInit() {
-    if (this.data.title){
+    if (this.data.title) {
       this.title = this.data.title;
     }
   }

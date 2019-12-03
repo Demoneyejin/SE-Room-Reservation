@@ -1,4 +1,4 @@
 export interface SecQuestions {
-	value: number;
+	value: string;
 	text: string;
 }

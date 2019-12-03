@@ -1,9 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CreateUserService } from '../create-user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../User';
+import { PleaseWaitComponent } from '../please-wait/please-wait.component';
+import { CheckCredentialsService } from '../check-credentials.service';
+import { OperationSuccessfulComponent } from '../operation-successful/operation-successful.component';
 
 
 @Component({
@@ -15,15 +17,15 @@ export class SignupComponent implements OnInit {
 
   securityQuestions = [
     {
-      value: 1,
+      value: 'What is your mother\'s maiden name?',
       text: 'What is your mother\'s maiden name?'
     },
     {
-      value: 2,
+      value: 'What is your first pet\'s name?',
       text: 'What is your first pet\'s name?'
     },
     {
-      value: 3,
+      value: 'Where were you born?',
       text: 'Where were you born?'
     }
   ];
@@ -39,7 +41,7 @@ export class SignupComponent implements OnInit {
     securityAnswer: new FormControl('', Validators.required)
   });
 
-  constructor(private router: Router, private dialog: MatDialog, private signupService: CreateUserService) { }
+  constructor(private router: Router, private dialog: MatDialog, private signupService: CheckCredentialsService) { }
 
   refName = 'dashboard';
 
@@ -50,21 +52,34 @@ export class SignupComponent implements OnInit {
 
     console.log('Testing');
 
-    if (this.profileForm.valid) {
+    if (this.profileForm.valid) { 
       const newUser: User = {
         name: this.profileForm.get('fullName').value,
         email: this.profileForm.get('email').value,
         password: this.profileForm.get('password').value,
-        secQuestion: this.profileForm.get('securityQuestion').value,
-        secAnswer: this.profileForm.get('securityAnswer').value
+        question: this.profileForm.get('securityQuestion').value,
+        answer: this.profileForm.get('securityAnswer').value,
+        username: this.profileForm.get('userName').value
       };
 
-      const dialogRef = this.dialog.open(SignupDialogComponent, {
+      const dialogRef = this.dialog.open(PleaseWaitComponent, {
         width: '350px',
-        disableClose: true,
-        data: {
-          user: newUser
-        }});
+        data: {text: 'We are currently adding your account to the system.'}
+      });
+      this.signupService.createUser(newUser).subscribe(
+        () => {
+          dialogRef.close();
+          this.dialog.open(OperationSuccessfulComponent, {
+            width: '350px',
+            data: {text: 'Your user has successfully been added to the system', toDashboard: true}});
+          },
+        () => {
+          dialogRef.close();
+          this.dialog.open(OperationSuccessfulComponent, {
+            width: '350px',
+            data: {text: 'We could not add in your user to the system.', title: 'Error'}
+          });
+        });
     } else {
       console.log('Not vaild form');
     }
@@ -79,33 +94,4 @@ export class SignupComponent implements OnInit {
     return this.securityQuestions.length;
   }
 
-
-
-}
-
-@Component({
-  selector: 'app-signup-dialog',
-  styleUrls: ['signup-dialog.css'],
-  templateUrl: 'signup-dialog-content.html'
-})
-
-export class SignupDialogComponent {
-
-  private returnMessage: string;
-
-  constructor(@Inject(MAT_DIALOG_DATA) private data: any, private router: Router, private createUserService: CreateUserService,
-              public dialogRef: MatDialogRef<SignupDialogComponent> ) {
-    createUserService.createUser(this.data.user).subscribe(
-      data => {this.returnMessage = data;
-               this.toDashboard();
-      }
-      );
-  }
-
-  toDashboard() {
-    if (this.returnMessage !== 'Failed to create user') {
-      this.dialogRef.close();
-      this.router.navigate(['/dashboard']);
-    }
-  }
 }

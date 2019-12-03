@@ -25,7 +25,6 @@ public class User{
     private Map<String, String> userSettings = new HashMap<>();
 
     public User(){}
-
 	public User(ObjectId id, String username, String password){
         _id = id;
         userName = username;
