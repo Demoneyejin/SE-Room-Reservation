@@ -13,7 +13,7 @@ export class ReservationService {
 
   private url = 'http://localhost:8080/reserve/uname';
 
-  private postURL = '/remove/reserve/';
+  private removeReservationURL = 'http://localhost:8080/reserve/';
 
   private roleURL = 'http://localhost:8080/reserve/role/add';
 
@@ -36,14 +36,9 @@ export class ReservationService {
     return throwError(error.message || 'Server Error');
   }
 
-  removeReservation(reserveID, credentials): Observable<string> {
-    // return this.http.post<string>(this.postURL + reserveID, credentials);
-    return new Observable<string>(subscriber => {
-      setTimeout(() => {
-        subscriber.next('Confirmed');
-        subscriber.complete();
-      }, 2000);
-    });
+  removeReservation(reserveID): Observable<string> {
+    return this.http.delete<string>(this.removeReservationURL + reserveID + '/remove')
+      .pipe(catchError(this.errorHandler));
   }
 
   makeReservation(date: string, time: string, room: string) {

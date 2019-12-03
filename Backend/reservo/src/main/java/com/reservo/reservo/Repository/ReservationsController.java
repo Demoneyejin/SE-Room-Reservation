@@ -6,7 +6,8 @@ import com.reservo.reservo.Models.Room;
 import com.reservo.reservo.ReturnClasses.CurrentReservationsReturn;
 import com.reservo.reservo.ReturnClasses.ReservationReturn;
 import com.reservo.reservo.ReturnClasses.RoleReturn;
-import org.apache.tomcat.jni.Local;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/reserve")
 public class ReservationsController {
+
+    private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired(required = true)
     private ReservationRepository reservationRepository;
@@ -159,6 +162,9 @@ public class ReservationsController {
         reservationRepository.deleteById(id);
 
         if (before == reservationRepository.count() + 1){
+
+            LOG.info("Removed Reservation ID: {}", id);
+
             return "Successfully removed";
         }
         else {

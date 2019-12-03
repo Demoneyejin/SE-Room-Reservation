@@ -23,11 +23,22 @@ export class ViewReservationComponent implements OnInit {
   constructor(private reservationService: ReservationService, private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.getReservations();
+  }
+
+  getReservations() {
     this.reservationService.getReservations()
-        .subscribe(data => {this.reservations = data;
-                            this.noReservations = this.reservations.length === 0;
-                            console.log(this.reservations); },
-        error => this.errorMsg = error);
+      .subscribe(
+        data => {
+        this.reservations = data;
+        this.noReservations = this.reservations.length === 0;
+        },
+        error => {
+        this.dialog.open(OperationSuccessfulComponent, {
+          width: '350px',
+          data: {text: 'Could not retrieve reservations', title: 'Error'}
+        });
+      });
   }
 
   onClick(reserve: Reservation) {
@@ -49,15 +60,24 @@ export class ViewReservationComponent implements OnInit {
       const dialogRef = this.dialog.open(ReservationCancelWaitComponent, {
         width: '350px'
       });
-      this.reservationService.removeReservation(reservation.resID, 'creds').subscribe(data => {
-        console.log('Dialog finished');
-        this.confirmedCancellation = data === 'Confirmation';
-        dialogRef.close();
-        this.dialog.open(OperationSuccessfulComponent, {
-          width: '350px',
-          data: {text: 'You\'re reservation for ' + reservation.date + ' has been successfully been cancelled.',
-                toDashboard: false}
-        });
+      this.reservationService.removeReservation(reservation.resID).subscribe(
+        () => {
+          console.log('Dialog finished');
+          dialogRef.close();
+          const confirmRef = this.dialog.open(OperationSuccessfulComponent, {
+            width: '350px',
+            data: {text: 'You\'re reservation for ' + reservation.date + ' has been successfully been cancelled.'}
+          });
+          confirmRef.afterClosed().subscribe(
+            () => this.getReservations()
+          );
+         },
+        () => {
+          dialogRef.close();
+          this.dialog.open(OperationSuccessfulComponent, {
+            width: '350px',
+            data: {text: 'Could not remove your reservation', title: 'Error'}
+          });
       });
     }
 
@@ -78,6 +98,7 @@ export class ViewReservationComponent implements OnInit {
 
       this.reservationService.addRole(roleRequest).subscribe(
         data => {
+          this.getReservations();
         }
       );
 
