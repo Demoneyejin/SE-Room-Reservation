@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoginReturn } from './LoginReturn';
+import { LoginReturn, UserInfo } from './LoginReturn';
 import { retry } from 'rxjs/operators';
 
 @Injectable({
@@ -9,12 +9,12 @@ import { retry } from 'rxjs/operators';
 })
 export class CheckCredentialsService {
 
-  private url = '';
+  private url = 'http://localhost:8080/user/auth';
 
   constructor(private http: HttpClient) { }
 
-  checkCredentials(credentials: string): Observable<LoginReturn> {
-    return this.http.post<LoginReturn>(this.url, credentials)
+  checkCredentials(user: UserInfo): Observable<LoginReturn> {
+    return this.http.post<LoginReturn>(this.url, user)
             .pipe(
               retry(3)
               );

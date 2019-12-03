@@ -11,7 +11,12 @@ export class OperationSuccessfulComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public router: Router) {}
 
+  public title = 'Operation Successful';
+
   ngOnInit() {
+    if (this.data.title){
+      this.title = this.data.title;
+    }
   }
 
   onClick() {

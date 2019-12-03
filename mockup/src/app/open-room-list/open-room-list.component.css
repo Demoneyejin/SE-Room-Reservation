@@ -8,6 +8,10 @@ button {
 	float: right;
 }
 
+h4 {
+	font-family: 'Bitter', serif;
+}
+
 :host {
 	width: 100%;
 }
