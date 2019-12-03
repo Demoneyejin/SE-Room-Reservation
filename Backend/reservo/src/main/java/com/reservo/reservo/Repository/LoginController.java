@@ -20,49 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController
 {
-    @Autowired
-    private MongoUserDetailService userService;
-    @Autowired
-    private BCryptPasswordEncoder BCryptPasswordEncoder;
-
-    private final Logger LOG = LoggerFactory.getLogger(getClass());
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(String Username, String Password){
-        //if anything is empty, nada..
-        if(Username.isEmpty() || Password.isEmpty()){
-            LOG.info("401"); //Error 204, cannot login. 
-            return "Missing information";
-        }
-        User user = userService.findUserByUsername(Username);
-        if(user == null){
-            LOG.info("401"); //Error 204, cannot login. 
-            return "User not found.";
-        }
-        else{
-            if(BCryptPasswordEncoder.matches(Password, user.getPassword())){
-                return "200"; //user found;
-            }else{
-                return "Wrong Password";
-            }
-        }
-        
-    }
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public User createNewUser(@Valid User user, BindingResult bindingResult) {
-        
-        User userExists = userService.findUserByUsername(user.getUserName());
-        if (userExists != null) {
-            bindingResult.rejectValue("email", "error.user", "There is already a user registered with the username provided");
-        }
-        if (bindingResult.hasErrors()) {
-            return null;
-        }
-        else {
-        userService.saveUser(user);
-        LOG.info("successMessage", "User has been registered successfully");
-        }
-        return user;
-    }
+   //Being moved to user controller, check there for now.
 
 }

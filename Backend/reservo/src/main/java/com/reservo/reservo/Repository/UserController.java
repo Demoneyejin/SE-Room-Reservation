@@ -1,6 +1,8 @@
 package com.reservo.reservo.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -17,6 +19,12 @@ import jdk.internal.org.jline.utils.Log;
 import com.reservo.reservo.DAL.User_DAL;
 import com.reservo.reservo.Models.User;
 import com.reservo.reservo.Repository.UserRepository;
+import com.reservo.reservo.Services.MongoUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -24,6 +32,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
     private final UserRepository userRepository;
+    @Autowired
+    private MongoUserDetailService userService;
+    @Autowired
+    private BCryptPasswordEncoder BCryptPasswordEncoder;
 
     private final User_DAL userDal;
 
@@ -67,6 +79,83 @@ public class UserController {
             return "User not found.";
         }
     }
+
+    @RequestMapping(value = "/login/{userId}/{password}", method = RequestMethod.POST)
+    public String login(String userId, String password){
+        //if anything is empty, nada..
+        if(userId.isEmpty() || password.isEmpty()){
+            LOG.info("401"); //Error 204, cannot login. 
+            return "Missing information";
+        }
+        User user = userService.findUserByUsername(userId);
+        if(user == null){
+            LOG.info("401"); //Error 204, cannot login. 
+            return "User not found.";
+        }
+        else{
+            if(BCryptPasswordEncoder.matches(password, user.getPassword())){
+                return "200"; //user found;
+            }else{
+                return "Wrong Password";
+            }
+        }
+        
+    }
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public User createNewUser( Map<String,String> newUser, BindingResult bindingResult) {
+        //create and populate the user..
+        User user = new User();
+        user.setUserName(newUser.get("userName"));
+        user.setFullName(newUser.get("fullName"));
+        user.setUserPassword(newUser.get("password"));
+        user.setUserEmail(newUser.get("email"));
+        Map<String, String> securityQuestion = new HashMap<>();
+        securityQuestion.put(newUser.get("securityQuestion"), newUser.get("securityAnswer"));
+        user.setSecurityScreening(securityQuestion);
+        //check if the user exists..
+        User userExists = userService.findUserByUsername(user.getUserName());
+        if (userExists != null) {
+            bindingResult.rejectValue("email", "error.user", "There is already a user registered with the username provided");
+        }
+        if (bindingResult.hasErrors()) {
+            return null;
+        }
+        else {
+        userService.saveUser(user);
+        LOG.info("successMessage", "User has been registered successfully");
+        }
+        return user;
+    }
+    /*
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String createNewUser( Map<String,String> newUser, BindingResult bindingResult) {
+        //create and populate the user..
+        User user = new User();
+        user.setUserName(newUser.get("userName"));
+        user.setUserPassword(newUser.get("password"));
+        user.setUserEmail(newUser.get("email"));
+        user.setFirstName(newUser.get("firstName"));
+        user.setLastName(newUser.get("lastName"));
+        Map<String, String> securityQuestion = new HashMap<>();
+        securityQuestion.put(newUser.get("question"), newUser.get("answer"));
+        user.setSecurityScreening(securityQuestion);
+        //check if the user exists..
+        User userExists = userService.findUserByUsername(user.getUserName());
+        if (userExists != null) {
+            bindingResult.rejectValue("email", "error.user", "There is already a user registered with the username provided");
+        }
+        if (bindingResult.hasErrors()) {
+            return "403 FORBIDDEN";
+        }
+        else {
+        userService.saveUser(user);
+        LOG.info("successMessage", "User has been registered successfully");
+        }
+        return "200 OK";
+    }
+    */
+
+
     /* traditional implementation, trying out the DAL implementation (utilizing mongos interface options)/(Above this)
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
