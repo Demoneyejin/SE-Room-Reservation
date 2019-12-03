@@ -1,5 +1,6 @@
 package com.reservo.reservo.Repository;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jdk.internal.org.jline.utils.Log;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reservo.reservo.DAL.User_DAL;
 import com.reservo.reservo.Models.User;
 import com.reservo.reservo.Repository.UserRepository;
@@ -28,13 +33,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
+@CrossOrigin()
 @RequestMapping(value = "/user")
 public class UserController {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
     private final UserRepository userRepository;
     @Autowired
     private MongoUserDetailService userService;
-    @Autowired
+
     private BCryptPasswordEncoder BCryptPasswordEncoder;
 
     private final User_DAL userDal;
@@ -50,7 +56,7 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    @RequestMapping(value = "",  method = RequestMethod.GET)
+    @RequestMapping(value = "/",  method = RequestMethod.GET)
     public List<User> getAlUsers(){
         LOG.info("Getting all users.");
         return userRepository.findAll();
@@ -87,7 +93,7 @@ public class UserController {
             LOG.info("401"); //Error 204, cannot login. 
             return "Missing information";
         }
-        User user = userService.findUserByUsername(userId);
+        User user = userService.findUserTypeByUsername(userId);
         if(user == null){
             LOG.info("401"); //Error 204, cannot login. 
             return "User not found.";
@@ -101,6 +107,7 @@ public class UserController {
         }
         
     }
+    /*
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public User createNewUser( Map<String,String> newUser, BindingResult bindingResult) {
         //create and populate the user..
@@ -125,35 +132,32 @@ public class UserController {
         LOG.info("successMessage", "User has been registered successfully");
         }
         return user;
-    }
-    /*
+    }*/
+    
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String createNewUser( Map<String,String> newUser, BindingResult bindingResult) {
+    public User createNewUser(@RequestBody Map<String,String> newUser) throws JsonParseException, JsonMappingException, IOException {
         //create and populate the user..
         User user = new User();
-        user.setUserName(newUser.get("userName"));
+        user.setUserName(newUser.get("username"));
+        user.setFullName(newUser.get("name"));
         user.setUserPassword(newUser.get("password"));
         user.setUserEmail(newUser.get("email"));
-        user.setFirstName(newUser.get("firstName"));
-        user.setLastName(newUser.get("lastName"));
         Map<String, String> securityQuestion = new HashMap<>();
         securityQuestion.put(newUser.get("question"), newUser.get("answer"));
         user.setSecurityScreening(securityQuestion);
+        
         //check if the user exists..
-        User userExists = userService.findUserByUsername(user.getUserName());
-        if (userExists != null) {
-            bindingResult.rejectValue("email", "error.user", "There is already a user registered with the username provided");
-        }
-        if (bindingResult.hasErrors()) {
-            return "403 FORBIDDEN";
+        Boolean userExists = userService.findUserByUsername(user.getUserName());
+        if (userExists) {
+            return null;
         }
         else {
         userService.saveUser(user);
         LOG.info("successMessage", "User has been registered successfully");
         }
-        return "200 OK";
+        return user;
     }
-    */
+    
 
 
     /* traditional implementation, trying out the DAL implementation (utilizing mongos interface options)/(Above this)

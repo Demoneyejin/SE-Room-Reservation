@@ -6,16 +6,20 @@ import com.reservo.reservo.Models.User;
 import com.reservo.reservo.Repository.ReservationRepository;
 import com.reservo.reservo.Repository.RoomRepository;
 import com.reservo.reservo.Repository.UserRepository;
+
+import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class DemoApplication implements CommandLineRunner {
 
 	@Autowired
@@ -26,7 +30,9 @@ public class DemoApplication implements CommandLineRunner {
 	private RoomRepository roomRepository;
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		
+			SpringApplication.run(DemoApplication.class, args);
+		
 	}
 
 	@Override

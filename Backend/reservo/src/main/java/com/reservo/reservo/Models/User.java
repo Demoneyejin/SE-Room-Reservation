@@ -63,7 +63,7 @@ public class User{
     }
     //UpdateUserName() from the model
     public void setUserName(final String name){
-        password = name;
+        this.userName = name;
     }
     //Required Update PAssword in the model
     public void setUserPassword(final String Id){

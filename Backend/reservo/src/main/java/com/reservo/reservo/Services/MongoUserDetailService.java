@@ -12,6 +12,7 @@ import java.util.Set;
 import com.reservo.reservo.Repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthoritiesContainer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,8 +29,8 @@ public class MongoUserDetailService implements UserDetailsService {
     private UserRepository userRepository;
    // @Autowired
     //private RoleRepository RoleRepository;
-    @Autowired
-    private BCryptPasswordEncoder BCryptPasswordEncoder;
+    
+    private BCryptPasswordEncoder BCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
@@ -41,8 +42,12 @@ public class MongoUserDetailService implements UserDetailsService {
         return new User(user.get().getUserName(), user.get().getPassword(), authorities);
     }
     //find user by username but should also work for email.
-    public com.reservo.reservo.Models.User findUserByUsername(String username){
-        return userRepository.findById(username).get();
+    public Boolean findUserByUsername(String username){
+        return userRepository.existsByUserName(username);
+    }
+
+    public com.reservo.reservo.Models.User findUserTypeByUsername(String username){
+        return userRepository.findByUserName(username); 
     }
 
     public void saveUser(com.reservo.reservo.Models.User user){

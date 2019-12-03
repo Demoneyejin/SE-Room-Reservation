@@ -76,7 +76,7 @@ public class ReservationsController {
         if (!reservationRepository.existsByTimeAndDateAndRoomID(LocalTime.parse(info.get("time")), LocalDate.parse(info.get("date")),
                                                                 roomRepository.findByRoomName(info.get("room")).getRoomID())) {
 
-            String userId = userRepository.findByUserName(info.get("username")).get_Id();
+            String userId = userRepository.findByUserName(info.get("username")).getUserID();
             String roomID = roomRepository.findByRoomName(info.get("room")).getRoomID();
             LocalDate date = LocalDate.parse(info.get("date"));
             LocalTime time = LocalTime.parse(info.get("time"));

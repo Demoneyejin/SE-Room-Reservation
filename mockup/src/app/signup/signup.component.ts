@@ -67,14 +67,15 @@ export class SignupComponent implements OnInit {
         data: {text: 'We are currently adding your account to the system.'}
       });
       this.signupService.createUser(newUser).subscribe(
-        () => {
+        data => {
           dialogRef.close();
           this.dialog.open(OperationSuccessfulComponent, {
             width: '350px',
             data: {text: 'Your user has successfully been added to the system', toDashboard: true}});
           },
-        () => {
+        error => {
           dialogRef.close();
+          console.log(error)
           this.dialog.open(OperationSuccessfulComponent, {
             width: '350px',
             data: {text: 'We could not add in your user to the system.', title: 'Error'}
