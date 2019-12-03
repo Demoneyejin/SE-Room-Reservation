@@ -47,8 +47,6 @@ public class MongoUserDetailService implements UserDetailsService {
 
     public void saveUser(com.reservo.reservo.Models.User user){
         user.setUserPassword(BCryptPasswordEncoder.encode(user.getPassword()));
-       // Role userRole = RoleRepository.findbyRole("User");
-        //user.appendUserSettings(userRole.getID(), userRole.getRole()); //assigns the role to the user setting
         userRepository.save(user);
     }
 

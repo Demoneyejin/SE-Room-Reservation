@@ -17,6 +17,8 @@ public class User{
     private String password;
     private String userName;
     private String userEmail;
+    private String firstName;
+    private String lastName;
     //used to store security type id
     private ObjectId _id;
     //contains the question and answer for security questions.
@@ -50,7 +52,20 @@ public class User{
     public final String get_Id(){
         return this._id.toHexString();
     }
-  
+    public final String getFirstName(){
+        return this.firstName;
+    }
+    public final String getLastName(){
+        return this.lastName;
+    }
+    
+    public void setLastName(String name){
+        this.lastName = name;
+    }
+    public void setFirstName(String name){
+        this.firstName = name;
+    }
+
     //UpdateUserName() from the model
     public void setUserName(final String name){
         password = name;
