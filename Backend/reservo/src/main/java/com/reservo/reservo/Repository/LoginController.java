@@ -49,41 +49,20 @@ public class LoginController
         
     }
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
+    public User createNewUser(@Valid User user, BindingResult bindingResult) {
+        
         User userExists = userService.findUserByUsername(user.getUserName());
         if (userExists != null) {
             bindingResult.rejectValue("email", "error.user", "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("signup");
+            return null;
         }
         else {
         userService.saveUser(user);
-        modelAndView.addObject("successMessage", "User has been registered successfully");
-        modelAndView.addObject("user", new User());
-        modelAndView.setViewName("login");
-
+        LOG.info("successMessage", "User has been registered successfully");
         }
-        return modelAndView;
+        return user;
     }
-    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-    public ModelAndView dashboard() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUsername(auth.getName());
-        modelAndView.addObject("currentUser", user);
-        modelAndView.addObject("fullName", "Welcome " + user.getUserName());
-        modelAndView.setViewName("dashboard");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
-    public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
-        return modelAndView;
-    }
-
 
 }
