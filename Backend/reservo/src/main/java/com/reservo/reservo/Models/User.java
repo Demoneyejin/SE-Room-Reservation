@@ -24,11 +24,11 @@ public class User{
         return userName;
     }
     //UpdateUserName() from the model
-    public void setUserName(final String name){
-        userId = name;
+    public void setUserName(String name){
+        userName = name;
     }
     //Required UpdateUserID in the model
-    public void setUserID(final String Id){
+    public void setUserID(String Id){
        userId = Id;
     }
 

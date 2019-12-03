@@ -1,17 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Reservation } from './view-reservation/Reservation';
 import { catchError } from 'rxjs/operators';
+import { RoleRequest } from './view-reservation/view-reservation.component';
+import { Roles } from './view-reservation/Roles';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
 
-  private url = '/assets/data/reservations.json';
+  private url = 'http://localhost:8080/reserve/uname';
 
-  private postURL = '/remove/reserve/';
+  private removeReservationURL = 'http://localhost:8080/reserve/';
+
+  private roleURL = 'http://localhost:8080/reserve/role/add';
+
+  private makeResURL = 'http://localhost:8080/reserve/make';
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -24,22 +36,19 @@ export class ReservationService {
     return throwError(error.message || 'Server Error');
   }
 
-  removeReservation(reserveID, credentials): Observable<string> {
-    // return this.http.post<string>(this.postURL + reserveID, credentials);
-    return new Observable<string>(subscriber => {
-      setTimeout(() => {
-        subscriber.next('Confirmed');
-        subscriber.complete();
-      }, 2000);
-    });
+  removeReservation(reserveID): Observable<string> {
+    return this.http.delete<string>(this.removeReservationURL + reserveID + '/remove')
+      .pipe(catchError(this.errorHandler));
   }
 
-  makeReservation(date: string, time: string, room: string){
-    return new Observable<string>(subscriber => {
-      setTimeout(() => {
-        subscriber.next('Confirmed');
-        subscriber.complete();
-      }, 2000);
-    });
+  makeReservation(date: string, time: string, room: string) {
+    return this.http.post<Reservation>(this.makeResURL, {date, time, room, username: 'uname'}, this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  addRole(role: RoleRequest) {
+
+    return this.http.post<Roles>(this.roleURL, role, this.httpOptions)
+                    .pipe(catchError(this.errorHandler));
   }
 }

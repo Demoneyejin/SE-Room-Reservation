@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreateUserService } from '../create-user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { User } from '../User';
 
 
 @Component({
@@ -49,11 +50,23 @@ export class SignupComponent implements OnInit {
 
     console.log('Testing');
 
-    if (this.profileForm.valid){
+    if (this.profileForm.valid) {
+      const newUser: User = {
+        name: this.profileForm.get('fullName').value,
+        email: this.profileForm.get('email').value,
+        password: this.profileForm.get('password').value,
+        secQuestion: this.profileForm.get('securityQuestion').value,
+        secAnswer: this.profileForm.get('securityAnswer').value
+      };
+
       const dialogRef = this.dialog.open(SignupDialogComponent, {
         width: '350px',
-        disableClose: true
-      });
+        disableClose: true,
+        data: {
+          user: newUser
+        }});
+    } else {
+      console.log('Not vaild form');
     }
 
   }
@@ -78,16 +91,21 @@ export class SignupComponent implements OnInit {
 
 export class SignupDialogComponent {
 
-  addContinue = false;
+  private returnMessage: string;
 
-  constructor(private router: Router, private createUserService: CreateUserService,
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any, private router: Router, private createUserService: CreateUserService,
               public dialogRef: MatDialogRef<SignupDialogComponent> ) {
-    createUserService.createUser().subscribe(data =>
-      this.addContinue = data);
+    createUserService.createUser(this.data.user).subscribe(
+      data => {this.returnMessage = data;
+               this.toDashboard();
+      }
+      );
   }
 
   toDashboard() {
-    this.dialogRef.close();
-    this.router.navigate(['/dashboard']);
+    if (this.returnMessage !== 'Failed to create user') {
+      this.dialogRef.close();
+      this.router.navigate(['/dashboard']);
+    }
   }
 }

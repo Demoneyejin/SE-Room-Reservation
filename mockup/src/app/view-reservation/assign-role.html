@@ -2,17 +2,17 @@
 <h2 mat-dialog-title>
 	Assign Role
 </h2>
-<form>
+<form [formGroup]="roleForm">
 	<mat-form-field>
 		<mat-label>Email</mat-label>
-		<input matInput placeholder="Email" required>
+		<input matInput type="email" placeholder="Email" required #email formControlName="email">
 	</mat-form-field>
 	<mat-form-field>
 		<mat-label>Role</mat-label>
-		<input matInput placeholder="Email" required>
+		<input matInput type="text" placeholder="Role" required #role formControlName="role">
 	</mat-form-field>
 </form>
 <mat-dialog-actions align="end">
-	<button mat-button>Cancel</button>
-	<button mat-raised-button color="primary">Submit</button>
+	<button mat-button mat-dialog-close>Cancel</button>
+	<button class='specButton'mat-raised-button color="primary" (click)="closeDialog()">Submit</button>
 </mat-dialog-actions>

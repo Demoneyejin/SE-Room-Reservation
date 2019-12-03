@@ -2,31 +2,32 @@
 <button class="back_button" mat-button routerLink="/dashboard"><mat-icon>keyboard_arrow_left</mat-icon> Go Back</button>
 <h2>Make a Reservation</h2>
 <mat-card class="mat-elevation-z4" fxLayout="row wrap" fxLayoutAlign="center">
-	<mat-form-field>
-		<input matInput [min]="minDate" [matDatepicker]="myDatePicker" placeholder="Choose a date">
-		<mat-datepicker-toggle matSuffix [for]="myDatePicker"></mat-datepicker-toggle>
-		<mat-datepicker #myDatePicker></mat-datepicker>
-	</mat-form-field>
-	
-	<mat-form-field>
-		<mat-label>Time</mat-label>
-		<mat-select>
-			<mat-option *ngFor="let time of times" [value]="time.value">
-				{{time.text}}
-			</mat-option>
-		</mat-select>
-	</mat-form-field>
+	<form [formGroup]="openingForm" (ngSubmit)="getAvailableRooms()">
+		<mat-form-field>
+			<input matInput [min]="minDate" [matDatepicker]="myDatePicker" placeholder="Choose a date" formControlName="date">
+			<mat-datepicker-toggle matSuffix [for]="myDatePicker"></mat-datepicker-toggle>
+			<mat-datepicker #myDatePicker></mat-datepicker>
+		</mat-form-field>
+		
+		<mat-form-field>
+			<mat-label>Time</mat-label>
+			<mat-select required formControlName="time">
+				<mat-option *ngFor="let time of times" [value]="time.value">
+					{{time.text}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
 
-	<mat-form-field>
-		<mat-label># of people</mat-label>
-		<mat-select>
-			<mat-option *ngFor="let people of numPersons" [value]="people.value">
-				{{people.text}}
-			</mat-option>
-		</mat-select>
-	</mat-form-field>
+		<mat-form-field>
+			<mat-label># of people</mat-label>
+			<mat-select required formControlName="numPeople">
+				<mat-option *ngFor="let people of numPersons" [value]="people.value">
+					{{people.text}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
 
-	<button class="spec-button"mat-raised-button color="primary"(click)="getAvailableRooms()">Search</button>
-
+		<button type="submit" class="spec-button" mat-raised-button color="primary">Search</button>
+	</form>
 	<ng-template appReserveList></ng-template>
 </mat-card>

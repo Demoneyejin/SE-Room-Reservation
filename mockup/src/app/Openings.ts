@@ -1,6 +1,6 @@
 export interface Opening {
-	time: number;
-	capacity: number;
-	roomName: string;
-	date: string;
+    time: number;
+    capacity: number;
+    room: string;
+    date: string;
 }

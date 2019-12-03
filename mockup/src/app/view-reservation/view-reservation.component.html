@@ -4,34 +4,37 @@
 
 <h2>Reservations</h2>
 
-<mat-card class="card mat-elevation-z4" fxLayout="column" *ngIf='!noReservations; else noReserve'>
+<mat-card class="card mat-elevation-z4" fxLayout="column" >
 
-	<div *ngFor="let reserve of reservations; last as last">
-		<div class=reserveUnit>
-			<div>
-				<h3>Date: {{reserve.date}}</h3>
-				<p>Time: {{reserve.time}}</p>
-				<p>Owner: {{reserve.owner}}</p>
-				<p>Room: {{reserve.room}}</p>
+	<ng-container *ngIf='reservations; else noReserve'>
+		<div *ngFor="let reserve of reservations; last as last" >
+			<div class=reserveUnit>
+				<div>
+					<h3>Date: {{reserve.date}}</h3>
+					<p>Time: {{reserve.time}}</p>
+					<p>Owner: {{reserve.owner}}</p>
+					<p>Room: {{reserve.room}}</p>
+				</div>
+
+				<div class="roles">
+					<h4>Roles:</h4>
+					<p *ngIf="!reserve.roles">None Assigned</p>
+					<p *ngFor="let role of reserve.roles">{{role.email}}: {{role.roles}}</p>
+				</div>
+
+				<button mat-icon-button class='push reg_button' aria-label="Add User Roles" (click)="addRoles(reserve)">
+					<mat-icon>group_add</mat-icon>
+				</button>
+				<button class="reg_button" mat-icon-button type="submit" color="primary" (click)="onClick(reserve)" aria-label="Cancel Reservation">
+					<mat-icon>delete</mat-icon>
+				</button>
 			</div>
-
-			<div class="roles">
-				<h4>Roles</h4>
-				<p *ngFor="let role of reserve.roles">{{role.email}}: {{role.roles}}</p>
-			</div>
-
-			<button mat-icon-button class='push reg_button' aria-label="Add User Roles" (click)="addRoles(reserve)">
-				<mat-icon>group_add</mat-icon>
-			</button>
-			<button class="reg_button" mat-icon-button type="submit" color="primary" (click)="onClick(reserve)" aria-label="Cancel Reservation">
-				<mat-icon>delete</mat-icon>
-			</button>
+			<mat-divider *ngIf="!last"></mat-divider>
 		</div>
-		<mat-divider *ngIf="!last"></mat-divider>
-	</div>
+	</ng-container>
+	<ng-template #noReserve>
+		<h3>No Reservations Found</h3>
+		<p>Once you make a reservation you can find it here</p>
+	</ng-template>
 </mat-card>
 
-<ng-template #noReserve>
-	<h3>No Reservations Found</h3>
-	<p>Once you make a reservation you can find it here</p>
-</ng-template>
