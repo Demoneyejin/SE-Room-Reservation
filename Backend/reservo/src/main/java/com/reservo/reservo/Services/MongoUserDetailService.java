@@ -8,8 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import com.reservo.reservo.Models.Role;
-import com.reservo.reservo.Repository.RoleRepository;
+
 import com.reservo.reservo.Repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,8 @@ import org.springframework.stereotype.Component;
 public class MongoUserDetailService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RoleRepository RoleRepository;
+   // @Autowired
+    //private RoleRepository RoleRepository;
     @Autowired
     private BCryptPasswordEncoder BCryptPasswordEncoder;
 
@@ -48,14 +47,14 @@ public class MongoUserDetailService implements UserDetailsService {
 
     public void saveUser(com.reservo.reservo.Models.User user){
         user.setUserPassword(BCryptPasswordEncoder.encode(user.getPassword()));
-        Role userRole = RoleRepository.findbyRole("User");
-        user.appendUserSettings(userRole.getID(), userRole.getRole()); //assigns the role to the user setting
+       // Role userRole = RoleRepository.findbyRole("User");
+        //user.appendUserSettings(userRole.getID(), userRole.getRole()); //assigns the role to the user setting
         userRepository.save(user);
     }
 
-    private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles){
+    private List<GrantedAuthority> getUserAuthority(Set<String> userRoles){
         Set<GrantedAuthority> roles = new HashSet<>();
-        userRoles.forEach((role) -> {roles.add(new SimpleGrantedAuthority(role.getRole()));});
+        //userRoles.forEach((role) -> {roles.add(new SimpleGrantedAuthority(role.getRole()));});
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
         return grantedAuthorities;
