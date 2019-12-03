@@ -106,12 +106,11 @@ public class UserController {
         //create and populate the user..
         User user = new User();
         user.setUserName(newUser.get("userName"));
+        user.setFullName(newUser.get("fullName"));
         user.setUserPassword(newUser.get("password"));
         user.setUserEmail(newUser.get("email"));
-        user.setFirstName(newUser.get("firstName"));
-        user.setLastName(newUser.get("lastName"));
         Map<String, String> securityQuestion = new HashMap<>();
-        securityQuestion.put(newUser.get("question"), newUser.get("answer"));
+        securityQuestion.put(newUser.get("securityQuestion"), newUser.get("securityAnswer"));
         user.setSecurityScreening(securityQuestion);
         //check if the user exists..
         User userExists = userService.findUserByUsername(user.getUserName());

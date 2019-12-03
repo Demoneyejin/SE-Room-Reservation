@@ -17,10 +17,9 @@ public class User{
     private String password;
     private String userName;
     private String userEmail;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     //used to store security type id
-    private ObjectId _id;
+    private String userID;
     //contains the question and answer for security questions.
     private Map<String, String> securityScreening = new HashMap<>();
     //contains roles for the user, simplified here instead of being an object.
@@ -28,9 +27,9 @@ public class User{
 
     public User(){}
 
-	public User(ObjectId id, String username, String password){
-        _id = id;
-        userName = username;
+	public User(String id, String username, String password){
+        this.userID = id;
+        this.userName = username;
         this.password = password;
     }
     
@@ -49,23 +48,19 @@ public class User{
     public final Map<String, String> getSecurityScreening(){
         return securityScreening;
     }
-    public final String get_Id(){
-        return this._id.toHexString();
+    public final String getUserID(){
+        return userID;
     }
-    public final String getFirstName(){
-        return this.firstName;
+   //Required UpdateUserID in the model
+   public void setUserID(String Id){
+        userID = Id;
     }
-    public final String getLastName(){
-        return this.lastName;
+    public final String getFullName(){
+        return this.fullName;
     }
-    
-    public void setLastName(String name){
-        this.lastName = name;
+    public void setFullName(String name){
+        this.fullName = name;
     }
-    public void setFirstName(String name){
-        this.firstName = name;
-    }
-
     //UpdateUserName() from the model
     public void setUserName(final String name){
         password = name;
@@ -86,7 +81,5 @@ public class User{
     public void setSecurityScreening(final Map<String, String> securityScreening){
         this.securityScreening = securityScreening;
     }
-    public void set_Id(ObjectId id){
-        this._id = id;
-    }
+
 }
