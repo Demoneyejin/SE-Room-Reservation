@@ -5,26 +5,69 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import jdk.internal.org.jline.utils.Log;
+
+import com.reservo.reservo.DAL.User_DAL;
 import com.reservo.reservo.Models.User;
 import com.reservo.reservo.Repository.UserRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(value = "/user")
-
 public class UserController {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
-
-    @Autowired
     private final UserRepository userRepository;
 
+    private final User_DAL userDal;
+
+    public UserController(UserRepository userRepository, User_DAL userDal){
+        this.userRepository = userRepository;
+        this.userDal = userDal;
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public User addNewUser(@RequestBody User user){
+        LOG.info("Saving user.");
+        return userRepository.save(user);
+    }
+
+    @RequestMapping(value = "",  method = RequestMethod.GET)
+    public List<User> getAlUsers(){
+        LOG.info("Getting all users.");
+        return userRepository.findAll();
+    }
+
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public Optional<User> getUser(@PathVariable String userId) {
+        LOG.info("Getting user with ID: {}", userId);
+        return userRepository.findById(userId);
+    }
+
+    @RequestMapping(value = "/settings/{userId}/{key}", method = RequestMethod.GET)
+    public String getUserSettings(@PathVariable String userId, @PathVariable String key){
+        return userDal.getUserSettings(userId, key);
+    }
+
+    @RequestMapping(value = "/settings/{userId}/{key}/{value}", method = RequestMethod.GET)
+    public String addUserSettings(@PathVariable String userId, @PathVariable String key, @PathVariable String value){
+        Optional<User> user = userRepository.findById(userId);
+        if(user != null){
+            User localUser = user.get();
+            localUser.getUserSettings().put(key, value);
+            userRepository.save(localUser);
+            return "Key added";
+        }else{
+            return "User not found.";
+        }
+    }
+    /* traditional implementation, trying out the DAL implementation (utilizing mongos interface options)/(Above this)
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -37,7 +80,7 @@ public class UserController {
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public Optional<User> getUser(@PathVariable String userId) {
-        LOG.info("Getting user with ID: {}.", userId);
+        Log.info("Getting user with ID: {}.", userId);
         return userRepository.findById(userId);
     }
 
@@ -61,7 +104,7 @@ public class UserController {
     @RequestMapping(value = "/settings/{userId}/{key}", method = RequestMethod.GET)
     public String getUserSetting(@PathVariable String userId, @PathVariable String key) {
         Optional<User> user = userRepository.findById(userId);
-        if(user.isPresent())
+        if(user  != null)
         {
             User Localuser = user.get();
             return Localuser.getUserSettings().get(key);
@@ -83,7 +126,7 @@ public class UserController {
         else {
 		return "User not found.";
 	    }       
-    }
+    }*/
 
     
 
