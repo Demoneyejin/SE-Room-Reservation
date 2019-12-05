@@ -18,7 +18,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure (HttpSecurity http) throws Exception{
         http
-            .antMatchers(HttpMethod.POST, "/user/**")
+            .antMatchers(HttpMethod.POST, "/user    ")
             .permitAll()
             .antMatchers("/",
                     "/favicon.ico",

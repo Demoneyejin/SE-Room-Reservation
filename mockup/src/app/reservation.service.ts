@@ -47,7 +47,6 @@ export class ReservationService {
   }
 
   addRole(role: RoleRequest) {
-
     return this.http.post<Roles>(this.roleURL, role, this.httpOptions)
                     .pipe(catchError(this.errorHandler));
   }

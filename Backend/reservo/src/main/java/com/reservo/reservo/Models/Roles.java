@@ -27,9 +27,15 @@ public class Roles {
     public List<String> getRoles(){ return roles; }
 
     public String getRoleString(){
-        StringBuilder s = new StringBuilder();
-        roles.forEach(role -> s.append(role).append(", "));
-        return s.toString();
+        if (roles.size() > 1) {
+            StringBuilder s = new StringBuilder();
+            roles.forEach(role -> s.append(role).append(", "));
+            return s.toString();
+        }
+        else {
+            return roles.get(0);
+        }
+
     }
 
     public void addRole(String role){ this.roles.add(role); }

@@ -20,9 +20,8 @@ public class RoleReturn {
         this.roles = roles;
     }
 
-    public RoleReturn(Roles role, UserRepository repository){
-        Optional<User> userOp = repository.findById(role.getUserID());
-        userOp.ifPresent(user -> this.userName = user.getUserName());
+    public RoleReturn(Roles role, String userName){
+        this.userName = userName;
         this.roles = role.getRoleString();
     }
 

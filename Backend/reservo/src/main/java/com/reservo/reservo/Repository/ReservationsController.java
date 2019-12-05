@@ -3,6 +3,7 @@ package com.reservo.reservo.Repository;
 import com.reservo.reservo.Models.Reservation;
 import com.reservo.reservo.Models.Roles;
 import com.reservo.reservo.Models.Room;
+import com.reservo.reservo.Models.User;
 import com.reservo.reservo.ReturnClasses.CurrentReservationsReturn;
 import com.reservo.reservo.ReturnClasses.ReservationReturn;
 import com.reservo.reservo.ReturnClasses.RoleReturn;
@@ -109,7 +110,12 @@ public class ReservationsController {
 
         reservations.forEach(res -> {
             List<RoleReturn> roles = rolesRepository.findByReservationID(res.getReservationID())
-                    .stream().map(role -> new RoleReturn(role, userRepository)).collect(Collectors.toList());
+                    .stream().map(role -> {
+                                      final String[] userName = new String[1];
+                        userRepository.findById(role.getUserID()).ifPresent(user -> userName[0] = user.getUserEmail());
+                        return new RoleReturn(role, userName[0]);
+                    }
+                        ).collect(Collectors.toList());
 
             returns.add(new CurrentReservationsReturn(res, roles));
 
@@ -125,7 +131,7 @@ public class ReservationsController {
             throw new NullPointerException("No payload found");
         }
 
-        if (!userRepository.existsById(payload.get("userID"))) {
+        if (!userRepository.existsByUserEmail(payload.get("userID"))) {
             throw new NullPointerException("No user found");
         }
 
@@ -137,13 +143,15 @@ public class ReservationsController {
             throw new NullPointerException("No role included");
         }
 
-        Optional<Roles> rolesOptional= rolesRepository.findByReservationIDAndUserID(payload.get("reservationID"), payload.get("userID"));
+        User user = userRepository.findByUserEmail(payload.get("userID"));
+
+        Optional<Roles> rolesOptional= rolesRepository.findByReservationIDAndUserID(payload.get("reservationID"), user.getUserID());
 
         Roles tempRole;
 
-        tempRole = rolesOptional.orElseGet(() -> new Roles(payload.get("reservationID"), payload.get("userID"), new ArrayList<>()));
+        tempRole = rolesOptional.orElseGet(() -> new Roles(payload.get("reservationID"), user.getUserID(), new ArrayList<>()));
 
-        tempRole.addRole(payload.get("role"));
+        tempRole.addRole(payload.get("roles"));
         return rolesRepository.save(tempRole);
 
     }

@@ -9,14 +9,9 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.web.bind.annotation.*;
 
-import jdk.internal.org.jline.utils.Log;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -30,7 +25,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin()
@@ -86,7 +80,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/login/{userId}/{password}", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/login/{userId}/{password}", method = RequestMethod.POST)
     public String login(String userId, String password){
         //if anything is empty, nada..
         if(userId.isEmpty() || password.isEmpty()){
@@ -106,7 +100,45 @@ public class UserController {
             }
         }
         
+    }*/
+
+    @RequestMapping(value = "/login", method=RequestMethod.POST)
+    public Map<String, String> loginUser(@RequestBody Map<String, String> userInfo) {
+
+        Map<String, String> returnMap = new HashMap<>();
+        if (userInfo.isEmpty()){
+            LOG.info("401");
+            returnMap.put("error", "No info provided");
+            return null;
+        }
+
+        String username = userInfo.get("username");
+        String password = userInfo.get("password");
+
+        User user  = userService.findUserTypeByUsername(username);
+
+        if (user == null){
+
+            LOG.debug("User is null");
+
+            returnMap.put("error", "No user found");
+            return returnMap;
+        }
+        else {
+            LOG.debug("User is not null");
+            if(BCrypt.checkpw(password, user.getPassword())){
+                LOG.debug("Passwords match");
+                returnMap.put("username", username);
+                return returnMap;
+            }
+            else {
+                returnMap.put("error", "Passwords do not match");
+                return returnMap;
+            }
+        }
+
     }
+
     /*
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public User createNewUser( Map<String,String> newUser, BindingResult bindingResult) {
@@ -140,6 +172,8 @@ public class UserController {
         User user = new User();
         user.setUserName(newUser.get("username"));
         user.setFullName(newUser.get("name"));
+        LOG.debug(newUser.get("password"));
+        System.out.println(newUser.get("password"));
         user.setUserPassword(newUser.get("password"));
         user.setUserEmail(newUser.get("email"));
         Map<String, String> securityQuestion = new HashMap<>();

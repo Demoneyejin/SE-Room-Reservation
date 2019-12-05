@@ -1,7 +1,6 @@
 export interface LoginReturn {
-    loginAttempts: number;
-    loginSuccessful: boolean;
-    sessionID: string;
+    username: string;
+    error: string;
 }
 
 export interface UserInfo {

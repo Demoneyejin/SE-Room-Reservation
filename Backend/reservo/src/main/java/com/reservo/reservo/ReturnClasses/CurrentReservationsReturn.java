@@ -57,5 +57,7 @@ public class CurrentReservationsReturn {
         return resID;
     }
 
+    public List<RoleReturn> getRoles() { return roles;}
+
     public void addRoles(List<RoleReturn> roleReturns){this.roles = roleReturns;}
 }

@@ -72,6 +72,7 @@ export class SignupComponent implements OnInit {
           this.dialog.open(OperationSuccessfulComponent, {
             width: '350px',
             data: {text: 'Your user has successfully been added to the system', toDashboard: true}});
+          sessionStorage.setItem('username', newUser.username);
           },
         error => {
           dialogRef.close();

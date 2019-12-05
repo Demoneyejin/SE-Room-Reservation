@@ -1,4 +1,4 @@
 export interface Roles {
-	email: string;
+	userName: string;
 	roles: string;
 }

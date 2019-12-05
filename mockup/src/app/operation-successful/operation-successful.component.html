@@ -2,5 +2,5 @@
 <h2 mat-dialog-header>{{title}}</h2>
 <p>{{data.text}}</p>
 <mat-dialog-actions align="end">
-	<button mat-button mat-dialog-close>OK</button>
+	<button (click)="onClick()" mat-button mat-dialog-close>OK</button>
 </mat-dialog-actions>
