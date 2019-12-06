@@ -35,7 +35,7 @@ export class CheckCredentialsService {
   }
 
   isAuthenticated(): boolean {
-    return !(sessionStorage.getItem('username') === null);
+    return !(sessionStorage.getItem('sessionkey') === null);
   }
 
   errorHandler(error: HttpErrorResponse) {

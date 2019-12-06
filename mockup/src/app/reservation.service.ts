@@ -11,7 +11,7 @@ import { Roles } from './view-reservation/Roles';
 })
 export class ReservationService {
 
-  private url = 'http://localhost:8080/reserve/uname';
+  private url = 'http://localhost:8080/reserve/';
 
   private removeReservationURL = 'http://localhost:8080/reserve/';
 
@@ -28,7 +28,12 @@ export class ReservationService {
   constructor(private http: HttpClient) { }
 
   getReservations(): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(this.url)
+
+    const url = this.url + sessionStorage.getItem('username');
+
+    console.log(url);
+
+    return this.http.get<Reservation[]>(url)
                   .pipe(catchError(this.errorHandler));
   }
 
@@ -42,7 +47,7 @@ export class ReservationService {
   }
 
   makeReservation(date: string, time: string, room: string) {
-    return this.http.post<Reservation>(this.makeResURL, {date, time, room, username: 'uname'}, this.httpOptions)
+    return this.http.post<Reservation>(this.makeResURL, {date, time, room, username: sessionStorage.getItem('username')}, this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
 

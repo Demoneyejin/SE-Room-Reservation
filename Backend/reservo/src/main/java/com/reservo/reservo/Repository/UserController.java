@@ -1,10 +1,7 @@
 package com.reservo.reservo.Repository;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +32,7 @@ public class UserController {
     @Autowired
     private MongoUserDetailService userService;
 
-    private BCryptPasswordEncoder BCryptPasswordEncoder;
+    private BCryptPasswordEncoder BCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     private final User_DAL userDal;
 
@@ -44,23 +41,18 @@ public class UserController {
         this.userDal = userDal;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public User addNewUser(@RequestBody User user){
-        LOG.info("Saving user.");
-        return userRepository.save(user);
-    }
-
     @RequestMapping(value = "/",  method = RequestMethod.GET)
     public List<User> getAlUsers(){
         LOG.info("Getting all users.");
         return userRepository.findAll();
     }
 
+    /*
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public Optional<User> getUser(@PathVariable String userId) {
         LOG.info("Getting user with ID: {}", userId);
         return userRepository.findById(userId);
-    }
+    }*/
 
     @RequestMapping(value = "/settings/{userId}/{key}", method = RequestMethod.GET)
     public String getUserSettings(@PathVariable String userId, @PathVariable String key){
@@ -80,28 +72,40 @@ public class UserController {
         }
     }
 
-    /*@RequestMapping(value = "/login/{userId}/{password}", method = RequestMethod.POST)
-    public String login(String userId, String password){
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Map<String, String> login(@RequestBody Map<String, String> loginInfo){
+
+        Map<String, String> returnMap = new HashMap<>();
+
         //if anything is empty, nada..
-        if(userId.isEmpty() || password.isEmpty()){
-            LOG.info("401"); //Error 204, cannot login. 
-            return "Missing information";
+        if(loginInfo.isEmpty() || loginInfo.get("username").isEmpty() || loginInfo.get("password").isEmpty()){
+            LOG.info("401"); //Error 204, cannot login.
+            returnMap.put("error", "Missing information");
+            return returnMap;
         }
-        User user = userService.findUserTypeByUsername(userId);
+        User user = userService.findUserTypeByUsername(loginInfo.get("username"));
         if(user == null){
-            LOG.info("401"); //Error 204, cannot login. 
-            return "User not found.";
+            LOG.info("401"); //Error 204, cannot login.
+            returnMap.put("error", "User not found");
+            return returnMap;
         }
         else{
-            if(BCryptPasswordEncoder.matches(password, user.getPassword())){
-                return "200"; //user found;
+            if(BCryptPasswordEncoder.matches(loginInfo.get("password"), user.getPassword())){
+
+                String base64_out = Base64.getEncoder().encodeToString((loginInfo.get("username") + ":" +loginInfo.get("password")).getBytes());
+
+                returnMap.put("sessionkey", base64_out);
+                returnMap.put("username", loginInfo.get("username"));
+                return returnMap; //user found;
             }else{
-                return "Wrong Password";
+                returnMap.put("error", "Incorrect Password");
+                return returnMap;
             }
         }
         
-    }*/
+    }
 
+    /*
     @RequestMapping(value = "/login", method=RequestMethod.POST)
     public Map<String, String> loginUser(@RequestBody Map<String, String> userInfo) {
 
@@ -137,7 +141,7 @@ public class UserController {
             }
         }
 
-    }
+    }*/
 
     /*
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -167,29 +171,35 @@ public class UserController {
     }*/
     
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public User createNewUser(@RequestBody Map<String,String> newUser) throws JsonParseException, JsonMappingException, IOException {
+    public Map<String, String> createNewUser(@RequestBody Map<String,String> newUser) throws JsonParseException, JsonMappingException, IOException {
         //create and populate the user..
         User user = new User();
         user.setUserName(newUser.get("username"));
         user.setFullName(newUser.get("name"));
         LOG.debug(newUser.get("password"));
-        System.out.println(newUser.get("password"));
         user.setUserPassword(newUser.get("password"));
         user.setUserEmail(newUser.get("email"));
         Map<String, String> securityQuestion = new HashMap<>();
         securityQuestion.put(newUser.get("question"), newUser.get("answer"));
         user.setSecurityScreening(securityQuestion);
+
+        Map<String, String> returnMap = new HashMap<>();
         
         //check if the user exists..
         Boolean userExists = userService.findUserByUsername(user.getUserName());
         if (userExists) {
-            return null;
+            returnMap.put("error", "User already exists");
+            return returnMap;
         }
         else {
         userService.saveUser(user);
         LOG.info("successMessage", "User has been registered successfully");
         }
-        return user;
+        returnMap.put("username", user.getUserName());
+        String unamePw = user.getUserName() + ':' + user.getPassword();
+        String base64 = Base64.getEncoder().encodeToString(unamePw.getBytes());
+        returnMap.put("sessionkey", base64);
+        return returnMap;
     }
     
 

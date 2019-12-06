@@ -8,7 +8,8 @@ import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faCalendarPlus, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import { ViewReservationComponent, ReservationDialogComponent, ReservationCancelWaitComponent, AssignUserRoleComponent } from './view-reservation/view-reservation.component';
+import { ViewReservationComponent, ReservationDialogComponent,
+   ReservationCancelWaitComponent, AssignUserRoleComponent } from './view-reservation/view-reservation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,7 +19,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,6 +36,7 @@ import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { OperationSuccessfulComponent } from './operation-successful/operation-successful.component';
 import { PleaseWaitComponent } from './please-wait/please-wait.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,13 @@ import { PleaseWaitComponent } from './please-wait/please-wait.component';
     OperationSuccessfulComponent,
     PleaseWaitComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

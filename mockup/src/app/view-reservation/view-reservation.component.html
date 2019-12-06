@@ -18,7 +18,7 @@
 
 				<div class="roles">
 					<h4>Roles:</h4>
-					<p *ngIf="!reserve.roles">None Assigned</p>
+					<p *ngIf="reserve.roles.length === 0">None Assigned</p>
 					<p *ngFor="let role of reserve.roles">{{role.userName}}: {{role.roles}}</p>
 				</div>
 

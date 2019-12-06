@@ -52,8 +52,8 @@ export class LoginComponent implements OnInit {
       this.checkAuth.checkCredentials(user).subscribe(
         data => {
           console.log('Got to the return of the subscribe');
-          if (data.username) {
-            sessionStorage.setItem('username', data.username);
+          if (data.sessionkey) {
+            sessionStorage.setItem('sessionkey', data.sessionkey);
             console.log('Returned the username');
             this.router.navigate(['dashboard']);
           } else {

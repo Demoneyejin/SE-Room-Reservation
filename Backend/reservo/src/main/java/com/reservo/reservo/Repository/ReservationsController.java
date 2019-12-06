@@ -40,12 +40,8 @@ public class ReservationsController {
     @RequestMapping(value="/{date}/{time}/{capacity}", method= RequestMethod.GET)
     public List<ReservationReturn> findOpenSlots(@PathVariable String date, @PathVariable String time, @PathVariable int capacity){
 
-        System.out.println(capacity);
-
         // All rooms with enough capacity
         List<Room> rooms = roomRepository.findByCapacityGreaterThanEqual(capacity);
-
-        System.out.println(rooms.toString());
 
         List<String> roomIDs = rooms.stream().map(Room::getRoomID).collect(Collectors.toList());
 
@@ -65,8 +61,6 @@ public class ReservationsController {
 
         rooms.forEach(room -> returns.add(new ReservationReturn(date, room.getRoomName(),
                                                                 room.getCapacity(), time)));
-
-        System.out.println(returns);
 
         return returns;
     }
@@ -100,10 +94,13 @@ public class ReservationsController {
     @RequestMapping(value = "/{userEmail}", method=RequestMethod.GET)
     public List<CurrentReservationsReturn> getReservationFromUser(@PathVariable String userEmail){
 
-        List<Reservation> reservations = reservationRepository.findByOwnerID(userEmail);
+        String ownerID = userRepository.findByUserName(userEmail).getUserID();
+
+        List<Reservation> reservations = reservationRepository.findByOwnerID(ownerID);
         reservations.forEach(res -> {
             Optional<Room> room = roomRepository.findById(res.getRoomID());
             room.ifPresent(value -> res.setRoomID(value.getRoomName()));
+            res.setOwnerID(userEmail);
         });
 
         List<CurrentReservationsReturn> returns = new ArrayList<>();
