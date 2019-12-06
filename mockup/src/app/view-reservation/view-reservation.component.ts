@@ -32,6 +32,7 @@ export class ViewReservationComponent implements OnInit {
         data => {
         this.reservations = data;
         this.noReservations = this.reservations.length === 0;
+        console.log(data);
         },
         error => {
         this.dialog.open(OperationSuccessfulComponent, {
@@ -92,7 +93,7 @@ export class ViewReservationComponent implements OnInit {
 
       const roleRequest: RoleRequest = {
         reservationID: reservation.resID,
-        role: result.role,
+        roles: result.role,
         userID: result.email
       };
 
@@ -103,15 +104,16 @@ export class ViewReservationComponent implements OnInit {
       );
 
     });
-
   }
+
+
   addRoletoReservation(reservation: Reservation, roleRequest: RoleRequest) {
       for (let i = 0; i < reservation.roles.length; i++) {
-        if (reservation.roles[i].email === roleRequest.userID) {
-          reservation.roles[i].roles = roleRequest.role;
+        if (reservation.roles[i].userName === roleRequest.userID) {
+          reservation.roles[i].roles = roleRequest.roles;
           break;
         } else if (i === reservation.roles.length - 1) {
-          reservation.roles.push({roles: roleRequest.role, email: roleRequest.userID});
+          reservation.roles.push({roles: roleRequest.roles, userName: roleRequest.userID});
         }
       }
 
@@ -185,6 +187,6 @@ export class AssignUserRoleComponent implements OnInit {
 
 export interface RoleRequest {
   reservationID: string;
-  role: string;
+  roles: string;
   userID: string;
 }

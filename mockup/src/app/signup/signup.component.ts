@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
 
     console.log('Testing');
 
-    if (this.profileForm.valid) { 
+    if (this.profileForm.valid) {
       const newUser: User = {
         name: this.profileForm.get('fullName').value,
         email: this.profileForm.get('email').value,
@@ -72,10 +72,11 @@ export class SignupComponent implements OnInit {
           this.dialog.open(OperationSuccessfulComponent, {
             width: '350px',
             data: {text: 'Your user has successfully been added to the system', toDashboard: true}});
+          sessionStorage.setItem('username', newUser.username);
           },
         error => {
           dialogRef.close();
-          console.log(error)
+          console.log(error);
           this.dialog.open(OperationSuccessfulComponent, {
             width: '350px',
             data: {text: 'We could not add in your user to the system.', title: 'Error'}
@@ -85,6 +86,27 @@ export class SignupComponent implements OnInit {
       console.log('Not vaild form');
     }
 
+  }
+
+  createUserReturned(data, dialogRef) {
+    dialogRef.close();
+    if (data.error) {
+      this.dialog.open(OperationSuccessfulComponent,
+        {
+          width: '350px',
+          data: {
+            text: data.error,
+            title: 'Error',
+            toDashboard: false
+          }
+        });
+      } else {
+      this.dialog.open(OperationSuccessfulComponent, {
+        width: '350px',
+        data: {text: 'Your user has successfully been added to the system', toDashboard: true}});
+      sessionStorage.setItem('username', data.username);
+      sessionStorage.setItem('sessionkey', data.sessionkey);
+    }
   }
 
   toLogin() {

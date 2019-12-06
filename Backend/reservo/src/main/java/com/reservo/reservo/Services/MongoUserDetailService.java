@@ -34,12 +34,12 @@ public class MongoUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        Optional<com.reservo.reservo.Models.User> user = userRepository.findById(userId);
+        com.reservo.reservo.Models.User user = userRepository.findByUserName(userId);
         if(user == null){
             throw new UsernameNotFoundException("User not found");
         }
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("user"));
-        return new User(user.get().getUserName(), user.get().getPassword(), authorities);
+        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("USER"));
+        return new User(user.getUserName(), user.getPassword(), authorities);
     }
     //find user by username but should also work for email.
     public Boolean findUserByUsername(String username){

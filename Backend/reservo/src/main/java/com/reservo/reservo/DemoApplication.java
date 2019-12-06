@@ -14,11 +14,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 
+@ComponentScan
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class DemoApplication implements CommandLineRunner {
 
@@ -29,9 +32,10 @@ public class DemoApplication implements CommandLineRunner {
 	@Autowired
 	private RoomRepository roomRepository;
 
+	private static AnnotationConfigApplicationContext applicationContext;
+
 	public static void main(String[] args) {
-		
-			SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(DemoApplication.class, args);
 		
 	}
 

@@ -13,12 +13,12 @@ import org.bson.types.ObjectId;
 @Document
 public class User{
 
-    @Id
     private String password;
     private String userName;
     private String userEmail;
     private String fullName;
     //used to store security type id
+    @Id
     private String userID;
     //contains the question and answer for security questions.
     private Map<String, String> securityScreening = new HashMap<>();
@@ -27,8 +27,7 @@ public class User{
 
     public User(){}
 
-	public User(String id, String username, String password){
-        this.userID = id;
+	public User(String username, String password){
         this.userName = username;
         this.password = password;
     }
@@ -66,8 +65,8 @@ public class User{
         this.userName = name;
     }
     //Required Update PAssword in the model
-    public void setUserPassword(final String Id){
-       password = Id;
+    public void setUserPassword(final String password){
+       this.password = password;
     }
     public void setUserEmail(final String email){
         userEmail = email;
@@ -81,5 +80,8 @@ public class User{
     public void setSecurityScreening(final Map<String, String> securityScreening){
         this.securityScreening = securityScreening;
     }
+
+    public void setSecurityScreening(final String question, final String answer){
+        securityScreening.put(question, answer);}
 
 }

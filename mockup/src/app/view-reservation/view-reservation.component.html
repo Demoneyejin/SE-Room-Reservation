@@ -18,8 +18,8 @@
 
 				<div class="roles">
 					<h4>Roles:</h4>
-					<p *ngIf="!reserve.roles">None Assigned</p>
-					<p *ngFor="let role of reserve.roles">{{role.email}}: {{role.roles}}</p>
+					<p *ngIf="reserve.roles.length === 0">None Assigned</p>
+					<p *ngFor="let role of reserve.roles">{{role.userName}}: {{role.roles}}</p>
 				</div>
 
 				<button mat-icon-button class='push reg_button' aria-label="Add User Roles" (click)="addRoles(reserve)">

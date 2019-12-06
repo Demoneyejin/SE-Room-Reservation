@@ -22,14 +22,6 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
-  loginAttempts = 0;
-
-  public loginInfo: LoginReturn = {
-    loginAttempts: 0,
-    loginSuccessful: true,
-    sessionID: ''
-  };
-
   public pwLength = false;
 
   private password: string;
@@ -41,8 +33,7 @@ export class LoginComponent implements OnInit {
         minLength: true
       });
       this.pwLength = true;
-    }
-    else {
+    } else {
       this.password = pw;
       this.loginForm.get('password').setValue('***');
       this.pwLength = false;
@@ -53,24 +44,24 @@ export class LoginComponent implements OnInit {
   }
 
   onClick() {
-    console.log('onClick');
     if (this.loginForm.valid) {
-      console.log('isValid');
-      const user: UserInfo = {
-        email: this.loginForm.get('username').value,
-        password: this.loginForm.get('password').value
+      const user = {
+        username: this.loginForm.get('username').value,
+        password: this.password
       };
-      this.checkAuth.checkCredentials(user)
-      .subscribe(
+      this.checkAuth.checkCredentials(user).subscribe(
         data => {
-          this.loginInfo = data;
-          this.toTransfer();
-        },
-        error => {
-          this.dialog.open(OperationSuccessfulComponent, {
-            width: '350px',
-            data: {text: 'An error has occurred logging in. Please try again.', title: 'Login Error'}
-          });
+          console.log('Got to the return of the subscribe');
+          if (data.sessionkey) {
+            sessionStorage.setItem('sessionkey', data.sessionkey);
+            console.log('Returned the username');
+            this.router.navigate(['dashboard']);
+          } else {
+            this.dialog.open(OperationSuccessfulComponent, {
+              width: '350px',
+              data: {text: data.error, title: 'Error'}
+            });
+          }
         }
       );
     }
@@ -81,13 +72,7 @@ export class LoginComponent implements OnInit {
   }
 
   doCaptcha(): boolean {
-    return this.loginAttempts > 4;
-  }
-
-  toTransfer() {
-    if (this.loginInfo.loginSuccessful) {
-      this.router.navigate(['dashboard']);
-    }
+    return false;
   }
 
 }

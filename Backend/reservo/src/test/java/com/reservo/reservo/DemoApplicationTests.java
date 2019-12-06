@@ -5,6 +5,7 @@ import com.reservo.reservo.Models.Roles;
 import com.reservo.reservo.Models.Room;
 import com.reservo.reservo.Models.User;
 import com.reservo.reservo.Repository.*;
+import com.reservo.reservo.Services.MongoUserDetailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,6 +47,9 @@ public class DemoApplicationTests {
 
 	@MockBean
 	private RolesRepository rolesRepository;
+
+	@MockBean
+	private MongoUserDetailService userService;
 
 	@Test
 	public void testGetReservation()
@@ -150,7 +155,33 @@ public class DemoApplicationTests {
 				.andExpect(jsonPath("$[1].time").value("12:00"))
 				.andExpect(jsonPath("$[1].room").value("Room3"))
 				.andExpect(jsonPath("$[1].capacity").value(3));
-		
+
+	}
+
+	@Test
+	public void createUserTest() throws Exception{
+
+		Map<String, String> newUser = new HashMap<>();
+		newUser.put("username", "newUserName");
+		newUser.put("name", "Name");
+		newUser.put("password", "password");
+		newUser.put("email", "email@email.com");
+		newUser.put("question", "What's a thing?");
+		newUser.put("answer", "A thing");
+
+		when(this.userService.findUserByUsername(newUser.get("username")))
+				.thenReturn(false);
+
+		this.mockMvc.perform(post("/user/signup", newUser)).andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0].username").value(newUser.get("username")))
+				.andExpect(jsonPath("$[0].name").value(newUser.get("name")))
+				.andExpect(jsonPath("$[0].password").value(newUser.get("password")))
+				.andExpect(jsonPath("$[0].email").value(newUser.get("email")));
+
+
 	}
 
 }

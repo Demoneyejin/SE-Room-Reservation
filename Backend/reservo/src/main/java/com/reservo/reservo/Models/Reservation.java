@@ -45,4 +45,6 @@ public class Reservation {
 	public String getReservationID() {
 		return reservationID;
 	}
+
+	public void setOwnerID(String id) { this.ownerID = id; }
 }

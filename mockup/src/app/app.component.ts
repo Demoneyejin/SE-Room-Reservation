@@ -19,4 +19,10 @@ export class AppComponent {
     this.router.navigate(['dashboard']);
   }
 
+  logout() {
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('sessionkey');
+    this.router.navigate(['login']);
+  }
+
 }

@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { LoginReturn, UserInfo } from './LoginReturn';
 import { retry, catchError } from 'rxjs/operators';
+import { User } from './User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CheckCredentialsService {
 
-  private url = 'http://localhost:8080/user/auth';
+  private url = 'http://localhost:8080/user/login';
 
   private createURL = 'http://localhost:8080/user/signup';
 
@@ -21,7 +22,7 @@ export class CheckCredentialsService {
 
   constructor(private http: HttpClient) { }
 
-  checkCredentials(user: UserInfo): Observable<LoginReturn> {
+  checkCredentials(user): Observable<LoginReturn> {
     return this.http.post<LoginReturn>(this.url, user)
             .pipe(
               retry(3)
@@ -34,7 +35,7 @@ export class CheckCredentialsService {
   }
 
   isAuthenticated(): boolean {
-    return true;
+    return !(sessionStorage.getItem('sessionkey') === null);
   }
 
   errorHandler(error: HttpErrorResponse) {
